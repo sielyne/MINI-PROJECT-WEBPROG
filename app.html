@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NamaGame</title>
+</head>
+<body>
+    <h1>WELCOME TO NAMAGAME</h1>
+    <h2>Represent Your Day With The Cute And Adorable NamaGame!</h2>
+    <div id="choice-buttons">
+        <button onclick="showForm('register')" type="button">Register</button>
+        <button onclick="showForm('login')" type="button">Login</button>
+    </div>
+
+    <form id="user-form" action="" method="POST" style="display:none;">
+        <h2 id="form-title"></h2>
+        <label for="Uname">Username</label>
+        <input type="text" id="username" name="username" required
+         pattern="^[a-zA-Z0-9_]{3,15}$"
+         title="Username harus 3-15 karakter dan hanya boleh huruf, angka, dan underscore">
+        <br>
+        <label for="">Password</label>
+        <input type="password" name="password" placeholder="Password"
+       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).+$"
+       title="Harus mengandung huruf, angka, dan simbol.">
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+    function showForm(type) {
+        document.getElementById('choice-buttons').style.display = 'none';
+        var form = document.getElementById('user-form');
+        var title = document.getElementById('form-title');
+        if(type === 'register') {
+            form.action = '/register';
+            title.textContent = 'Register';
+        } else {
+            form.action = '/login';
+            title.textContent = 'Login';
+        }
+        form.style.display = 'block';
+    }
+    </script>
+</body>
+</html>

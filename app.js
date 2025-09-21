@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs');
 const querystring = require('querystring');
+const path = require('path');
 
 const DATA_FILE = 'data.json';
 
@@ -17,6 +18,20 @@ function saveData(data) {
 }
 
 const server = http.createServer((req, res) => {
+    // Tambahkan ini di atas route lain
+    if (req.method === 'GET' && req.url.startsWith('/style.css')) {
+        const cssPath = path.join(__dirname, 'style.css');
+        fs.readFile(cssPath, (err, content) => {
+            if (err) {
+                res.writeHead(404, {'Content-Type': 'text/plain'});
+                res.end('Not Found');
+                return;
+            }
+            res.writeHead(200, {'Content-Type': 'text/css'});
+            res.end(content);
+        });
+        return;
+    }
     if (req.method === 'GET' && req.url === '/') {
         fs.readFile('app.html', (err, content) => {
             if (err) {
@@ -50,7 +65,23 @@ const server = http.createServer((req, res) => {
             data.push({ id: newID, username: parsed.username, password: parsed.password });
             saveData(data);
             res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end('<h2>Registrasi berhasil! <a href="/">Login</a></h2>');
+res.end(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Registrasi Berhasil</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="result-page success">
+            <h2>Registrasi berhasil! Selamat datang di Bloomii, <span>${parsed.username}</span>.</h2>
+            <a href="/" class="back-btn">Login sekarang</a>
+        </div>
+    </body>
+    </html>
+`);
+
         });
     }
     else if (req.method === 'POST' && req.url === '/login') {
@@ -64,10 +95,40 @@ const server = http.createServer((req, res) => {
             const user = data.find(u => u.username === parsed.username && u.password === parsed.password);
             if (user) {
                 res.writeHead(200, {'Content-Type': 'text/html'});
-                res.end(`<h2>Login berhasil! Selamat datang, ${user.username}. <a href="/">Logout</a></h2>`);
+                res.end(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Login Berhasil</title>
+                        <link rel="stylesheet" href="style.css">
+                    </head>
+                    <body>
+                        <div class="result-page success">
+                            <h2>Login berhasil! Selamat datang, <span>${user.username}</span>.</h2>
+                            <a href="/" class="back-btn">Logout</a>
+                        </div>
+                    </body>
+                    </html>
+                `);
             } else {
                 res.writeHead(200, {'Content-Type': 'text/html'});
-                res.end('<h2>Username atau password salah. <a href="/">Coba lagi</a></h2>');
+                res.end(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <title>Login Gagal</title>
+                        <link rel="stylesheet" href="style.css">
+                    </head>
+                    <body>
+                        <div class="result-page failed">
+                            <h2>Username atau password salah.</h2>
+                            <a href="/" class="back-btn">Coba lagi</a>
+                        </div>
+                    </body>
+                    </html>
+                `);
             }
         });
     }

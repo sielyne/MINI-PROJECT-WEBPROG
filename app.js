@@ -120,53 +120,133 @@ const server = http.createServer((req, res) => {
         });
     }
 
-    else if (req.method === 'POST' && req.url === '/bmi') {
-        let body = '';
-        req.on('data', chunk => { body += chunk.toString(); });
-        req.on('end', () => {
-            const parsed = querystring.parse(body);
-            let data = loadData();
+   else if (req.method === 'POST' && req.url === '/bmi') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+        console.log("=== BMI REQUEST DITERIMA ===");
+        console.log("Raw body:", body);
 
-            const user = data.find(u => u.username === parsed.username);
-            if (!user) {
-                res.writeHead(400, {'Content-Type': 'application/json'});
-                res.end(JSON.stringify({ error: 'User tidak ditemukan' }));
-                return;
-            }
+        const parsed = querystring.parse(body);
+        console.log("Parsed body:", parsed);
 
-            const height = parseFloat(parsed.height);
-            const weight = parseFloat(parsed.weight);
-            
-            // Validate input
-            if (height < 100 || height > 250 || weight < 30 || weight > 200) {
-                res.writeHead(400, {'Content-Type': 'application/json'});
-                res.end(JSON.stringify({ error: 'Invalid height or weight' }));
-                return;
-            }
-            
-            const bmi = (weight / ((height/100) ** 2)).toFixed(2);
+        let data = loadData();
+        const user = data.find(u => u.username === parsed.username);
+        if (!user) {
+            console.log("User tidak ditemukan:", parsed.username);
+            res.writeHead(400, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({ error: 'User tidak ditemukan' }));
+            return;
+        }
 
-            // Determine BMI status
-            let status = '';
-            if (bmi < 18.5) status = 'Underweight';
-            else if (bmi < 25) status = 'Normal';
-            else if (bmi < 30) status = 'Overweight';
-            else status = 'Obese';
+        const height = parseFloat(parsed.height);
+        const weight = parseFloat(parsed.weight);
 
-            // Save BMI data
-            user.bmi.push({ 
-                date: new Date().toISOString().split('T')[0], 
-                value: bmi, 
-                status: status,
-                height: height,
-                weight: weight
-            });
-            saveData(data);
+        // Validasi input
+        if (height < 100 || height > 250 || weight < 30 || weight > 200) {
+            console.log("Input tidak valid!");
+            res.writeHead(400, {'Content-Type': 'application/json'});
+            res.end(JSON.stringify({ error: 'Invalid height or weight' }));
+            return;
+        }
 
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.end(JSON.stringify({ bmi: bmi, status: status }));
+        const bmi = (weight / ((height/100) ** 2)).toFixed(2);
+
+        // Status BMI
+        let status = '';
+        if (bmi < 18.5) status = 'Underweight';
+        else if (bmi < 25) status = 'Normal';
+        else if (bmi < 30) status = 'Overweight';
+        else status = 'Obese';
+
+        console.log(`BMI hasil: ${bmi}, status: ${status}`);
+
+        // Generate ID baru
+        const newId = user.bmi.length > 0 ? user.bmi[user.bmi.length - 1].id + 1 : 1;
+
+        // Simpan record baru
+        user.bmi.push({ 
+            id: newId,
+            date: new Date().toISOString().split('T')[0], 
+            height,
+            weight,
+            value: bmi,
+            status
         });
+        saveData(data);
+
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({ bmi: bmi, status: status }));
+    });
+}
+else if (req.method === 'GET' && req.url.startsWith('/bmi-history')) {
+    const urlParams = new URLSearchParams(req.url.split('?')[1]);
+    const username = urlParams.get('username');
+
+    let data = loadData();
+    const user = data.find(u => u.username === username);
+
+    if (!user) {
+        res.writeHead(404, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify({ error: "User not found" }));
     }
+
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(user.bmi));
+}
+else if (req.method === 'PUT' && req.url === '/bmi') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+        const parsed = JSON.parse(body);
+        let data = loadData();
+
+        const user = data.find(u => u.username === parsed.username);
+        if (!user) {
+            res.writeHead(404, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify({ error: "User not found" }));
+        }
+
+        let record = user.bmi.find(r => r.id === parsed.id);
+        if (!record) {
+            res.writeHead(404, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify({ error: "Record not found" }));
+        }
+
+        // Update field
+        record.height = parsed.height;
+        record.weight = parsed.weight;
+        record.value = (parsed.weight / ((parsed.height / 100) ** 2)).toFixed(2);
+        record.status = record.value < 18.5 ? "Underweight" : 
+                        record.value < 25 ? "Normal" : 
+                        record.value < 30 ? "Overweight" : "Obese";
+
+        saveData(data);
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true, record }));
+    });
+}
+else if (req.method === 'DELETE' && req.url === '/bmi') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+        const parsed = JSON.parse(body);
+        let data = loadData();
+
+        const user = data.find(u => u.username === parsed.username);
+        if (!user) {
+            res.writeHead(404, { "Content-Type": "application/json" });
+            return res.end(JSON.stringify({ error: "User not found" }));
+        }
+
+        user.bmi = user.bmi.filter(r => r.id !== parsed.id);
+        saveData(data);
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ success: true }));
+    });
+}
+
     else {
         res.writeHead(404, {'Content-Type': 'text/plain'});
         res.end('Not Found');

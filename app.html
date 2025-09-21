@@ -128,6 +128,7 @@
                             currentUser = document.getElementById('username').value;
                             document.getElementById('current-user').textContent = currentUser;
                             showPage('menu-page');
+                            loadBMIHistory();
                             // Sembunyikan form login
                             document.getElementById('user-form').classList.add('hidden');
                             document.getElementById('user-form').style.display = 'none';
@@ -201,6 +202,7 @@
 
             // Update chart
             updateBMIChart();
+            loadBMIHistory();
             
             // Reset form
             e.target.reset();
@@ -239,6 +241,57 @@
             bmiChart.update();
         }
     }
+    // === BMI HISTORY CRUD ===
+function loadBMIHistory() {
+    if (!currentUser) return;
+
+    fetch(`/bmi-history?username=${currentUser}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById("bmi-result").innerHTML = `<p>${data.error}</p>`;
+                return;
+            }
+
+            // Simpan ke bmiData (untuk chart)
+            bmiData = data.map(r => ({ date: r.date, value: parseFloat(r.value) }));
+            updateBMIChart();
+
+            // Render history list
+            let html = "<h3>BMI History</h3><ul>";
+            data.forEach(r => {
+                html += `
+                <li>
+                    ${r.date} - <b>${r.value}</b> (${r.status})
+                    <button onclick="editRecord(${r.id})">Edit</button>
+                    <button onclick="deleteRecord(${r.id})">Delete</button>
+                </li>`;
+            });
+            html += "</ul>";
+            document.getElementById("bmi-result").innerHTML += html;
+        })
+        .catch(err => console.error("Error load history:", err));
+}
+
+function deleteRecord(id) {
+    fetch('/bmi', { 
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ username: currentUser, id })
+    }).then(res => res.json()).then(() => loadBMIHistory());
+}
+
+function editRecord(id) {
+    let height = prompt("Masukkan tinggi baru (cm):");
+    let weight = prompt("Masukkan berat baru (kg):");
+    if (!height || !weight) return;
+
+    fetch('/bmi', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ username: currentUser, id, height, weight })
+    }).then(res => res.json()).then(() => loadBMIHistory());
+}
 
     </script>
 </body>

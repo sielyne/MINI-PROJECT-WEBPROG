@@ -8,5 +8,27 @@
     "id": 2,
     "username": "elin",
     "password": "*elin14"
+  },
+  {
+    "id": 3,
+    "username": "a123_",
+    "password": "a123**",
+    "bmi": [
+      {
+        "date": "2025-09-21",
+        "value": "22.89",
+        "status": "Normal",
+        "height": 155,
+        "weight": 55
+      },
+      {
+        "date": "2025-09-21",
+        "value": "22.89",
+        "status": "Normal",
+        "height": 155,
+        "weight": 55
+      }
+    ],
+    "moods": []
   }
 ]

@@ -4,30 +4,65 @@
     <meta charset="UTF-8">
     <title>Bloomii</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>WELCOME TO BLOOMII =)</h1>
-    <h2>Be the best version of yourself with us. </h2>
-    <h2>You can explore the world of bloomii by log in or register, the choice is yours!</h2>
-    <div id="choice-buttons">
-        <button onclick="showForm('register')" type="button">Register</button>
-        <button onclick="showForm('login')" type="button">Login</button>
-    </div>
+    <section id="login-page">
+        <h1>WELCOME TO BLOOMII =)</h1>
+        <h2>Be the best version of yourself with us. </h2>
+        <h2>You can explore the world of bloomii by log in or register, the choice is yours!</h2>
+        <div id="choice-buttons">
+            <button onclick="showForm('register')" type="button">Register</button>
+            <button onclick="showForm('login')" type="button">Login</button>
+        </div>
 
-    <form id="user-form" action="" method="POST" style="display:none;">
-        <h2 id="form-title"></h2>
-        <label for="Uname">Username</label>
-        <input type="text" id="username" name="username" required
-         pattern="^[a-zA-Z0-9_]{3,15}$"
-         title="Username harus 3-15 karakter dan hanya boleh huruf, angka, dan underscore">
-        <br>
-        <label for="">Password</label>
-        <input type="password" name="password" placeholder="Password"
-       pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).+$"
-       title="Harus mengandung huruf, angka, dan simbol.">
-        <br><br>
-        <button type="submit">Submit</button>
-    </form>
+        <form id="user-form" action="" method="POST" style="display:none;">
+            <h2 id="form-title"></h2>
+            <label for="Uname">Username</label>
+            <input type="text" id="username" name="username" required
+            pattern="^[a-zA-Z0-9_]{3,15}$"
+            title="Username harus 3-15 karakter dan hanya boleh huruf, angka, dan underscore">
+            <br>
+            <label for="">Password</label>
+            <input type="password" name="password" placeholder="Password"
+        pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).+$"
+        title="Harus mengandung huruf, angka, dan simbol.">
+            <br><br>
+            <button type="submit">Submit</button>
+            <button type="button" onclick="backToChoice()">Back</button>
+        </form>
+    </section>
+
+    <section id="menu-page" class="page hidden">
+        <div class="container">
+        <h2>Welcome, <span id="current-user"></span>!</h2>
+        <div class="menu-buttons">
+            <button onclick="showPage('bmi-page')">BMI Tracker</button>
+            <button onclick="showPage('mood-page')">Mood Calendar</button>
+            <button onclick="logout()">Logout</button>
+        </div>
+        </div>
+    </section>
+
+    <section id="bmi-page" class="page hidden">
+        <div class="container">
+        <h2>BMI Tracker</h2>
+        <form id="bmi-form">
+            <div class="form-group">
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" name="height" required min="100" max="250">
+            </div>
+            <div class="form-group">
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight" name="weight" required min="30" max="200" step="0.1">
+            </div>
+            <button type="submit">Calculate BMI</button>
+        </form>
+        <div id="bmi-result"></div>
+        <canvas id="bmiChart" style="margin: 20px 0;"></canvas>
+        <button onclick="showPage('menu-page')">Back</button>
+        </div>
+    </section>
 
     <script>
     function showForm(type) {
@@ -43,6 +78,168 @@
         }
         form.style.display = 'block';
     }
+
+    window.onload = function() {
+        showPage('login-page');
+    }
+
+    // Fungsi untuk menampilkan satu halaman dan menyembunyikan yang lain
+    function showPage(pageId) {
+        // Sembunyikan semua section dengan class 'page'
+        document.querySelectorAll('.page').forEach(p => {
+            if (p.id === pageId) {
+                p.classList.remove('hidden');
+            } else {
+                p.classList.add('hidden');
+            }
+        });
+        // Sembunyikan/tampilkan login-page sesuai kebutuhan
+        var loginPage = document.getElementById('login-page');
+        if (loginPage) {
+            if (pageId !== 'login-page') {
+                loginPage.classList.add('hidden');
+            } else {
+                loginPage.classList.remove('hidden');
+            }
+        }
+    }
+    let currentUser = null;
+    let bmiChart = null;
+    let bmiData = [];
+
+    function backToChoice() {
+      document.getElementById('user-form').classList.add('hidden');
+      document.getElementById('choice-buttons').style.display = 'flex';
+      document.getElementById('user-form').reset();
+    }
+
+    document.getElementById('user-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new URLSearchParams(new FormData(form));
+
+      fetch(form.action, { method: 'POST', body: data })
+        .then(res => res.text())
+        .then(result => {
+          console.log('Server response:', result); // Debug log
+          
+                    if (form.action.endsWith('/login')) {
+                        if (result.includes('Login berhasil')) {
+                            currentUser = document.getElementById('username').value;
+                            document.getElementById('current-user').textContent = currentUser;
+                            showPage('menu-page');
+                            // Sembunyikan form login
+                            document.getElementById('user-form').classList.add('hidden');
+                            document.getElementById('user-form').style.display = 'none';
+                            document.getElementById('choice-buttons').style.display = 'flex';
+                            document.getElementById('user-form').reset();
+                        } else {
+                            alert('Login failed: Wrong username or password');
+                        }
+                    } else {
+                        // Registration response
+                        if (result.includes('Registrasi berhasil')) {
+                            alert('Registration successful! Please login now.');
+                            // Switch to login form
+                            document.getElementById('form-title').textContent = 'Login';
+                            form.action = '/login';
+                            document.getElementById('password').value = '';
+                            // Sembunyikan form register, tampilkan tombol pilihan
+                            document.getElementById('user-form').classList.add('hidden');
+                            document.getElementById('user-form').style.display = 'none';
+                            document.getElementById('choice-buttons').style.display = 'flex';
+                        } else {
+                            alert('Registration failed: Username already exists');
+                        }
+                    }
+        })
+        .catch(err => {
+          console.error('Network error:', err);
+          alert('Network error. Please try again.');
+        });
+    });
+
+    document.getElementById('bmi-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        if (!currentUser) return alert("Login first!");
+        
+        const height = document.getElementById('height').value;
+        const weight = document.getElementById('weight').value;
+        
+        if (!height || !weight || height < 100 || height > 250 || weight < 30 || weight > 200) {
+            alert('Please enter valid height (100-250cm) and weight (30-200kg)');
+            return;
+        }
+        
+        const data = new URLSearchParams();
+        data.append('username', currentUser);
+        data.append('height', height);
+        data.append('weight', weight);
+
+        fetch('/bmi', { method: 'POST', body: data })
+            .then(res => res.json())
+            .then(result => {
+            if (result.error) {
+                alert('Error: ' + result.error);
+                return;
+            }
+            
+            // Show result
+            document.getElementById('bmi-result').innerHTML = `
+                <div class="bmi-result">
+                <h3>Your BMI: ${result.bmi}</h3>
+                <p class="bmi-status ${result.status.toLowerCase()}">${result.status}</p>
+                <small>Calculated on ${new Date().toLocaleDateString()}</small>
+                </div>
+            `;
+
+            // Add to chart data
+            bmiData.push({
+                date: new Date().toLocaleDateString(),
+                value: parseFloat(result.bmi)
+            });
+
+            // Update chart
+            updateBMIChart();
+            
+            // Reset form
+            e.target.reset();
+            })
+            .catch(err => {
+            alert('Network error. Please try again.');
+            console.error('BMI Error:', err);
+            });
+        });
+
+        function updateBMIChart() {
+        if (!bmiChart) {
+            bmiChart = new Chart(document.getElementById('bmiChart'), {
+            type: 'line',
+            data: {
+                labels: bmiData.map(d => d.date),
+                datasets: [{
+                label: 'BMI Progress',
+                data: bmiData.map(d => d.value),
+                borderColor: '#6366f1',
+                backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                borderWidth: 2,
+                fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                y: { beginAtZero: false, min: 15, max: 35 }
+                }
+            }
+            });
+        } else {
+            bmiChart.data.labels = bmiData.map(d => d.date);
+            bmiChart.data.datasets[0].data = bmiData.map(d => d.value);
+            bmiChart.update();
+        }
+    }
+
     </script>
 </body>
 </html>

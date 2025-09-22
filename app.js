@@ -247,6 +247,98 @@ else if (req.method === 'DELETE' && req.url === '/bmi') {
     });
 }
 
+
+
+
+
+
+    // === MOOD CRUD ===
+else if (req.method === 'POST' && req.url === '/mood') {
+    let body = '';
+    req.on('data', chunk => body += chunk.toString());
+    req.on('end', () => {
+        const parsed = JSON.parse(body);
+        let data = loadData();
+        const user = data.find(u => u.username === parsed.username);
+        if (!user) {
+            res.writeHead(404, {'Content-Type': 'application/json'});
+            return res.end(JSON.stringify({ error: 'User not found' }));
+        }
+
+        const newId = user.moods.length > 0 ? user.moods[user.moods.length - 1].id + 1 : 1;
+        const today = new Date().toISOString().split("T")[0];
+
+        user.moods.push({
+            id: newId,
+            date: today,
+            mood: parsed.mood,
+            note: parsed.note
+        });
+
+        saveData(data);
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({ success: true }));
+    });
+}
+else if (req.method === 'GET' && req.url.startsWith('/mood-history')) {
+    const urlParams = new URLSearchParams(req.url.split('?')[1]);
+    const username = urlParams.get('username');
+
+    let data = loadData();
+    const user = data.find(u => u.username === username);
+
+    if (!user) {
+        res.writeHead(404, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify({ error: "User not found" }));
+    }
+
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(user.moods));
+}
+else if (req.method === 'PUT' && req.url === '/mood') {
+    let body = '';
+    req.on('data', chunk => body += chunk.toString());
+    req.on('end', () => {
+        const parsed = JSON.parse(body);
+        let data = loadData();
+        const user = data.find(u => u.username === parsed.username);
+        if (!user) {
+            res.writeHead(404, {'Content-Type': 'application/json'});
+            return res.end(JSON.stringify({ error: 'User not found' }));
+        }
+        let mood = user.moods.find(m => m.id === parsed.id);
+        if (!mood) {
+            res.writeHead(404, {'Content-Type': 'application/json'});
+            return res.end(JSON.stringify({ error: 'Mood not found' }));
+        }
+        mood.mood = parsed.mood || mood.mood;
+        mood.note = parsed.note || mood.note;
+        saveData(data);
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({ success: true, mood }));
+    });
+}
+else if (req.method === 'DELETE' && req.url === '/mood') {
+    let body = '';
+    req.on('data', chunk => body += chunk.toString());
+    req.on('end', () => {
+        const parsed = JSON.parse(body);
+        let data = loadData();
+        const user = data.find(u => u.username === parsed.username);
+        if (!user) {
+            res.writeHead(404, {'Content-Type': 'application/json'});
+            return res.end(JSON.stringify({ error: 'User not found' }));
+        }
+        user.moods = user.moods.filter(m => m.id !== parsed.id);
+        saveData(data);
+        res.writeHead(200, {'Content-Type': 'application/json'});
+        res.end(JSON.stringify({ success: true }));
+    });
+}
+
+
+
+    
     else {
         res.writeHead(404, {'Content-Type': 'text/plain'});
         res.end('Not Found');

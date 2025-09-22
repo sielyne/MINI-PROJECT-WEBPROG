@@ -44,81 +44,46 @@ const server = http.createServer((req, res) => {
         });
     }
     else if (req.method === 'POST' && req.url === '/register') {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
+    let body = '';
+    req.on('data', chunk => {
+        body += chunk.toString();
+    });
+    req.on('end', () => {
+        const parsed = querystring.parse(body);
+        let data = loadData();
+        const exists = data.some(u => u.username === parsed.username);
+        if (exists) {
+            res.writeHead(200, { 'Content-Type': 'text/plain' });
+            return res.end('Registrasi gagal');
+        }
+        let newID = data.length > 0 ? data[data.length - 1].id + 1 : 1;
+        data.push({
+            id: newID,
+            username: parsed.username,
+            password: parsed.password,
+            bmi: [],
+            moods: []
         });
-        req.on('end', () => {
-            const parsed = querystring.parse(body);
-            let data = loadData();
-            // Cek apakah username sudah ada
-            const exists = data.some(u => u.username === parsed.username);
-            if (exists) {
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.end('<h2>Username sudah terdaftar. <a href="/">Kembali</a></h2>');
-                return;
-            }
-            let newID = data.length > 0 ? data[data.length - 1].id + 1 : 1;
-            data.push({ 
-                id: newID, 
-                username: parsed.username, 
-                password: parsed.password, 
-                bmi: [], 
-                moods: [] 
-            });
-            saveData(data);
-            res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end('<h2>Registrasi berhasil! <a href="/">Login</a></h2>');
-        });
-    }
-    else if (req.method === 'POST' && req.url === '/login') {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-        req.on('end', () => {
-            const parsed = querystring.parse(body);
-            let data = loadData();
-            const user = data.find(u => u.username === parsed.username && u.password === parsed.password);
-            if (user) {
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.end(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>Login Berhasil</title>
-                        <link rel="stylesheet" href="style.css">
-                    </head>
-                    <body>
-                        <div class="result-page success">
-                            <h2>Login berhasil! Selamat datang, <span>${user.username}</span>.</h2>
-                            <a href="/" class="back-btn">Logout</a>
-                        </div>
-                    </body>
-                    </html>
-                `);
-            } else {
-                res.writeHead(200, {'Content-Type': 'text/html'});
-                res.end(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <title>Login Gagal</title>
-                        <link rel="stylesheet" href="style.css">
-                    </head>
-                    <body>
-                        <div class="result-page failed">
-                            <h2>Username atau password salah.</h2>
-                            <a href="/" class="back-btn">Coba lagi</a>
-                        </div>
-                    </body>
-                    </html>
-                `);
-            }
-        });
-    }
+        saveData(data);
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        res.end('Registrasi berhasil');
+    });
+}
+else if (req.method === 'POST' && req.url === '/login') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+        const parsed = querystring.parse(body);
+        let data = loadData();
+        const user = data.find(u => u.username === parsed.username && u.password === parsed.password);
+        res.writeHead(200, { 'Content-Type': 'text/plain' });
+        if (user) {
+            res.end('Login berhasil');
+        } else {
+            res.end('Login gagal');
+        }
+    });
+}
 
    else if (req.method === 'POST' && req.url === '/bmi') {
     let body = '';
@@ -335,6 +300,60 @@ else if (req.method === 'DELETE' && req.url === '/mood') {
         res.end(JSON.stringify({ success: true }));
     });
 }
+
+// POST /quiz → tambah/update jawaban user
+else if (req.method === 'POST' && req.url === '/quiz') {
+    let body = '';
+    req.on('data', chunk => body += chunk.toString());
+    req.on('end', () => {
+        const { username, answers, result, recommendation } = JSON.parse(body);
+        let data = loadData();
+
+        const user = data.find(u => u.username === username);
+        if (!user) {
+            res.writeHead(404, {'Content-Type':'application/json'});
+            return res.end(JSON.stringify({error:'User not found'}));
+        }
+
+        // jika user belum punya array quiz, buat dulu
+        if (!user.quiz) user.quiz = [];
+
+        const quizRecord = {
+            answers,
+            result,
+            recommendation,
+            date: new Date().toISOString()
+        };
+
+        // update quiz terakhir
+        user.quiz[0] = quizRecord; // kita simpan 1 quiz terakhir, bisa diubah jadi multiple jika mau
+
+        saveData(data);
+
+        res.writeHead(200, {'Content-Type':'application/json'});
+        res.end(JSON.stringify(quizRecord));
+    });
+}
+
+// GET /quiz-history?username=...
+else if (req.method === 'GET' && req.url.startsWith('/quiz-history')) {
+    const urlObj = new URL(req.url, `http://${req.headers.host}`);
+    const username = urlObj.searchParams.get('username');
+
+    let data = loadData();
+    const user = data.find(u => u.username === username);
+
+    if (!user || !user.quiz || user.quiz.length === 0) {
+        res.writeHead(200, {'Content-Type':'application/json'});
+        return res.end(JSON.stringify({}));
+    }
+
+    res.writeHead(200, {'Content-Type':'application/json'});
+    res.end(JSON.stringify(user.quiz[0]));
+}
+
+
+
 
 
 

@@ -39,6 +39,10 @@
         <div class="menu-buttons">
             <button onclick="showPage('bmi-page')">BMI Tracker</button>
             <button onclick="showPage('mood-page')">Mood Calendar</button>
+            <button onclick="showPage('quiz-page')">Body Shape Quiz</button>
+
+
+
             <button onclick="logout()">Logout</button>
         </div>
         </div>
@@ -63,6 +67,79 @@
         <button onclick="showPage('menu-page')">Back</button>
         </div>
     </section>
+
+    <section id="mood-page" class="page hidden">
+  <div class="container" id="mood-step-1">
+    <h2>How are you today?</h2>
+    <div class="emoji-options">
+      <button onclick="selectMood('happy')">😊</button>
+      <button onclick="selectMood('sad')">😢</button>
+      <button onclick="selectMood('angry')">😡</button>
+      <button onclick="selectMood('fear')">😨</button>
+      <button onclick="selectMood('disgusted')">🤢</button>
+    </div>
+    <button onclick="showPage('menu-page')">Back</button>
+  </div>
+
+  <div class="container hidden" id="mood-step-2">
+    <h2>Write your journal</h2>
+    <textarea id="mood-note" placeholder="How was your day?"></textarea>
+    <br></br>
+    <button onclick="saveMood()">Save</button>
+    <button onclick="cancelMood()">Cancel</button>
+  </div>
+
+  <div class="container hidden" id="mood-step-3">
+    <h2>Your Mood Calendar</h2>
+    <div id="calendar"></div>
+    <div id="mood-count"></div>
+    <div id="today-mood"></div>
+    <button onclick="showPage('menu-page')">Back</button>
+  </div>
+</section>
+
+<section id="quiz-page" class="page hidden">
+  <div class="container">
+    <h2>Body Shape Quiz</h2>
+    <div id="quizBox">
+      <p id="quizQuestion"></p>
+      <div id="quizOptions"></div>
+
+      <div class="quiz-nav" style="margin-top:16px;">
+        <button id="backBtn" style="display:none;">⬅ Back</button>
+        <button id="nextBtn" style="display:none;">Next ➡</button>
+        <!-- Tambahin ini -->
+        <button id="submitBtn" style="display:none;">Submit</button>
+      </div>
+    </div>
+    
+    <div id="quizResult" style="margin-top:20px;"></div>
+    <button onclick="showPage('menu-page')">Back to Menu</button>
+  </div>
+</section>
+
+<section id="quiz-result-page" class="page hidden">
+  <div class="container">
+    <h2>Quiz Result</h2>
+    <div id="quizResultContent"></div>
+    <button id="reviewQuizBtn">Review Quiz</button>
+    <button onclick="showPage('menu-page')">Back to Menu</button>
+  </div>
+</section>
+
+<section id="quiz-review-page" class="page hidden">
+  <div class="container">
+    <h2>Review Quiz</h2>
+    <div id="quizReviewContent"></div>
+    <button onclick="showPage('quiz-result-page')">Back to Results</button>
+    <button id="takeQuizAgainBtn">Take Quiz Again</button>
+
+</div>
+</section>
+
+
+
+
 
     <script>
     function showForm(type) {
@@ -101,6 +178,9 @@
             } else {
                 loginPage.classList.remove('hidden');
             }
+            if (pageId === 'quiz-page') {
+                startQuiz();
+  }
         }
     }
     let currentUser = null;
@@ -353,6 +433,7 @@ function renderCalendar(moods) {
   document.getElementById("calendar").innerHTML = calendarHTML;
 }
 
+
 function renderMoodStats(moods) {
   let counts = { happy:0, sad:0, angry:0, fear:0, disgusted:0 };
   moods.forEach(m => counts[m.mood]++);
@@ -373,36 +454,268 @@ function renderMoodStats(moods) {
   document.getElementById("today-mood").innerHTML = todayHTML;
 }
 
+// === quiz data (HARUS dideklarasikan sebelum fungsi yang memakainya) ===
+// === quiz data (updated English + more questions) ===
+const quizQuestions = [
+  {
+    question: "Which part of your body is wider?",
+    options: [
+      { text: "Shoulders wider than hips", value: "inverted" },
+      { text: "Hips wider than shoulders", value: "pear" },
+      { text: "Shoulders and hips balanced, waist defined", value: "hourglass" },
+      { text: "Shoulders and hips balanced, waist less defined", value: "rectangle" }
+    ],
+    key: "shape1"
+  },
+  {
+    question: "Which area is most prominent?",
+    options: [
+      { text: "Very slim waist", value: "hourglass" },
+      { text: "Prominent hips", value: "pear" },
+      { text: "Prominent shoulders", value: "inverted" },
+      { text: "No area stands out", value: "rectangle" }
+    ],
+    key: "shape2"
+  },
+  {
+    question: "When wearing pants or skirts, where is the fit usually an issue?",
+    options: [
+      { text: "Too big at waist, fits hips well", value: "pear" },
+      { text: "Fits shoulders, loose at hips", value: "inverted" },
+      { text: "Always fits evenly", value: "hourglass" },
+      { text: "All areas usually too loose or tight", value: "rectangle" }
+    ],
+    key: "shape3"
+  },
+  {
+    question: "How would you describe your torso length?",
+    options: [
+      { text: "Short torso", value: "pear" },
+      { text: "Long torso", value: "inverted" },
+      { text: "Proportional torso", value: "hourglass" },
+      { text: "Straight torso without curves", value: "rectangle" }
+    ],
+    key: "shape4"
+  },
+  {
+    question: "How would you describe your arms and legs?",
+    options: [
+      { text: "Slim arms and legs", value: "hourglass" },
+      { text: "Thicker thighs or upper arms", value: "pear" },
+      { text: "Broad shoulders and arms", value: "inverted" },
+      { text: "Evenly proportioned, minimal curves", value: "rectangle" }
+    ],
+    key: "shape5"
+  },
+  {
+    question: "Which statement best describes your waistline?",
+    options: [
+      { text: "Clearly defined waist", value: "hourglass" },
+      { text: "Slightly defined waist", value: "rectangle" },
+      { text: "Waist less defined than hips", value: "pear" },
+      { text: "Waist less defined than shoulders", value: "inverted" }
+    ],
+    key: "shape6"
+  }
+];
 
-<section id="mood-page" class="page hidden">
-  <div class="container" id="mood-step-1">
-    <h2>How are you today?</h2>
-    <div class="emoji-options">
-      <button onclick="selectMood('happy')">😊</button>
-      <button onclick="selectMood('sad')">😢</button>
-      <button onclick="selectMood('angry')">😡</button>
-      <button onclick="selectMood('fear')">😨</button>
-      <button onclick="selectMood('disgusted')">🤢</button>
-    </div>
-    <button onclick="showPage('menu-page')">Back</button>
-  </div>
+let currentQuestion = 0;
+let answers = {};
 
-  <div class="container hidden" id="mood-step-2">
-    <h2>Write your journal</h2>
-    <textarea id="mood-note" placeholder="How was your day?"></textarea>
-    <br>
-    <button onclick="saveMood()">Save</button>
-    <button onclick="cancelMood()">Cancel</button>
-  </div>
+function startQuiz() {
+  currentQuestion = 0;
+  answers = {};
+  document.getElementById("quiz-page").style.display = "block";
+  document.getElementById("menu-page").style.display = "none";
+  showQuestion();
+}
 
-  <div class="container hidden" id="mood-step-3">
-    <h2>Your Mood Calendar</h2>
-    <div id="calendar"></div>
-    <div id="mood-count"></div>
-    <div id="today-mood"></div>
-    <button onclick="showPage('menu-page')">Back</button>
-  </div>
-</section>
+
+function showQuestion() {
+  const q = quizQuestions[currentQuestion];
+
+  const quizBox = document.getElementById("quizOptions");
+  quizBox.innerHTML = ""; // reset
+
+  const card = document.createElement("div");
+  card.className = "quiz-card";
+
+  const questionEl = document.createElement("p");
+  questionEl.id = "quizQuestion";
+  questionEl.innerText = q.question;
+  card.appendChild(questionEl);
+
+  q.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.innerText = opt.text;
+
+    if (answers[q.key] === opt.value) btn.classList.add("selected");
+
+    btn.onclick = () => {
+      answers[q.key] = opt.value;
+      Array.from(card.querySelectorAll("button")).forEach(b => b.classList.remove("selected"));
+      btn.classList.add("selected");
+
+      if (currentQuestion < quizQuestions.length - 1) {
+        currentQuestion++;
+        showQuestion();
+      } else {
+        document.getElementById("submitBtn").style.display = "inline-block";
+        document.getElementById("nextBtn").style.display = "none";
+      }
+    };
+    card.appendChild(btn);
+  });
+
+  quizBox.appendChild(card);
+
+  // navigasi
+  document.getElementById("backBtn").style.display = currentQuestion > 0 ? "inline-block" : "none";
+  document.getElementById("nextBtn").style.display = (currentQuestion < quizQuestions.length - 1) ? "inline-block" : "none";
+  document.getElementById("submitBtn").style.display = "none";
+
+  // di awal, sembunyiin submit
+  document.getElementById("submitBtn").style.display = "none";
+}
+
+
+document.getElementById("backBtn").addEventListener("click", () => {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    showQuestion();
+  }
+});
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (currentQuestion < quizQuestions.length - 1) {
+    currentQuestion++;
+    showQuestion();
+  }
+});
+
+document.getElementById("submitBtn").addEventListener("click", finishQuiz);
+
+function finishQuiz() {
+  let counts = { pear: 0, inverted: 0, hourglass: 0, rectangle: 0 };
+  Object.values(answers).forEach(val => counts[val]++);
+
+  let result = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+
+  let recommendation = "";
+  switch (result) {
+    case "pear":
+      recommendation = `
+      Your body shape is Pear 🍐. <br>
+      <ul>
+        <li>Highlight your upper body with bright or detailed tops.</li>
+        <li>Choose A-line skirts or wide-leg pants to balance hips.</li>
+        <li>Avoid bottoms that add extra volume to your hips.</li>
+      </ul>`;
+      break;
+    case "inverted":
+      recommendation = `
+      Your body shape is Inverted Triangle 🔺. <br>
+      <ul>
+        <li>Wear simple tops to minimize shoulder width.</li>
+        <li>Flared or wide-leg pants can add volume to lower body.</li>
+        <li>Avoid shoulder pads or heavily decorated tops.</li>
+      </ul>`;
+      break;
+    case "hourglass":
+      recommendation = `
+      Your body shape is Hourglass ⏳. <br>
+      <ul>
+        <li>Highlight your waist with fitted dresses or belts.</li>
+        <li>Bodycon dresses or outfits that show curves work well.</li>
+        <li>Avoid shapeless, boxy clothes that hide your waist.</li>
+      </ul>`;
+      break;
+    case "rectangle":
+      recommendation = `
+      Your body shape is Rectangle ▭. <br>
+      <ul>
+        <li>Create curves with peplum tops or belts.</li>
+        <li>Layered outfits or ruffles add dimension.</li>
+        <li>Avoid straight-cut outfits that hide the waist completely.</li>
+      </ul>`;
+      break;
+  }
+
+  // Kirim hasil quiz ke server
+fetch('/quiz', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        username: currentUser,
+        answers,
+        result,
+        recommendation
+    })
+}).then(res => res.json())
+  .then(data => console.log('Quiz saved:', data))
+  .catch(err => console.error('Quiz save error:', err));
+
+
+  // Pindah ke page hasil
+  showPage('quiz-result-page');
+
+  // Tampilkan hasil
+  document.getElementById("quizResultContent").innerHTML = `
+    <p><strong>Body Shape:</strong> ${result}</p>
+    <p><strong>Style Recommendations:</strong> ${recommendation}</p>
+  `;
+
+  // simpan hasil & jawaban terakhir untuk review
+  window.lastQuizAnswers = { answers, result, recommendation };
+}
+
+
+document.getElementById("reviewQuizBtn").addEventListener("click", () => {
+  showPage('quiz-review-page');
+  
+  const reviewDiv = document.getElementById("quizReviewContent");
+  reviewDiv.innerHTML = ""; // reset
+
+  const { answers } = window.lastQuizAnswers;
+  
+  quizQuestions.forEach((q, idx) => {
+    const userAnswer = answers[q.key];
+    const qDiv = document.createElement("div");
+    qDiv.innerHTML = `<p><strong>Q${idx+1}:</strong> ${q.question}</p>`;
+    
+    q.options.forEach(opt => {
+      const checked = (opt.value === userAnswer) ? "✅" : "";
+      const p = document.createElement("p");
+      p.textContent = `${opt.text} ${checked}`;
+      qDiv.appendChild(p);
+    });
+
+    reviewDiv.appendChild(qDiv);
+  });
+});
+
+// --- Take Quiz Again Button ---
+document.getElementById("takeQuizAgainBtn").addEventListener("click", () => {
+    if (!currentUser) return alert("Please login first!");
+
+    // Reset state quiz
+    currentQuestion = 0;
+    answers = {};
+
+    // Hapus hasil review
+    document.getElementById("quizReviewContent").innerHTML = "";
+    
+    // Tampilkan quiz page tanpa pengecekan lastQuizAnswers
+    startQuiz(true); // kasih parameter skipLastQuiz
+});
+
+        
+
+
+
+
+
+
 
 
 

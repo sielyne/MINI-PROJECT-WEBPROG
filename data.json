@@ -19,7 +19,29 @@
         "weight": 45
       }
     ],
-    "moods": []
+    "moods": [
+      {
+        "id": 1,
+        "date": "2025-09-22",
+        "mood": "disgusted",
+        "note": "pusing bang"
+      }
+    ],
+    "quiz": [
+      {
+        "answers": {
+          "shape1": "inverted",
+          "shape2": "rectangle",
+          "shape3": "inverted",
+          "shape4": "rectangle",
+          "shape5": "inverted",
+          "shape6": "pear"
+        },
+        "result": "inverted",
+        "recommendation": "\n      Your body shape is Inverted Triangle 🔺. <br>\n      <ul>\n        <li>Wear simple tops to minimize shoulder width.</li>\n        <li>Flared or wide-leg pants can add volume to lower body.</li>\n        <li>Avoid shoulder pads or heavily decorated tops.</li>\n      </ul>",
+        "date": "2025-09-22T17:26:33.397Z"
+      }
+    ]
   },
   {
     "id": 3,

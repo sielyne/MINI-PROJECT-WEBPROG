@@ -293,6 +293,41 @@ function editRecord(id) {
     }).then(res => res.json()).then(() => loadBMIHistory());
 }
 
+
+
+
+<section id="mood-page" class="page hidden">
+  <div class="container" id="mood-step-1">
+    <h2>How are you today?</h2>
+    <div class="emoji-options">
+      <button onclick="selectMood('happy')">😊</button>
+      <button onclick="selectMood('sad')">😢</button>
+      <button onclick="selectMood('angry')">😡</button>
+      <button onclick="selectMood('fear')">😨</button>
+      <button onclick="selectMood('disgusted')">🤢</button>
+    </div>
+    <button onclick="showPage('menu-page')">Back</button>
+  </div>
+
+  <div class="container hidden" id="mood-step-2">
+    <h2>Write your journal</h2>
+    <textarea id="mood-note" placeholder="How was your day?"></textarea>
+    <br>
+    <button onclick="saveMood()">Save</button>
+    <button onclick="cancelMood()">Cancel</button>
+  </div>
+
+  <div class="container hidden" id="mood-step-3">
+    <h2>Your Mood Calendar</h2>
+    <div id="calendar"></div>
+    <div id="mood-count"></div>
+    <div id="today-mood"></div>
+    <button onclick="showPage('menu-page')">Back</button>
+  </div>
+</section>
+
+
+
     </script>
 </body>
 </html>

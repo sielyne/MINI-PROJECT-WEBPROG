@@ -294,6 +294,84 @@ function editRecord(id) {
 }
 
 
+let selectedMood = null;
+
+function selectMood(mood) {
+  selectedMood = mood;
+  document.getElementById("mood-step-1").classList.add("hidden");
+  document.getElementById("mood-step-2").classList.remove("hidden");
+}
+
+function cancelMood() {
+  selectedMood = null;
+  document.getElementById("mood-step-2").classList.add("hidden");
+  document.getElementById("mood-step-1").classList.remove("hidden");
+}
+
+function saveMood() {
+  const note = document.getElementById("mood-note").value;
+  if (!selectedMood || !note) return alert("Please select mood and write notes");
+
+  fetch("/mood", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username: currentUser, mood: selectedMood, note })
+  })
+  .then(res => res.json())
+  .then(() => {
+    document.getElementById("mood-step-2").classList.add("hidden");
+    document.getElementById("mood-step-3").classList.remove("hidden");
+    loadMoodCalendar();
+  });
+}
+
+function loadMoodCalendar() {
+  fetch(`/mood-history?username=${currentUser}`)
+    .then(res => res.json())
+    .then(data => {
+      renderCalendar(data);
+      renderMoodStats(data);
+    });
+}
+
+function renderCalendar(moods) {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  let calendarHTML = "";
+  for (let i = 0; i < firstDay; i++) {
+    calendarHTML += `<div class="calendar-day empty"></div>`;
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    let dateStr = `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
+    let mood = moods.find(m => m.date === dateStr);
+    calendarHTML += `<div class="calendar-day ${mood ? mood.mood : ''}">${d}</div>`;
+  }
+  document.getElementById("calendar").innerHTML = calendarHTML;
+}
+
+function renderMoodStats(moods) {
+  let counts = { happy:0, sad:0, angry:0, fear:0, disgusted:0 };
+  moods.forEach(m => counts[m.mood]++);
+  
+  let statsHTML = "<h3>Mood Count</h3><ul>";
+  for (let mood in counts) {
+    statsHTML += `<li>${mood}: ${counts[mood]}</li>`;
+  }
+  statsHTML += "</ul>";
+
+  let todayStr = new Date().toISOString().split("T")[0];
+  let todayMood = moods.find(m => m.date === todayStr);
+  let todayHTML = todayMood 
+    ? `<h3>Today's Mood</h3><p>${todayMood.mood} - ${todayMood.note}</p>` 
+    : `<p>No mood recorded today</p>`;
+
+  document.getElementById("mood-count").innerHTML = statsHTML;
+  document.getElementById("today-mood").innerHTML = todayHTML;
+}
 
 
 <section id="mood-page" class="page hidden">

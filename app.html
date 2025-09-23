@@ -8,6 +8,7 @@
 </head>
 <body>
     <section id="login-page">
+      <div class="container">
         <h1>WELCOME TO BLOOMII =)</h1>
         <h2>Be the best version of yourself with us. </h2>
         <h2>You can explore the world of bloomii by log in or register, the choice is yours!</h2>
@@ -19,7 +20,7 @@
         <form id="user-form" action="" method="POST" style="display:none;">
             <h2 id="form-title"></h2>
             <label for="Uname">Username</label>
-            <input type="text" id="username" name="username" required
+            <input type="text" id="username" name="username" placeholder="Username"
             pattern="^[a-zA-Z0-9_]{3,15}$"
             title="Username harus 3-15 karakter dan hanya boleh huruf, angka, dan underscore">
             <br>
@@ -31,6 +32,7 @@
             <button type="submit">Submit</button>
             <button type="button" onclick="backToChoice()">Back</button>
         </form>
+      </div>
     </section>
 
     <section id="menu-page" class="page hidden">

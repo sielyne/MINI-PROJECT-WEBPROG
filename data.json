@@ -25,6 +25,12 @@
         "date": "2025-09-22",
         "mood": "disgusted",
         "note": "pusing bang"
+      },
+      {
+        "id": 2,
+        "date": "2025-09-23",
+        "mood": "angry",
+        "note": "aku curi data elin wkwk"
       }
     ],
     "quiz": [
@@ -64,5 +70,45 @@
       }
     ],
     "moods": []
+  },
+  {
+    "id": 4,
+    "username": "temen",
+    "password": "",
+    "bmi": [],
+    "moods": [
+      {
+        "id": 1,
+        "date": "2025-09-23",
+        "mood": "disgusted",
+        "note": "gatau mager"
+      },
+      {
+        "id": 2,
+        "date": "2025-09-23",
+        "mood": "angry",
+        "note": "hayem"
+      },
+      {
+        "id": 3,
+        "date": "2025-09-23",
+        "mood": "angry",
+        "note": "im tired af"
+      }
+    ],
+    "quiz": [
+      {
+        "answers": {
+          "shape2": "pear",
+          "shape3": "rectangle",
+          "shape4": "inverted",
+          "shape5": "rectangle",
+          "shape6": "hourglass"
+        },
+        "result": "rectangle",
+        "recommendation": "\n      Your body shape is Rectangle ▭. <br>\n      <ul>\n        <li>Create curves with peplum tops or belts.</li>\n        <li>Layered outfits or ruffles add dimension.</li>\n        <li>Avoid straight-cut outfits that hide the waist completely.</li>\n      </ul>",
+        "date": "2025-09-23T12:18:13.614Z"
+      }
+    ]
   }
 ]

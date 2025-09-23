@@ -71,6 +71,7 @@
     </section>
 
     <section id="mood-page" class="page hidden">
+
   <div class="container" id="mood-step-1">
     <h2>How are you today?</h2>
     <div class="emoji-options">
@@ -86,16 +87,21 @@
   <div class="container hidden" id="mood-step-2">
     <h2>Write your journal</h2>
     <textarea id="mood-note" placeholder="How was your day?"></textarea>
-    <br></br>
+    <br>
     <button onclick="saveMood()">Save</button>
     <button onclick="cancelMood()">Cancel</button>
   </div>
 
   <div class="container hidden" id="mood-step-3">
     <h2>Your Mood Calendar</h2>
-    <div id="calendar"></div>
-    <div id="mood-count"></div>
-    <div id="today-mood"></div>
+    <div class="calendar-nav">
+      <button id="prevMonthBtn">&#8592; Previous</button>
+      <span id="calendarMonthLabel" style="font-weight:bold;margin:0 12px;"></span>
+      <button id="nextMonthBtn">Next &#8594;</button>
+    </div>
+    <div id="calendar" class="calendar-grid"></div>
+    <div id="mood-count" class="mood-count-box"></div>
+    <div id="today-mood" class="today-mood-box"></div>
     <button onclick="showPage('menu-page')">Back</button>
   </div>
 </section>
@@ -407,54 +413,127 @@ function saveMood() {
   });
 }
 
+
+// --- Mood Calendar with Month Navigation & Improved UI ---
+let calendarYear = new Date().getFullYear();
+let calendarMonth = new Date().getMonth();
+let allMoodData = [];
+
 function loadMoodCalendar() {
   fetch(`/mood-history?username=${currentUser}`)
     .then(res => res.json())
     .then(data => {
-      renderCalendar(data);
-      renderMoodStats(data);
+      allMoodData = data;
+      renderCalendarMonth(calendarYear, calendarMonth);
+      renderMoodStatsMonth(calendarYear, calendarMonth);
     });
 }
 
-function renderCalendar(moods) {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
+function renderCalendarMonth(year, month) {
+  // Filter moods for this month
+  const moods = allMoodData.filter(m => {
+    const d = new Date(m.date);
+    return d.getFullYear() === year && d.getMonth() === month;
+  });
   const firstDay = new Date(year, month, 1).getDay();
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
+  // Month label
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  document.getElementById("calendarMonthLabel").textContent = `${monthNames[month]} ${year}`;
+
   let calendarHTML = "";
   for (let i = 0; i < firstDay; i++) {
-    calendarHTML += `<div class="calendar-day empty"></div>`;
+    calendarHTML += `<div class='calendar-day empty'></div>`;
   }
   for (let d = 1; d <= daysInMonth; d++) {
     let dateStr = `${year}-${String(month+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`;
     let mood = moods.find(m => m.date === dateStr);
-    calendarHTML += `<div class="calendar-day ${mood ? mood.mood : ''}">${d}</div>`;
+    let moodIcon = "";
+    let moodColor = "";
+    if (mood) {
+      switch(mood.mood) {
+        case "happy": moodIcon = "😊"; moodColor = "#a3e635"; break;
+        case "sad": moodIcon = "😢"; moodColor = "#60a5fa"; break;
+        case "angry": moodIcon = "😡"; moodColor = "#f87171"; break;
+        case "fear": moodIcon = "😨"; moodColor = "#fbbf24"; break;
+        case "disgusted": moodIcon = "🤢"; moodColor = "#34d399"; break;
+      }
+    }
+    calendarHTML += `<div class='calendar-day' style='background:${moodColor};cursor:pointer;' title='${mood ? mood.note : ""}' onclick='showMoodNote("${dateStr}")'>
+      <div style='font-size:1.2em;'>${d}</div>
+      <div>${moodIcon}</div>
+    </div>`;
   }
   document.getElementById("calendar").innerHTML = calendarHTML;
 }
 
-
-function renderMoodStats(moods) {
+function renderMoodStatsMonth(year, month) {
+  const moods = allMoodData.filter(m => {
+    const d = new Date(m.date);
+    return d.getFullYear() === year && d.getMonth() === month;
+  });
   let counts = { happy:0, sad:0, angry:0, fear:0, disgusted:0 };
   moods.forEach(m => counts[m.mood]++);
-  
-  let statsHTML = "<h3>Mood Count</h3><ul>";
-  for (let mood in counts) {
-    statsHTML += `<li>${mood}: ${counts[mood]}</li>`;
-  }
-  statsHTML += "</ul>";
 
+  let statsHTML = `<div class='mood-count-title'>
+    <h3>Mood Count This Month</h3>
+    <div class='mood-count-list'>
+      <span>😊 Happy: <b>${counts.happy}</b></span>
+      <span>😢 Sad: <b>${counts.sad}</b></span>
+      <span>😡 Angry: <b>${counts.angry}</b></span>
+      <span>😨 Fear: <b>${counts.fear}</b></span>
+      <span>🤢 Disgusted: <b>${counts.disgusted}</b></span>
+    </div>
+  </div>`;
+  document.getElementById("mood-count").innerHTML = statsHTML;
+
+  // Today's mood
   let todayStr = new Date().toISOString().split("T")[0];
   let todayMood = moods.find(m => m.date === todayStr);
   let todayHTML = todayMood 
-    ? `<h3>Today's Mood</h3><p>${todayMood.mood} - ${todayMood.note}</p>` 
-    : `<p>No mood recorded today</p>`;
-
-  document.getElementById("mood-count").innerHTML = statsHTML;
+    ? `<div class='today-mood-title'><h3>Today's Mood</h3><div class='today-mood-detail'><span style='font-size:1.5em;'>${getMoodIcon(todayMood.mood)}</span> <span style='font-weight:bold;'>${todayMood.mood}</span><br><span style='color:#555;'>${todayMood.note}</span></div></div>`
+    : `<div class='today-mood-title'><h3>Today's Mood</h3><p>No mood recorded today</p></div>`;
   document.getElementById("today-mood").innerHTML = todayHTML;
 }
+
+function getMoodIcon(mood) {
+  switch(mood) {
+    case "happy": return "😊";
+    case "sad": return "😢";
+    case "angry": return "😡";
+    case "fear": return "😨";
+    case "disgusted": return "🤢";
+    default: return "";
+  }
+}
+
+function showMoodNote(dateStr) {
+  const mood = allMoodData.find(m => m.date === dateStr);
+  if (mood) {
+    alert(`Mood on ${dateStr}: ${getMoodIcon(mood.mood)}\n${mood.mood}\nNote: ${mood.note}`);
+  }
+}
+
+document.getElementById("prevMonthBtn").addEventListener("click", function() {
+  calendarMonth--;
+  if (calendarMonth < 0) {
+    calendarMonth = 11;
+    calendarYear--;
+  }
+  renderCalendarMonth(calendarYear, calendarMonth);
+  renderMoodStatsMonth(calendarYear, calendarMonth);
+});
+
+document.getElementById("nextMonthBtn").addEventListener("click", function() {
+  calendarMonth++;
+  if (calendarMonth > 11) {
+    calendarMonth = 0;
+    calendarYear++;
+  }
+  renderCalendarMonth(calendarYear, calendarMonth);
+  renderMoodStatsMonth(calendarYear, calendarMonth);
+});
 
 // === quiz data (HARUS dideklarasikan sebelum fungsi yang memakainya) ===
 // === quiz data (updated English + more questions) ===

@@ -37,12 +37,11 @@ body::before {
   50% { transform: rotate(180deg) scale(1.1); }
 }
 
-
 .container {
   padding: 4rem;
   width: 100%;
-  max-width: 1300px;
-  min-height: 550px;
+  max-width: 1400px;
+  min-height: 400px;
   text-align: center;
   align-items: center;
   justify-content: center;

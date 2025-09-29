@@ -13,10 +13,10 @@
     "bmi": [
       {
         "date": "2025-09-21",
-        "value": "19.48",
-        "status": "Normal",
-        "height": 152,
-        "weight": 45
+        "value": "25.96",
+        "status": "Overweight",
+        "height": 157,
+        "weight": 64
       }
     ],
     "moods": [

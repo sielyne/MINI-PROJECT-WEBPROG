@@ -66,46 +66,46 @@ const server = http.createServer((req, res) => {
 
     // Handle register
     else if (req.method === 'POST' && req.url === '/register') {
-    let body = '';
-    req.on('data', chunk => {
-        body += chunk.toString();
-    });
-    req.on('end', () => {
-        console.log('Received POST /register with body:', body); // Log data yang diterima
-        try {
-            const parsed = querystring.parse(body);
-            console.log('Parsed body:', parsed); // Log hasil parsing
-            if (!parsed.username || !parsed.password) {
-                res.writeHead(400, { 'Content-Type': 'text/plain' });
-                return res.end('Username and password are required');
-            }
-            let data = loadData();
-            console.log('Loaded data:', data); // Log data dari data.json
-            const exists = data.some(u => u.username === parsed.username);
-            if (exists) {
+        let body = '';
+        req.on('data', chunk => {
+            body += chunk.toString();
+        });
+        req.on('end', () => {
+            console.log('Received POST /register with body:', body);
+            try {
+                const parsed = querystring.parse(body);
+                console.log('Parsed body:', parsed);
+                if (!parsed.username || !parsed.password) {
+                    res.writeHead(400, { 'Content-Type': 'text/plain' });
+                    return res.end('Username and password are required');
+                }
+                let data = loadData();
+                console.log('Loaded data:', data);
+                const exists = data.some(u => u.username === parsed.username);
+                if (exists) {
+                    res.writeHead(200, { 'Content-Type': 'text/plain' });
+                    return res.end('Registrasi gagal');
+                }
+                let newID = data.length > 0 ? data[data.length - 1].id + 1 : 1;
+                data.push({
+                    id: newID,
+                    username: parsed.username,
+                    password: parsed.password,
+                    bmi: [],
+                    moods: [],
+                    quiz: []
+                });
+                console.log('Data to save:', data);
+                saveData(data);
                 res.writeHead(200, { 'Content-Type': 'text/plain' });
-                return res.end('Registrasi gagal');
+                res.end('Registrasi berhasil');
+            } catch (err) {
+                console.error('Error in /register:', err);
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end('Internal Server Error');
             }
-            let newID = data.length > 0 ? data[data.length - 1].id + 1 : 1;
-            data.push({
-                id: newID,
-                username: parsed.username,
-                password: parsed.password,
-                bmi: [],
-                moods: [],
-                quiz: []
-            });
-            console.log('Data to save:', data); // Log data sebelum disimpan
-            saveData(data);
-            res.writeHead(200, { 'Content-Type': 'text/plain' });
-            res.end('Registrasi berhasil');
-        } catch (err) {
-            console.error('Error in /register:', err); // Log error
-            res.writeHead(500, { 'Content-Type': 'text/plain' });
-            res.end('Internal Server Error');
-        }
-    });
-}
+        });
+    }
     // Handle login
     else if (req.method === 'POST' && req.url === '/login') {
         let body = '';
@@ -154,8 +154,6 @@ const server = http.createServer((req, res) => {
             }
 
             const bmi = (weight / ((height/100) ** 2)).toFixed(2);
-
-            // Status BMI
             let status = '';
             if (bmi < 18.5) status = 'Underweight';
             else if (bmi < 25) status = 'Normal';
@@ -164,20 +162,29 @@ const server = http.createServer((req, res) => {
 
             console.log(`BMI hasil: ${bmi}, status: ${status}`);
 
-            // Generate ID baru
-            const newId = user.bmi.length > 0 ? user.bmi[user.bmi.length - 1].id + 1 : 1;
+            const today = new Date().toISOString().split('T')[0];
+            const existingRecord = user.bmi.find(r => r.date === today);
 
-            // Simpan record baru
-            user.bmi.push({ 
-                id: newId,
-                date: new Date().toISOString().split('T')[0], 
-                height,
-                weight,
-                value: bmi,
-                status
-            });
+            if (existingRecord) {
+                // Update entri yang sudah ada untuk hari ini
+                existingRecord.height = height;
+                existingRecord.weight = weight;
+                existingRecord.value = bmi;
+                existingRecord.status = status;
+            } else {
+                // Tambah entri baru jika belum ada untuk hari ini
+                const newId = user.bmi.length > 0 ? user.bmi[user.bmi.length - 1].id + 1 : 1;
+                user.bmi.push({ 
+                    id: newId,
+                    date: today, 
+                    height,
+                    weight,
+                    value: bmi,
+                    status
+                });
+            }
+
             saveData(data);
-
             res.writeHead(200, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({ bmi: bmi, status: status }));
         });

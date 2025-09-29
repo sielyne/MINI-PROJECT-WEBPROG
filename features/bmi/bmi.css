@@ -1,0 +1,28 @@
+.bmi-result {
+    text-align: center;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border: 2px solid #a259c6;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 8px 32px #c2e9fb55;
+}
+
+.bmi-result h3 {
+    color: #a259c6;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.bmi-status {
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    margin: 0.5rem 0;
+    display: inline-block;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}

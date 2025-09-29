@@ -1,0 +1,34 @@
+<section id="mood">
+    <div class="container" id="mood-step-1">
+        <h2>How are you today?</h2>
+        <div class="emoji-options">
+            <button class="mood-btn" data-mood="happy">😊</button>
+            <button class="mood-btn" data-mood="sad">😢</button>
+            <button class="mood-btn" data-mood="angry">😡</button>
+            <button class="mood-btn" data-mood="fear">😨</button>
+            <button class="mood-btn" data-mood="disgusted">🤢</button>
+        </div>
+        <button id="moodBackBtn">Back</button>
+    </div>
+
+    <div class="container hidden" id="mood-step-2">
+        <h2>Write your journal</h2>
+        <textarea id="mood-note" placeholder="How was your day?"></textarea>
+        <br>
+        <button id="saveMoodBtn">Save</button>
+        <button id="cancelMoodBtn">Cancel</button>
+    </div>
+
+    <div class="container hidden" id="mood-step-3">
+        <h2>Your Mood Calendar</h2>
+        <div class="calendar-nav">
+            <button id="prevMonthBtn">&#8592; Previous</button>
+            <span id="calendarMonthLabel" style="font-weight:bold;margin:0 12px;"></span>
+            <button id="nextMonthBtn">Next &#8594;</button>
+        </div>
+        <div id="calendar" class="calendar-grid"></div>
+        <div id="mood-count" class="mood-count-box"></div>
+        <div id="today-mood" class="today-mood-box"></div>
+        <button id="moodCalendarBackBtn">Back</button>
+    </div>
+</section>

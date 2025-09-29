@@ -1,0 +1,51 @@
+.emoji-options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.emoji-options button {
+    font-size: 2rem;
+    background: white;
+    border: 2px solid #a1c4fd;
+    border-radius: 12px;
+    padding: 0.5em 0.8em;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.emoji-options button:hover {
+    transform: scale(1.2);
+}
+
+#mood-note {
+    width: 100%;
+    min-height: 120px;
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin: 1rem 0;
+}
+
+.calendar-day {
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 2px 6px #0001;
+    cursor: pointer;
+}
+
+.calendar-day.happy { background: #dcfce7; }
+.calendar-day.sad { background: #bfdbfe; }
+.calendar-day.angry { background: #fecaca; }
+.calendar-day.fear { background: #fef3c7; }
+.calendar-day.disgusted { background: #fbcfe8; }

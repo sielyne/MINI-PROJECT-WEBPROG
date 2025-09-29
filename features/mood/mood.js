@@ -79,6 +79,7 @@ FeatureHandler.registerFeature('mood', {
             if (mood) {
                 switch (mood.mood) {
                     case 'happy': moodIcon = '😊'; moodColor = '#dcfce7'; break;
+                    case 'neutral': moodIcon = '😐'; moodColor = '#dbcffbff'; break;
                     case 'sad': moodIcon = '😢'; moodColor = '#bfdbfe'; break;
                     case 'angry': moodIcon = '😡'; moodColor = '#fecaca'; break;
                     case 'fear': moodIcon = '😨'; moodColor = '#fef3c7'; break;
@@ -105,6 +106,7 @@ FeatureHandler.registerFeature('mood', {
             <h3>Mood Count This Month</h3>
             <div class='mood-count-list'>
                 <span>😊 Happy: <b>${counts.happy}</b></span>
+                <span>😐 Neutral: <b>${counts.neutral || 0}</b></span>
                 <span>😢 Sad: <b>${counts.sad}</b></span>
                 <span>😡 Angry: <b>${counts.angry}</b></span>
                 <span>😨 Fear: <b>${counts.fear}</b></span>
@@ -124,6 +126,7 @@ FeatureHandler.registerFeature('mood', {
     getMoodIcon(mood) {
         switch (mood) {
             case 'happy': return '😊';
+            case 'neutral': return '😐';
             case 'sad': return '😢';
             case 'angry': return '😡';
             case 'fear': return '😨';

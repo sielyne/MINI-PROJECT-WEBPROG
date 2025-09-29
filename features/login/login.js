@@ -45,8 +45,12 @@ FeatureHandler.registerFeature('login', {
                     if (result.includes('Registrasi berhasil')) {
                         alert('Registration successful! Please login now.');
                         this.showForm('login');
-                    } else {
+                    } else if (result.includes('Registrasi gagal')) {
                         alert('Registration failed: Username already exists');
+                    } else if (result.includes('Username and password are required')) {
+                        alert('Registration failed: Username dan password harus diisi!');
+                    } else {
+                        alert('Registration failed: ' + result);
                     }
                 }
             })

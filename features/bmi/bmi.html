@@ -16,4 +16,14 @@
         <canvas id="bmiChart" style="margin: 20px 0;"></canvas>
         <button id="bmiBackBtn">Back</button>
     </div>
+    <div id="editModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; border-radius:10px;">
+  <form id="editBmiForm">
+    <label for="editHeight">Height (cm)</label>
+    <input type="number" id="editHeight" required min="100" max="250">
+    <label for="editWeight">Weight (kg)</label>
+    <input type="number" id="editWeight" required min="30" max="200" step="0.1">
+    <button type="submit">Save</button>
+    <button type="button" onclick="document.getElementById('editModal').style.display='none';">Cancel</button>
+  </form>
+</div>
 </section>

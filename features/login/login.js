@@ -40,6 +40,7 @@ FeatureHandler.registerFeature('login', {
                         FeatureHandler.showPage('menu');
                     } else {
                         alert('Login failed: Wrong username or password');
+                        form.reset();
                     }
                 } else {
                     if (result.includes('Registrasi berhasil')) {
@@ -47,16 +48,20 @@ FeatureHandler.registerFeature('login', {
                         this.showForm('login');
                     } else if (result.includes('Registrasi gagal')) {
                         alert('Registration failed: Username already exists');
+                        form.reset();
                     } else if (result.includes('Username and password are required')) {
                         alert('Registration failed: Username dan password harus diisi!');
+                        form.reset();
                     } else {
                         alert('Registration failed: ' + result);
+                        form.reset();
                     }
                 }
             })
             .catch(err => {
                 console.error('Network error:', err);
                 alert('Network error. Please try again.');
+                form.reset();
             });
     }
 });

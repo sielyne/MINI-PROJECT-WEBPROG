@@ -95,7 +95,14 @@ FeatureHandler.registerFeature('bmi', {
             return;
         }
 
+        if (typeof Chart === 'undefined') {
+            console.error('Chart.js not loaded');
+            document.getElementById('bmiChart').innerHTML = '<p>Error loading chart library</p>';
+            return;
+        }
+
         if (!this.bmiChart) {
+            this.bmiData.sort((a, b) => new Date(a.date) - new Date(b.date));
             this.bmiChart = new Chart(canvas, {
                 type: 'line',
                 data: {
@@ -183,31 +190,27 @@ FeatureHandler.registerFeature('bmi', {
     },
 
     editRecord(id) {
-        let height = prompt("Masukkan tinggi baru (cm):");
-        let weight = prompt("Masukkan berat baru (kg):");
-        if (!height || !weight) return;
-
-        height = parseFloat(height);
-        weight = parseFloat(weight);
-
-        if (isNaN(height) || isNaN(weight) || height < 100 || height > 250 || weight < 30 || weight > 200) {
-            alert('Please enter valid height (100-250cm) and weight (30-200kg)');
-            return;
-        }
-
-        fetch('/bmi', {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: FeatureHandler.getCurrentUser(), id, height, weight })
-        })
-            .then(res => {
-                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-                return res.json();
-            })
-            .then(() => this.loadHistory())
-            .catch(err => {
-                alert('Error updating record. Please try again.');
-                console.error("Error updating record:", err);
-            });
+  document.getElementById('editModal').style.display = 'block';
+  const form = document.getElementById('editBmiForm');
+  form.onsubmit = (e) => {
+    e.preventDefault();
+    const height = parseFloat(document.getElementById('editHeight').value);
+    const weight = parseFloat(document.getElementById('editWeight').value);
+    if (isNaN(height) || isNaN(weight) || height < 100 || height > 250 || weight < 30 || weight > 200) {
+      alert('Please enter valid height (100-250cm) and weight (30-200kg)');
+      return;
     }
+    fetch('/bmi', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: FeatureHandler.getCurrentUser(), id, height, weight })
+    })
+    .then(res => res.json())
+    .then(() => {
+      this.loadHistory();
+      document.getElementById('editModal').style.display = 'none';
+    })
+    .catch(err => alert('Error updating record.'));
+  };
+}
 });

@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const querystring = require('querystring');
 const path = require('path');
+const bcrypt = require('bcrypt');
 
 const DATA_FILE = 'data.json';
 
@@ -66,62 +67,73 @@ const server = http.createServer((req, res) => {
 
     // Handle register
     else if (req.method === 'POST' && req.url === '/register') {
-        let body = '';
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
-        req.on('end', () => {
-            console.log('Received POST /register with body:', body);
-            try {
-                const parsed = querystring.parse(body);
-                console.log('Parsed body:', parsed);
-                if (!parsed.username || !parsed.password) {
-                    res.writeHead(400, { 'Content-Type': 'text/plain' });
-                    return res.end('Username and password are required');
-                }
-                let data = loadData();
-                console.log('Loaded data:', data);
-                const exists = data.some(u => u.username === parsed.username);
-                if (exists) {
-                    res.writeHead(200, { 'Content-Type': 'text/plain' });
-                    return res.end('Registrasi gagal');
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+        console.log('Received POST /register with body:', body);
+        try {
+            const parsed = querystring.parse(body);
+            console.log('Parsed body:', parsed);
+            if (!parsed.username || !parsed.password) {
+                res.writeHead(400, { 'Content-Type': 'text/plain' });
+                return res.end('Username and password are required');
+            }
+            let data = loadData();
+            const exists = data.some(u => u.username === parsed.username);
+            if (exists) {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                return res.end('Registrasi gagal');
+            }
+            bcrypt.hash(parsed.password, 10, (err, hash) => {
+                if (err) {
+                    res.writeHead(500, { 'Content-Type': 'text/plain' });
+                    return res.end('Error hashing password');
                 }
                 let newID = data.length > 0 ? data[data.length - 1].id + 1 : 1;
                 data.push({
                     id: newID,
                     username: parsed.username,
-                    password: parsed.password,
+                    password: hash, // Simpan hash, bukan plain text
                     bmi: [],
                     moods: [],
                     quiz: []
                 });
-                console.log('Data to save:', data);
                 saveData(data);
                 res.writeHead(200, { 'Content-Type': 'text/plain' });
                 res.end('Registrasi berhasil');
-            } catch (err) {
-                console.error('Error in /register:', err);
-                res.writeHead(500, { 'Content-Type': 'text/plain' });
-                res.end('Internal Server Error');
-            }
-        });
-    }
-    // Handle login
-    else if (req.method === 'POST' && req.url === '/login') {
-        let body = '';
-        req.on('data', chunk => { body += chunk.toString(); });
-        req.on('end', () => {
-            const parsed = querystring.parse(body);
-            let data = loadData();
-            const user = data.find(u => u.username === parsed.username && u.password === parsed.password);
+            });
+        } catch (err) {
+            console.error('Error in /register:', err);
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Internal Server Error');
+        }
+    });
+}else if (req.method === 'POST' && req.url === '/login') {
+    let body = '';
+    req.on('data', chunk => { body += chunk.toString(); });
+    req.on('end', () => {
+        const parsed = querystring.parse(body);
+        let data = loadData();
+        const user = data.find(u => u.username === parsed.username);
+        if (!user) {
             res.writeHead(200, { 'Content-Type': 'text/plain' });
-            if (user) {
+            return res.end('Login gagal');
+        }
+        bcrypt.compare(parsed.password, user.password, (err, result) => {
+            if (err) {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                return res.end('Error checking password');
+            }
+            if (result) {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
                 res.end('Login berhasil');
             } else {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
                 res.end('Login gagal');
             }
         });
-    }
+    });
+}
     // Handle BMI calculation
     else if (req.method === 'POST' && req.url === '/bmi') {
         let body = '';
@@ -164,6 +176,8 @@ const server = http.createServer((req, res) => {
 
             const today = new Date().toISOString().split('T')[0];
             const existingRecord = user.bmi.find(r => r.date === today);
+
+            if (existingRecord) { res.end(JSON.stringify({ error: 'Already submitted today' })); return; }
 
             if (existingRecord) {
                 // Update entri yang sudah ada untuk hari ini
@@ -274,7 +288,12 @@ const server = http.createServer((req, res) => {
 
             const newId = user.moods.length > 0 ? user.moods[user.moods.length - 1].id + 1 : 1;
             const today = new Date().toISOString().split("T")[0];
-
+            const existingMood = user.moods.find(m => m.date === today);
+                if (existingMood) {
+                res.writeHead(400, {'Content-Type': 'application/json'});
+                return res.end(JSON.stringify({ error: 'Already submitted mood today' }));
+            }
+            
             user.moods.push({
                 id: newId,
                 date: today,
@@ -289,20 +308,17 @@ const server = http.createServer((req, res) => {
     }
     // Handle mood history
     else if (req.method === 'GET' && req.url.startsWith('/mood-history')) {
-        const urlParams = new URLSearchParams(req.url.split('?')[1]);
-        const username = urlParams.get('username');
-
-        let data = loadData();
-        const user = data.find(u => u.username === username);
-
-        if (!user) {
-            res.writeHead(404, { "Content-Type": "application/json" });
-            return res.end(JSON.stringify({ error: "User not found" }));
-        }
-
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify(user.moods));
+    const urlParams = new URLSearchParams(req.url.split('?')[1]);
+    const username = urlParams.get('username');
+    let data = loadData();
+    const user = data.find(u => u.username === username);
+    if (!user) {
+        res.writeHead(404, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify({ error: "User not found" }));
     }
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(user.moods || []));
+}
     // Handle mood update
     else if (req.method === 'PUT' && req.url === '/mood') {
         let body = '';
@@ -347,59 +363,55 @@ const server = http.createServer((req, res) => {
     }
     // Handle quiz submission
     else if (req.method === 'POST' && req.url === '/quiz') {
-        let body = '';
-        req.on('data', chunk => body += chunk.toString());
-        req.on('end', () => {
+    let body = '';
+    req.on('data', chunk => body += chunk.toString());
+    req.on('end', async () => {
+        try {
             const { username, answers, result, recommendation } = JSON.parse(body);
             let data = loadData();
-
             const user = data.find(u => u.username === username);
             if (!user) {
-                res.writeHead(404, {'Content-Type':'application/json'});
-                return res.end(JSON.stringify({error:'User not found'}));
+                res.writeHead(404, { 'Content-Type': 'application/json' });
+                return res.end(JSON.stringify({ error: 'User not found' }));
             }
-
-            // jika user belum punya array quiz, buat dulu
             if (!user.quiz) user.quiz = [];
-
             const quizRecord = {
+                id: user.quiz.length > 0 ? user.quiz[user.quiz.length - 1].id + 1 : 1,
+                date: new Date().toISOString().split('T')[0],
                 answers,
                 result,
-                recommendation,
-                date: new Date().toISOString()
+                recommendation
             };
-
-            // update quiz terakhir
-            user.quiz[0] = quizRecord; // kita simpan 1 quiz terakhir, bisa diubah jadi multiple jika mau
-
-            saveData(data);
-
-            res.writeHead(200, {'Content-Type':'application/json'});
-            res.end(JSON.stringify(quizRecord));
-        });
-    }
-    // Handle quiz history
-    else if (req.method === 'GET' && req.url.startsWith('/quiz-history')) {
+            user.quiz.push(quizRecord);
+            await saveData(data);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ success: true, quiz: quizRecord }));
+        } catch (err) {
+            console.error('Error in /quiz:', err);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ error: 'Error saving quiz' }));
+        }
+    });
+}
+else if (req.method === 'GET' && req.url.startsWith('/quiz-history')) {
+    try {
         const urlObj = new URL(req.url, `http://${req.headers.host}`);
         const username = urlObj.searchParams.get('username');
-
         let data = loadData();
         const user = data.find(u => u.username === username);
-
         if (!user || !user.quiz || user.quiz.length === 0) {
-            res.writeHead(200, {'Content-Type':'application/json'});
-            return res.end(JSON.stringify({}));
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify([]));
         }
-
-        res.writeHead(200, {'Content-Type':'application/json'});
-        res.end(JSON.stringify(user.quiz[0]));
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(user.quiz));
+    } catch (err) {
+        console.error('Error in /quiz-history:', err);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Error fetching quiz history' }));
     }
-    else {
-        res.writeHead(404, {'Content-Type': 'text/plain'});
-        res.end('Not Found');
-    }
+}   
 });
-
 server.listen(3000, () => {
     console.log('Server listening on http://localhost:3000');
 });

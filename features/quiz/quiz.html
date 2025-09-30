@@ -1,30 +1,29 @@
 <section id="quiz">
     <div class="container">
-        <h2>Body Shape Quiz</h2>
         <div id="quizBox">
+            <h2>Body Shape Quiz</h2> <!-- Judul di sini supaya hilang saat quiz selesai -->
             <p id="quizQuestion"></p>
             <div id="quizOptions"></div>
             <div class="quiz-nav" style="margin-top:16px;">
+                <button id="quizMenuBackBtn">Back to Menu</button>
                 <button id="quizBackBtn" style="display:none;">⬅ Back</button>
                 <button id="nextBtn" style="display:none;">Next ➡</button>
                 <button id="submitBtn" style="display:none;">Submit</button>
             </div>
         </div>
-        <div id="quizResult" style="margin-top:20px;"></div>
-        <button id="quizMenuBackBtn">Back to Menu</button>
-    </div>
-
-    <div class="container hidden" id="quiz-result">
-        <h2>Quiz Result</h2>
-        <div id="quizResultContent"></div>
-        <button id="reviewQuizBtn">Review Quiz</button>
-        <button id="quizResultBackBtn">Back to Menu</button>
-    </div>
-
-    <div class="container hidden" id="quiz-review">
-        <h2>Review Quiz</h2>
-        <div id="quizReviewContent"></div>
-        <button id="quizReviewBackBtn">Back to Results</button>
-        <button id="takeQuizAgainBtn">Take Quiz Again</button>
+        <div id="quiz-result" class="hidden">
+            <h2>Quiz Result</h2>
+            <div id="quizResultContent"></div>
+            <div class="quiz-result-buttons">
+                <button id="reviewQuizBtn">Review Jawaban Quiz</button>
+                <button id="takeQuizAgainBtn">Take Quiz Again</button>
+                <button id="quizResultBackBtn">Back to Menu</button>
+            </div>
+        </div>
+        <div id="quiz-review" class="hidden">
+            <h2>Review Jawaban Quiz</h2>
+            <div id="quizReviewContent"></div>
+            <button id="quizReviewBackBtn">Back to Result</button>
+        </div>
     </div>
 </section>

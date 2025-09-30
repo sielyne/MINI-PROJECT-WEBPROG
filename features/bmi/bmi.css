@@ -26,3 +26,7 @@
 .form-group {
     margin-bottom: 1.5rem;
 }
+
+.form-group { 
+    animation: fadeIn 0.5s ease-in-out; 
+}

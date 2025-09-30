@@ -1,114 +1,120 @@
 [
   {
     "id": 1,
-    "username": "elan",
-    "password": "*elan14",
-    "bmi": [],
-    "moods": []
-  },
-  {
-    "id": 2,
     "username": "elin",
-    "password": "*elin14",
+    "password": "$2b$10$IjEVEOVp.UPssXJLQsXCreyRWHEiC3vHlaLeKq3OOeTGLRq5wAEpC",
     "bmi": [
       {
-        "date": "2025-09-21",
-        "value": "25.96",
-        "status": "Overweight",
-        "height": 157,
-        "weight": 64
-      }
-    ],
-    "moods": [
-      {
         "id": 1,
-        "date": "2025-09-22",
-        "mood": "disgusted",
-        "note": "pusing bang"
+        "date": "2025-09-28",
+        "height": 184,
+        "weight": 60,
+        "value": "17.70",
+        "status": "Underweight"
       },
       {
         "id": 2,
-        "date": "2025-09-23",
-        "mood": "angry",
-        "note": "aku curi data elin wkwk"
-      }
-    ],
-    "quiz": [
-      {
-        "answers": {
-          "shape1": "inverted",
-          "shape2": "rectangle",
-          "shape3": "inverted",
-          "shape4": "rectangle",
-          "shape5": "inverted",
-          "shape6": "pear"
-        },
-        "result": "inverted",
-        "recommendation": "\n      Your body shape is Inverted Triangle 🔺. <br>\n      <ul>\n        <li>Wear simple tops to minimize shoulder width.</li>\n        <li>Flared or wide-leg pants can add volume to lower body.</li>\n        <li>Avoid shoulder pads or heavily decorated tops.</li>\n      </ul>",
-        "date": "2025-09-22T17:26:33.397Z"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "username": "a123_",
-    "password": "a123**",
-    "bmi": [
-      {
-        "date": "2025-09-21",
-        "value": "22.89",
-        "status": "Normal",
-        "height": 155,
-        "weight": 55
-      },
-      {
-        "date": "2025-09-21",
-        "value": "22.89",
-        "status": "Normal",
-        "height": 155,
-        "weight": 55
-      }
-    ],
-    "moods": []
-  },
-  {
-    "id": 4,
-    "username": "temen",
-    "password": "",
-    "bmi": [],
-    "moods": [
-      {
-        "id": 1,
-        "date": "2025-09-23",
-        "mood": "disgusted",
-        "note": "gatau mager"
-      },
-      {
-        "id": 2,
-        "date": "2025-09-23",
-        "mood": "angry",
-        "note": "hayem"
+        "date": "2025-09-30",
+        "height": 184,
+        "weight": 70,
+        "value": "20.70",
+        "status": "Normal"
       },
       {
         "id": 3,
-        "date": "2025-09-23",
-        "mood": "angry",
-        "note": "im tired af"
+        "date": "2025-09-30",
+        "height": 184,
+        "weight": 64,
+        "value": "18.90",
+        "status": "Normal"
+      }
+    ],
+    "moods": [
+      {
+        "id": 1,
+        "date": "2025-09-30",
+        "mood": "fear",
+        "note": "peace"
       }
     ],
     "quiz": [
       {
         "answers": {
+          "shape1": "hourglass",
           "shape2": "pear",
           "shape3": "rectangle",
-          "shape4": "inverted",
-          "shape5": "rectangle",
-          "shape6": "hourglass"
+          "shape4": "pear",
+          "shape5": "pear",
+          "shape6": "inverted"
         },
-        "result": "rectangle",
-        "recommendation": "\n      Your body shape is Rectangle ▭. <br>\n      <ul>\n        <li>Create curves with peplum tops or belts.</li>\n        <li>Layered outfits or ruffles add dimension.</li>\n        <li>Avoid straight-cut outfits that hide the waist completely.</li>\n      </ul>",
-        "date": "2025-09-23T12:18:13.614Z"
+        "result": "pear",
+        "recommendation": "\n                Your body shape is Pear 🍐. <br>\n                <ul>\n                    <li>Highlight your upper body with bright or detailed tops.</li>\n                    <li>Choose A-line skirts or wide-leg pants to balance hips.</li>\n                    <li>Avoid bottoms that add extra volume to your hips.</li>\n                </ul>",
+        "date": "2025-09-30T04:19:03.774Z"
+      },
+      {
+        "id": null,
+        "date": "2025-09-30",
+        "answers": {
+          "shape1": "hourglass",
+          "shape2": "rectangle",
+          "shape3": "inverted",
+          "shape4": "hourglass",
+          "shape5": "pear",
+          "shape6": "pear"
+        },
+        "result": "hourglass",
+        "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+      },
+      {
+        "id": 1,
+        "date": "2025-09-30",
+        "answers": {
+          "shape1": "hourglass",
+          "shape2": "inverted",
+          "shape3": "pear",
+          "shape4": "rectangle",
+          "shape5": "pear",
+          "shape6": "inverted"
+        },
+        "result": "inverted",
+        "recommendation": "\n                    Your body shape is Inverted Triangle 🔺.<br>\n                    <ul>\n                        <li>Wear simple tops to minimize shoulder width.</li>\n                        <li>Flared or wide-leg pants can add volume to lower body.</li>\n                        <li>Avoid shoulder pads or heavily decorated tops.</li>\n                    </ul>"
+      },
+      {
+        "id": 2,
+        "date": "2025-09-30",
+        "answers": {
+          "shape1": "hourglass",
+          "shape2": "pear",
+          "shape3": "rectangle",
+          "shape4": "pear",
+          "shape5": "inverted",
+          "shape6": "inverted"
+        },
+        "result": "inverted",
+        "recommendation": "\n                    Your body shape is Inverted Triangle 🔺.<br>\n                    <ul>\n                        <li>Wear simple tops to minimize shoulder width.</li>\n                        <li>Flared or wide-leg pants can add volume to lower body.</li>\n                        <li>Avoid shoulder pads or heavily decorated tops.</li>\n                    </ul>"
+      },
+      {
+        "id": 3,
+        "date": "2025-09-30",
+        "answers": {
+          "shape1": "hourglass",
+          "shape2": "rectangle",
+          "shape3": "pear",
+          "shape4": "hourglass",
+          "shape5": "pear",
+          "shape6": "inverted"
+        },
+        "result": "hourglass",
+        "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
       }
     ]
+  },
+  {
+    "id": 2,
+    "username": "ucup",
+    "password": "$2b$10$fkaIbYmyKtpMTdbdoA/oS.7k72kXpZBQhfdG4K/0Y7bWH/ONHC6uC",
+    "bmi": [],
+    "moods": [],
+    "quiz": []
   }
 ]

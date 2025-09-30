@@ -38,10 +38,10 @@ body::before {
 }
 
 .container {
-    padding: 4rem;
+    padding: 2rem; /* Kurangi dari 4rem */
     width: 100%;
-    max-width: 1350px;
-    min-height: 400px;
+    max-width: 1200px; /* Kurangi dari 1350px untuk lebih kompak */
+    min-height: 300px; /* Kurangi dari 400px */
     text-align: center;
     align-items: center;
     justify-content: center;
@@ -83,9 +83,8 @@ button:hover {
 
 @media (max-width: 770px) {
     .container {
-        max-width: 98%;
-        min-height: auto;
-        padding: 2rem;
+        max-width: 95%; /* Lebih ketat dari 98% */
+        padding: 1rem; /* Kurangi dari 2rem */
     }
 }
 

@@ -116,8 +116,24 @@ FeatureHandler.registerFeature('quiz', {
                 document.getElementById('quiz-result').classList.remove('hidden');
             });
 
-            console.log('Starting quiz initialization');
-            this.startQuiz();
+            const user = FeatureHandler.getCurrentUser();
+            if (user) {
+                fetch(`/quiz-history?username=${encodeURIComponent(user)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (Array.isArray(data) && data.length > 0) {
+                            // Ambil hasil quiz terakhir
+                            const last = data[data.length - 1];
+                            this.lastQuizAnswers = last;
+                            this.showSavedQuizResult();
+                        } else {
+                            this.startQuiz();
+                        }
+                    })
+                    .catch(() => this.startQuiz());
+            } else {
+                this.startQuiz();
+            }
         } catch (err) {
             console.error('Quiz init error:', err.message);
             alert('Error loading quiz: ' + err.message + '. Please refresh the page.');
@@ -226,7 +242,7 @@ FeatureHandler.registerFeature('quiz', {
     },
 
     finishQuiz() {
-        try {
+    try {
             console.log('Finishing quiz');
             if (Object.keys(this.answers).length < this.quizQuestions.length) {
                 alert('Please answer all questions before submitting');
@@ -337,6 +353,7 @@ FeatureHandler.registerFeature('quiz', {
             `;
 
             this.lastQuizAnswers = { answers: { ...this.answers }, result, recommendation };
+            // Tidak perlu simpan ke localStorage, cukup POST ke server
         } catch (err) {
             console.error('Finish quiz error:', err.message);
             alert('Error finishing quiz: ' + err.message + '. Please try again.');
@@ -375,11 +392,13 @@ FeatureHandler.registerFeature('quiz', {
     takeQuizAgain() {
         try {
             console.log('Taking quiz again');
-            if (!FeatureHandler.getCurrentUser()) {
+            const user = FeatureHandler.getCurrentUser();
+            if (!user) {
                 alert('Please login first!');
                 FeatureHandler.showPage('login');
                 return;
             }
+            // Tidak perlu hapus localStorage, quiz akan direset dan hasil baru akan diambil dari server
             this.currentQuestion = 0;
             this.answers = {};
             document.getElementById('quizReviewContent').innerHTML = '';
@@ -391,6 +410,62 @@ FeatureHandler.registerFeature('quiz', {
         } catch (err) {
             console.error('Take quiz again error:', err.message);
             alert('Error restarting quiz: ' + err.message + '. Please try again.');
+        }
+
+    },
+
+    showSavedQuizResult() {
+        // Tampilkan hasil quiz yang sudah tersimpan di localStorage
+        try {
+            document.getElementById('quizBox').classList.remove('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+            document.getElementById('quiz-review').classList.add('hidden');
+            document.getElementById('quizQuestion').style.display = 'none';
+            document.getElementById('quizOptions').style.display = 'none';
+            document.querySelector('.quiz-nav').style.display = 'none';
+            const { result, recommendation } = this.lastQuizAnswers || {};
+            let articles = '';
+            switch (result) {
+                case 'pear':
+                    articles = `
+                    <h3>Rekomendasi Artikel Outfit:</h3>
+                    <ul>
+                        <li><a href="https://www.stylecraze.com/articles/outfits-for-pear-shaped-body/" target="_blank">Outfits for Pear Shaped Body - StyleCraze</a></li>
+                        <li><a href="https://www.instyle.com/pear-shaped-body-fashion-tips-7973072" target="_blank">Fashion Tips for Pear Shaped Body - InStyle</a></li>
+                    </ul>`;
+                    break;
+                case 'inverted':
+                    articles = `
+                    <h3>Rekomendasi Artikel Outfit:</h3>
+                    <ul>
+                        <li><a href="https://www.stylecraze.com/articles/outfits-for-inverted-triangle-body-shape/" target="_blank">Outfits for Inverted Triangle - StyleCraze</a></li>
+                        <li><a href="https://www.instyle.com/inverted-triangle-body-fashion-tips-7973073" target="_blank">Fashion Tips for Inverted Triangle - InStyle</a></li>
+                    </ul>`;
+                    break;
+                case 'hourglass':
+                    articles = `
+                    <h3>Rekomendasi Artikel Outfit:</h3>
+                    <ul>
+                        <li><a href="https://www.stylecraze.com/articles/outfits-for-hourglass-body-shape/" target="_blank">Outfits for Hourglass - StyleCraze</a></li>
+                        <li><a href="https://www.instyle.com/hourglass-body-fashion-tips-7973074" target="_blank">Fashion Tips for Hourglass - InStyle</a></li>
+                    </ul>`;
+                    break;
+                case 'rectangle':
+                    articles = `
+                    <h3>Rekomendasi Artikel Outfit:</h3>
+                    <ul>
+                        <li><a href="https://www.stylecraze.com/articles/outfits-for-rectangle-body-shape/" target="_blank">Outfits for Rectangle - StyleCraze</a></li>
+                        <li><a href="https://www.instyle.com/rectangle-body-fashion-tips-7973075" target="_blank">Fashion Tips for Rectangle - InStyle</a></li>
+                    </ul>`;
+                    break;
+            }
+            document.getElementById('quizResultContent').innerHTML = `
+                <p><strong>Body Shape:</strong> ${result ? result.charAt(0).toUpperCase() + result.slice(1) : ''}</p>
+                <p><strong>Style Recommendations:</strong> ${recommendation || ''}</p>
+                ${articles}
+            `;
+        } catch (err) {
+            console.error('Show saved quiz result error:', err.message);
         }
     }
 });

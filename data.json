@@ -172,6 +172,34 @@
         },
         "result": "hourglass",
         "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+      },
+      {
+        "id": 4,
+        "date": "2025-09-30",
+        "answers": {
+          "shape1": "inverted",
+          "shape2": "hourglass",
+          "shape3": "pear",
+          "shape4": "pear",
+          "shape5": "hourglass",
+          "shape6": "hourglass"
+        },
+        "result": "hourglass",
+        "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+      },
+      {
+        "id": 5,
+        "date": "2025-09-30",
+        "answers": {
+          "shape1": "inverted",
+          "shape2": "hourglass",
+          "shape3": "pear",
+          "shape4": "pear",
+          "shape5": "hourglass",
+          "shape6": "hourglass"
+        },
+        "result": "hourglass",
+        "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
       }
     ]
   },
@@ -256,5 +284,35 @@
       }
     ],
     "quiz": []
+  },
+  {
+    "id": 6,
+    "username": "siapaya1",
+    "password": "$2b$10$BGubKJ2hji6fu3fSsbRWoO6iH6GB90GD9EcBY5LTub5zZcRGgAgyG",
+    "bmi": [],
+    "moods": [
+      {
+        "id": 1,
+        "date": "2025-09-30",
+        "mood": "neutral",
+        "note": "idk"
+      }
+    ],
+    "quiz": [
+      {
+        "id": 1,
+        "date": "2025-09-30",
+        "answers": {
+          "shape1": "inverted",
+          "shape2": "hourglass",
+          "shape3": "pear",
+          "shape4": "pear",
+          "shape5": "hourglass",
+          "shape6": "hourglass"
+        },
+        "result": "hourglass",
+        "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+      }
+    ]
   }
 ]

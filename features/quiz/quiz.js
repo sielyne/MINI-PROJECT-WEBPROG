@@ -321,7 +321,13 @@ FeatureHandler.registerFeature('quiz', {
                     .catch(err => console.error('Quiz save error:', err));
             }
 
-            document.getElementById('quizBox').classList.add('hidden');
+
+            // Sembunyikan pertanyaan dan navigasi quiz, tapi quizBox tetap tampil
+            document.getElementById('quizQuestion').style.display = 'none';
+            document.getElementById('quizOptions').style.display = 'none';
+            document.querySelector('.quiz-nav').style.display = 'none';
+
+            // Tampilkan hasil quiz di bawah quizBox
             document.getElementById('quiz-result').classList.remove('hidden');
             document.getElementById('quiz-review').classList.add('hidden');
             document.getElementById('quizResultContent').innerHTML = `
@@ -377,6 +383,10 @@ FeatureHandler.registerFeature('quiz', {
             this.currentQuestion = 0;
             this.answers = {};
             document.getElementById('quizReviewContent').innerHTML = '';
+            // Tampilkan kembali pertanyaan dan navigasi quiz
+            document.getElementById('quizQuestion').style.display = '';
+            document.getElementById('quizOptions').style.display = '';
+            document.querySelector('.quiz-nav').style.display = '';
             this.startQuiz();
         } catch (err) {
             console.error('Take quiz again error:', err.message);

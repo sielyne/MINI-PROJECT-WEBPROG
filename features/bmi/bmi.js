@@ -149,21 +149,25 @@ FeatureHandler.registerFeature('bmi', {
                     value: parseFloat(r.value) || 0
                 }));
                 this.updateBMIChart();
+                if (!data || data.length === 0) {
+                    this.latestBMIResult = '';
+                    document.getElementById("bmi-result").innerHTML = '';
+                    return;
+                }
 
                 // Bangun HTML untuk history tanpa duplikasi
-                let html = this.latestBMIResult || ''; // Sertakan hasil BMI terbaru (jika ada)
+                let html = this.latestBMIResult || '';
                 html += "<h3>BMI History</h3><ul>";
                 data.forEach(r => {
                     html += `
                     <li>
                         ${r.date} - <b>${r.value}</b> (${r.status})
-                        <button onclick="FeatureHandler.executeFeature('bmi', 'editRecord', ${r.id})">Edit</button>
-                        <button onclick="FeatureHandler.executeFeature('bmi', 'deleteRecord', ${r.id})">Delete</button>
+                        <button onclick=\"FeatureHandler.executeFeature('bmi', 'editRecord', ${r.id})\">Edit</button>
+                        <button onclick=\"FeatureHandler.executeFeature('bmi', 'deleteRecord', ${r.id})\">Delete</button>
                     </li>`;
                 });
                 html += "</ul>";
 
-                // Ganti seluruh konten bmi-result, bukan tambah
                 document.getElementById("bmi-result").innerHTML = html;
             })
             .catch(err => {

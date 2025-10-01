@@ -265,10 +265,10 @@ FeatureHandler.registerFeature('quiz', {
                         <li>Avoid bottoms that add extra volume to your hips.</li>
                     </ul>`;
                     articles = `
-                    <h3>Rekomendasi Artikel Outfit:</h3>
+                    <h3>Outfit Article Recommendations:</h3>
                     <ul>
                         <li><a href="https://www.stylecraze.com/articles/outfits-for-pear-shaped-body/" target="_blank">Outfits for Pear Shaped Body - StyleCraze</a></li>
-                        <li><a href="https://www.instyle.com/pear-shaped-body-fashion-tips-7973072" target="_blank">Fashion Tips for Pear Shaped Body - InStyle</a></li>
+                        <li><a href="https://theconceptwardrobe.com/build-a-wardrobe/pear-body-shape" target="_blank">Fashion Tips for Pear Shaped Body - InStyle</a></li>
                     </ul>`;
                     break;
                 case 'inverted':
@@ -280,10 +280,10 @@ FeatureHandler.registerFeature('quiz', {
                         <li>Avoid shoulder pads or heavily decorated tops.</li>
                     </ul>`;
                     articles = `
-                    <h3>Rekomendasi Artikel Outfit:</h3>
+                    <h3>Outfit Article Recommendations:</h3>
                     <ul>
                         <li><a href="https://www.stylecraze.com/articles/outfits-for-inverted-triangle-body-shape/" target="_blank">Outfits for Inverted Triangle - StyleCraze</a></li>
-                        <li><a href="https://www.instyle.com/inverted-triangle-body-fashion-tips-7973073" target="_blank">Fashion Tips for Inverted Triangle - InStyle</a></li>
+                        <li><a href="https://theconceptwardrobe.com/build-a-wardrobe/inverted-triangle-body-shape" target="_blank">Fashion Tips for Inverted Triangle - InStyle</a></li>
                     </ul>`;
                     break;
                 case 'hourglass':
@@ -295,10 +295,10 @@ FeatureHandler.registerFeature('quiz', {
                         <li>Avoid shapeless, boxy clothes that hide your waist.</li>
                     </ul>`;
                     articles = `
-                    <h3>Rekomendasi Artikel Outfit:</h3>
+                    <h3>Outfit Article Recommendations:</h3>
                     <ul>
                         <li><a href="https://www.stylecraze.com/articles/outfits-for-hourglass-body-shape/" target="_blank">Outfits for Hourglass - StyleCraze</a></li>
-                        <li><a href="https://www.instyle.com/hourglass-body-fashion-tips-7973074" target="_blank">Fashion Tips for Hourglass - InStyle</a></li>
+                        <li><a href="https://theconceptwardrobe.com/build-a-wardrobe/hourglass-body-shape target="_blank">Fashion Tips for Hourglass - InStyle</a></li>
                     </ul>`;
                     break;
                 case 'rectangle':
@@ -310,10 +310,10 @@ FeatureHandler.registerFeature('quiz', {
                         <li>Avoid straight-cut outfits that hide the waist completely.</li>
                     </ul>`;
                     articles = `
-                    <h3>Rekomendasi Artikel Outfit:</h3>
+                    <h3>Outfit Article Recommendations:</h3>
                     <ul>
                         <li><a href="https://www.stylecraze.com/articles/outfits-for-rectangle-body-shape/" target="_blank">Outfits for Rectangle - StyleCraze</a></li>
-                        <li><a href="https://www.instyle.com/rectangle-body-fashion-tips-7973075" target="_blank">Fashion Tips for Rectangle - InStyle</a></li>
+                        <li><a href="https://theconceptwardrobe.com/build-a-wardrobe/how-to-dress-the-rectangle-body-shape" target="_blank">Fashion Tips for Rectangle - InStyle</a></li>
                     </ul>`;
                     break;
             }

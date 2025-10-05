@@ -23,23 +23,36 @@ const FeatureHandler = {
         this.currentPage = pageId;
 
         const container = document.getElementById('app-container');
+        const header = document.getElementById('main-header');
+        if (header) {
+            header.style.display = pageId === 'login' ? 'none' : 'flex';
+        }
+
         fetch(`features/${pageId}/${pageId}.html`)
             .then(res => res.text())
             .then(html => {
-                container.innerHTML = html;
-                // Load feature-specific CSS
-                const existingStyle = document.querySelector(`link[href="features/${pageId}/${pageId}.css"]`);
+                const tempContainer = document.createElement('div');
+                tempContainer.innerHTML = html;
+
+                const cssHref = `features/${pageId}/${pageId}.css`;
+                const existingStyle = document.querySelector(`link[href="${cssHref}"]`);
                 if (!existingStyle) {
-                    const link = document.createElement('link');
-                    link.rel = 'stylesheet';
-                    link.href = `features/${pageId}/${pageId}.css`;
-                    document.head.appendChild(link);
-                }
-                // Initialize feature
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = cssHref;
+                link.onload = () => {
+                    container.innerHTML = tempContainer.innerHTML;
+                    this.executeFeature(pageId, 'init');
+                };
+                document.head.appendChild(link);
+                } else {
+                container.innerHTML = tempContainer.innerHTML;
                 this.executeFeature(pageId, 'init');
+                }
             })
-            .catch(err => console.error(`Error loading ${pageId}:`, err));
-    },
+
+                .catch(err => console.error(`Error loading ${pageId}:`, err));
+},
 
     // Set current user
     setCurrentUser(username) {
@@ -54,6 +67,40 @@ const FeatureHandler = {
     // Initialize app
     init() {
         this.showPage('login');
+
+        // Set username in header
+
+const profileIcon = document.getElementById('profileIcon');
+if (profileIcon) {
+  profileIcon.addEventListener('click', () => {
+    this.showPage('profile');
+  });
+}
+
+  const username = this.getCurrentUser();
+  if (username) {
+    const headerName = document.getElementById('header-username');
+    if (headerName) headerName.textContent = `Hi, ${username}`;
+  }
+
+  // Toggle nav menu
+  const hamburger = document.getElementById('hamburgerBtn');
+  const nav = document.getElementById('header-nav');
+  if (hamburger && nav) {
+    hamburger.addEventListener('click', () => {
+      nav.classList.toggle('hidden');
+    });
+  }
+
+  // Logout
+  const navLogout = document.getElementById('navLogoutBtn');
+    if (navLogout) {
+    navLogout.addEventListener('click', () => {
+        this.setCurrentUser(null);
+        this.showPage('login');
+    });
+    }
+
     }
 };
 

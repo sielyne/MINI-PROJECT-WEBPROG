@@ -1,11 +1,28 @@
 <section id="menu">
-    <div class="container">
-        <h2>Welcome, <span id="current-user"></span>!</h2>
-        <div class="menu-buttons">
-            <button id="bmiBtn">BMI Tracker</button>
-            <button id="moodBtn">Mood Calendar</button>
-            <button id="quizBtn">Body Shape Quiz</button>
-            <button id="logoutBtn">Logout</button>
-        </div>
+  <h1>Selamat Datang di Bloomii 🌸</h1>
+  <h2>Temukan keseimbangan tubuh dan pikiranmu</h2>
+
+  <!-- Fitur utama -->
+  <div class="feature-cards">
+    <div class="card">
+      <h3>BMI Tracker</h3>
+      <p>Pantau berat badan dan status kesehatanmu.</p>
+      <button onclick="FeatureHandler.showPage('bmi')">Cek BMI</button>
     </div>
+    <div class="card">
+      <h3>Mood Calendar</h3>
+      <p>Kenali suasana hatimu setiap hari.</p>
+      <button onclick="FeatureHandler.showPage('mood')">Isi Mood</button>
+    </div>
+    <div class="card">
+      <h3>Body Shape Quiz</h3>
+      <p>Temukan gaya terbaik sesuai bentuk tubuhmu.</p>
+      <button onclick="FeatureHandler.showPage('quiz')">Mulai Quiz</button>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <button class="cta" onclick="FeatureHandler.showPage('bmi')">
+    🌟 Mulai Cek BMI Kamu Sekarang
+  </button>
 </section>

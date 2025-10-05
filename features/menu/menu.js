@@ -1,17 +1,31 @@
 FeatureHandler.registerFeature('menu', {
-    init() {
-        if (!FeatureHandler.getCurrentUser()) {
-            FeatureHandler.showPage('login');
-            return;
-        }
-        document.getElementById('current-user').textContent = FeatureHandler.getCurrentUser();
-        document.getElementById('current-user').textContent = FeatureHandler.getCurrentUser();
-        document.getElementById('bmiBtn').addEventListener('click', () => FeatureHandler.showPage('bmi'));
-        document.getElementById('moodBtn').addEventListener('click', () => FeatureHandler.showPage('mood'));
-        document.getElementById('quizBtn').addEventListener('click', () => FeatureHandler.showPage('quiz'));
-        document.getElementById('logoutBtn').addEventListener('click', () => {
-            FeatureHandler.setCurrentUser(null);
-            FeatureHandler.showPage('login');
-        });
+  init() {
+    console.log('Home page loaded');
+
+    // Navigasi ke Dashboard
+    const dashboardBtn = document.getElementById('dashboardBtn');
+    if (dashboardBtn) {
+      dashboardBtn.addEventListener('click', () => {
+        FeatureHandler.showPage('dashboard');
+      });
     }
+
+    // Navigasi ke Blog
+    const blogBtn = document.getElementById('blogBtn');
+    if (blogBtn) {
+      blogBtn.addEventListener('click', () => {
+        FeatureHandler.showPage('blog');
+      });
+    }
+
+    // Navigasi ke Profile
+    const profileBtn = document.getElementById('profileBtn');
+    if (profileBtn) {
+      profileBtn.addEventListener('click', () => {
+        FeatureHandler.showPage('profile');
+      });
+    }
+
+    // Tombol fitur lainnya pakai onclick langsung di HTML (BMI, Mood, Quiz)
+  }
 });

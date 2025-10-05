@@ -10,6 +10,11 @@
     gap: 10px;
 }
 
+#quizBox {
+  margin-top: 80px;
+}
+
+
 #quizOptions button {
     display: block;
     border-radius: 12px;

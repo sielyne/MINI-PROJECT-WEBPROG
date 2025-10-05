@@ -3,15 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Bloomii</title>
+    <style>
+      #main-header {
+        display: none;
+        position: sticky;
+        top: 0;
+        width: 100%;
+        z-index: 100;
+      }
+    </style>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <header id="main-header">
+  <div class="logo">Bloomii</div>
+  <div class="profile-area">
+    <span id="header-username"></span>
+    <img src="https://cdn-icons-png.flaticon.com/512/9131/9131529.png" alt="Profile Icon" class="profile-icon" id="profileIcon">
+    <button id="hamburgerBtn">☰</button>
+  </div>
+  <nav id="header-nav" class="hidden">
+    <button onclick="FeatureHandler.showPage('dashboard')">Dashboard</button>
+    <button onclick="FeatureHandler.showPage('blog')">Blog & Insight</button>
+    <button id="navLogoutBtn">Logout</button>
+  </nav>
+</header>
+
     <div class="container" id="app-container"></div>
     <script src="handler.js"></script>
     <script src="features/login/login.js"></script>
     <script src="features/menu/menu.js"></script>
+    <script src="features/dashboard/dashboard.js"></script>
+    <script src="features/blog/blog.js"></script>
+    <script src="features/profile/profile.js"></script>
     <script src="features/bmi/bmi.js"></script>
     <script src="features/mood/mood.js"></script>
     <script src="features/quiz/quiz.js"></script>

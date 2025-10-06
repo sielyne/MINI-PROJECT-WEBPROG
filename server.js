@@ -393,6 +393,26 @@ const server = http.createServer((req, res) => {
         }
     });
 }
+else if (req.method === 'GET' && req.url.startsWith('/assets/')) {
+  const imgPath = path.join(__dirname, req.url);
+  fs.readFile(imgPath, (err, content) => {
+    if (err) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      return res.end('Image not found');
+    }
+    const ext = path.extname(imgPath).toLowerCase();
+    const mimeTypes = {
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.png': 'image/png',
+      '.svg': 'image/svg+xml'
+    };
+    res.writeHead(200, { 'Content-Type': mimeTypes[ext] || 'application/octet-stream' });
+    res.end(content);
+  });
+  return;
+}
+
 else if (req.method === 'GET' && req.url.startsWith('/quiz-history')) {
     try {
         const urlObj = new URL(req.url, `http://${req.headers.host}`);

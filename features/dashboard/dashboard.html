@@ -1,28 +1,28 @@
 <section id="dashboard">
   <h2>Hi, <span id="dashboard-username"></span> 👋</h2>
-  <p>Berikut ringkasan wellbeing kamu hari ini:</p>
+  <p>Here’s your wellbeing summary for today.</p>
 
   <div class="dashboard-cards">
     <div class="card" id="bmi-summary">
-      <h3>BMI Terakhir</h3>
+      <h3>Last BMI</h3>
       <p id="bmi-value">-</p>
       <p id="bmi-status">-</p>
-      <button onclick="FeatureHandler.showPage('bmi')">Lihat Detail</button>
+      <button onclick="FeatureHandler.showPage('bmi')">View More</button>
     </div>
 
     <div class="card" id="mood-summary">
-      <h3>Mood Hari Ini</h3>
+      <h3>Today's Mood</h3>
       <p id="mood-icon">-</p>
       <p id="mood-note">-</p>
-      <button onclick="FeatureHandler.showPage('mood')">Isi Mood</button>
+      <button onclick="FeatureHandler.showPage('mood')">Fill Mood</button>
     </div>
 
     <div class="card" id="quiz-summary">
       <h3>Body Profile</h3>
       <p id="quiz-result">-</p>
-      <button onclick="FeatureHandler.showPage('quiz')">Lihat Rekomendasi</button>
+      <button onclick="FeatureHandler.showPage('quiz')">View Recommendations</button>
     </div>
   </div>
 
-  <button id="dashboardBackBtn">Kembali ke Menu</button>
+  <button id="dashboardBackBtn">Back to Menu</button>
 </section>

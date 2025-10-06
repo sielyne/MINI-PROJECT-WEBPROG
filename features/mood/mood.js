@@ -15,6 +15,7 @@ FeatureHandler.registerFeature('mood', {
             btn.addEventListener('click', () => this.selectMood(btn.dataset.mood));
         });
         this.checkTodayMoodAndJournal();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     },
 
     checkTodayMoodAndJournal() {

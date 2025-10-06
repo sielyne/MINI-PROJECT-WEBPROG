@@ -6,6 +6,7 @@
         <div id="choice-buttons">
             <button id="registerBtn" type="button">Register</button>
             <button id="loginBtn" type="button">Login</button>
+            
         </div>
 
         <form id="user-form" action="" method="POST" style="display:none;">
@@ -13,12 +14,12 @@
             <label for="username">Username</label>
             <input type="text" id="username" name="username" placeholder="Username"
                 pattern="^[a-zA-Z0-9_]{3,15}$"
-                title="Username harus 3-15 karakter dan hanya boleh huruf, angka, dan underscore">
+                title="Username must be 3–15 characters long and can only contain letters, numbers, and underscores">
             <br>
             <label for="password">Password</label>
             <input type="password" id="password" name="password" placeholder="Password"
                 pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&]).+$"
-                title="Harus mengandung huruf, angka, dan simbol.">
+                title="Must contain letters, numbers, and symbols.">
             <br><br>
             <button type="submit">Submit</button>
             <button id="backBtn" type="button">Back</button>

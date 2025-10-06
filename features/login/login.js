@@ -4,6 +4,23 @@ FeatureHandler.registerFeature('login', {
         document.getElementById('loginBtn').addEventListener('click', () => this.showForm('login'));
         document.getElementById('backBtn').addEventListener('click', () => this.backToChoice());
         document.getElementById('user-form').addEventListener('submit', (e) => this.handleSubmit(e));
+        FeatureHandler.registerFeature('login', {
+  init() {
+    const toggleBtn = document.getElementById('themeToggleBtn');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+      });
+
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+      }
+    }
+  }
+});
+
     },
 
     showForm(type) {

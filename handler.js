@@ -25,31 +25,50 @@ const FeatureHandler = {
         const container = document.getElementById('app-container');
         const header = document.getElementById('main-header');
         if (header) {
-            header.style.display = pageId === 'login' ? 'none' : 'flex';
+            header.style.display =  'flex';
         }
 
         fetch(`features/${pageId}/${pageId}.html`)
-            .then(res => res.text())
-            .then(html => {
-                const tempContainer = document.createElement('div');
-                tempContainer.innerHTML = html;
+  .then(res => res.text())
+  .then(html => {
+    const tempContainer = document.createElement('div');
+    tempContainer.innerHTML = html;
 
-                const cssHref = `features/${pageId}/${pageId}.css`;
-                const existingStyle = document.querySelector(`link[href="${cssHref}"]`);
-                if (!existingStyle) {
-                const link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.href = cssHref;
-                link.onload = () => {
-                    container.innerHTML = tempContainer.innerHTML;
-                    this.executeFeature(pageId, 'init');
-                };
-                document.head.appendChild(link);
-                } else {
-                container.innerHTML = tempContainer.innerHTML;
-                this.executeFeature(pageId, 'init');
-                }
-            })
+    const cssHref = `features/${pageId}/${pageId}.css`;
+    const existingStyle = document.querySelector(`link[href="${cssHref}"]`);
+    const applyThemeToggle = () => {
+      const toggleBtn = document.getElementById('themeToggleBtn');
+      if (toggleBtn) {
+        toggleBtn.onclick = () => {
+          document.body.classList.toggle('dark-mode');
+          localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        };
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+      }
+    };
+
+    if (!existingStyle) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = cssHref;
+      link.onload = () => {
+        container.innerHTML = tempContainer.innerHTML;
+        applyThemeToggle(); // ← selalu dipanggil
+        this.executeFeature(pageId, 'init');
+      };
+      document.head.appendChild(link);
+    } else {
+      container.innerHTML = tempContainer.innerHTML;
+      applyThemeToggle(); // ← selalu dipanggil
+      this.executeFeature(pageId, 'init');
+    }
+  })
 
                 .catch(err => console.error(`Error loading ${pageId}:`, err));
 },
@@ -91,6 +110,7 @@ if (profileIcon) {
       nav.classList.toggle('hidden');
     });
   }
+
 
   // Logout
   const navLogout = document.getElementById('navLogoutBtn');

@@ -226,6 +226,9 @@ FeatureHandler.registerFeature('quiz', {
             console.error('Show previous question error:', err.message);
             alert('Error navigating to previous question: ' + err.message);
         }
+        const progress = ((this.currentQuestion + 1) / this.quizQuestions.length) * 100;
+document.getElementById('quizProgressBar').style.width = `${progress}%`;
+
     },
 
     showNextQuestion() {
@@ -251,10 +254,16 @@ FeatureHandler.registerFeature('quiz', {
             let counts = { pear: 0, inverted: 0, hourglass: 0, rectangle: 0 };
             Object.values(this.answers).forEach(val => counts[val]++);
 
+            document.getElementById('quizResultContent').style.opacity = 0;
+            setTimeout(() => {
+            document.getElementById('quizResultContent').style.opacity = 1;
+            }, 100);
+
+
             let result = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
 
             let recommendation = '';
-            let articles = '';
+            let articleList = [];
             switch (result) {
                 case 'pear':
                     recommendation = `
@@ -264,13 +273,22 @@ FeatureHandler.registerFeature('quiz', {
                         <li>Choose A-line skirts or wide-leg pants to balance hips.</li>
                         <li>Avoid bottoms that add extra volume to your hips.</li>
                     </ul>`;
-                    articles = `
-                    <h3>Outfit Article Recommendations:</h3>
-                    <ul>
-                        <li><a href="https://www.stylecraze.com/articles/outfits-for-pear-shaped-body/" target="_blank">Outfits for Pear Shaped Body - StyleCraze</a></li>
-                        <li><a href="https://theconceptwardrobe.com/build-a-wardrobe/pear-body-shape" target="_blank">Fashion Tips for Pear Shaped Body - InStyle</a></li>
-                    </ul>`;
-                    break;
+                    articleList = [
+                {
+                    title: "17 Outfits That Actually Work For Pear-Shaped Bodies",
+                    url: "https://trendyuniverse.com/outfits-for-pear-shaped-bodies/",
+                    image: "assets/thumbnails/pear1.jpg",
+                    description: "Game-changing outfit ideas to balance curves and flatter your pear shape."
+                },
+                {
+                    title: "50+ Stunning Outfit Ideas for Pear Shaped Women",
+                    url: "https://hervoguelife.com/outfit-ideas-for-pear-shaped-women/",
+                    image: "assets/thumbnails/pear2.jpg",
+                    description: "From casual to formal, discover flattering styles for pear-shaped figures."
+                }
+                ];
+                break;
+
                 case 'inverted':
                     recommendation = `
                     Your body shape is Inverted Triangle 🔺.<br>
@@ -279,12 +297,20 @@ FeatureHandler.registerFeature('quiz', {
                         <li>Flared or wide-leg pants can add volume to lower body.</li>
                         <li>Avoid shoulder pads or heavily decorated tops.</li>
                     </ul>`;
-                    articles = `
-                    <h3>Outfit Article Recommendations:</h3>
-                    <ul>
-                        <li><a href="https://www.stylecraze.com/articles/outfits-for-inverted-triangle-body-shape/" target="_blank">Outfits for Inverted Triangle - StyleCraze</a></li>
-                        <li><a href="https://theconceptwardrobe.com/build-a-wardrobe/inverted-triangle-body-shape" target="_blank">Fashion Tips for Inverted Triangle - InStyle</a></li>
-                    </ul>`;
+                    articleList = [
+                    {
+                        title: "How to Dress an Inverted Triangle Body Shape",
+                        url: "https://www.mychicobsession.com/inverted-triangle-body-shape-outfits/",
+                        image: "assets/thumbnails/inverted1.jpg",
+                        description: "Balance your silhouette with styles that soften shoulders and enhance lower body."
+                    },
+                    {
+                        title: "60 Outfit Ideas for Inverted Triangle Shapes",
+                        url: "https://www.autumlove.com/blog/inverted-triangle-body-shape-outfits",
+                        image: "assets/thumbnails/inverted2.jpg",
+                        description: "Flexible outfit combos to create harmony and proportion for inverted triangle frames."
+                    }
+                    ];
                     break;
                 case 'hourglass':
                     recommendation = `
@@ -294,13 +320,21 @@ FeatureHandler.registerFeature('quiz', {
                         <li>Bodycon dresses or outfits that show curves work well.</li>
                         <li>Avoid shapeless, boxy clothes that hide your waist.</li>
                     </ul>`;
-                    articles = `
-                    <h3>Outfit Article Recommendations:</h3>
-                    <ul>
-                        <li><a href="https://www.stylecraze.com/articles/outfits-for-hourglass-body-shape/" target="_blank">Outfits for Hourglass - StyleCraze</a></li>
-                        <li><a href="https://theconceptwardrobe.com/build-a-wardrobe/hourglass-body-shape target="_blank">Fashion Tips for Hourglass - InStyle</a></li>
-                    </ul>`;
-                    break;
+                    articleList = [
+                {
+                    title: "25 Outfit Ideas for the Hourglass Body Shape",
+                    url: "https://wonder-wardrobe.com/blog/curvy-hourglass-wardrobe",
+                    image: "assets/thumbnails/hourglass1.jpg",
+                    description: "Sustainable and stylish ways to highlight your curves and waistline."
+                },
+                {
+                    title: "Wardrobe Essentials for Hourglass Shape",
+                    url: "https://bodytypefashion.com/hourglass-essentials/",
+                    image: "assets/thumbnails/hourglass2.jpg",
+                    description: "Must-have pieces and styling tips to flatter your hourglass figure."
+                }
+                ];
+                break;
                 case 'rectangle':
                     recommendation = `
                     Your body shape is Rectangle ▭.<br>
@@ -309,14 +343,48 @@ FeatureHandler.registerFeature('quiz', {
                         <li>Layered outfits or ruffles add dimension.</li>
                         <li>Avoid straight-cut outfits that hide the waist completely.</li>
                     </ul>`;
-                    articles = `
-                    <h3>Outfit Article Recommendations:</h3>
-                    <ul>
-                        <li><a href="https://www.stylecraze.com/articles/outfits-for-rectangle-body-shape/" target="_blank">Outfits for Rectangle - StyleCraze</a></li>
-                        <li><a href="https://theconceptwardrobe.com/build-a-wardrobe/how-to-dress-the-rectangle-body-shape" target="_blank">Fashion Tips for Rectangle - InStyle</a></li>
-                    </ul>`;
-                    break;
+                    articleList = [
+                {
+                    title: "25 Stunning Outfit Ideas for Rectangle Body Shape",
+                    url: "https://hervoguelife.com/outfit-ideas-for-rectangle-body-shape/",
+                    image: "assets/thumbnails/rectangle1.jpg",
+                    description: "Create curves and dimension with strategic styling for rectangle frames."
+                },
+                {
+                    title: "Fashion Guide for Rectangle Body Shape",
+                    url: "https://www.mychicobsession.com/rectangle-body-shape-outfits/",
+                    image: "assets/thumbnails/rectangle2.jpg",
+                    description: "Layering, ruffles, and fitted styles to define your waist and add shape."
+                }
+                ];
+                break;
+
+                case 'apple':
+                recommendation = `
+                Your body shape is Apple 🍎.<br>
+                <ul>
+                    <li>Draw attention away from the midsection with V-neck or empire-line tops.</li>
+                    <li>Choose clothing that elongates the torso, like vertical patterns or flowy fabrics.</li>
+                    <li>Structured jackets or cardigans can help define your shoulders and balance your look.</li>
+                    <li>Avoid tight-fitting tops or belts around the waist.</li>
+                </ul>`;
+                articleList = [
+                {
+                    title: "17 Outfits That Actually Work For Apple-Shaped Bodies",
+                    url: "https://trendyuniverse.com/outfits-for-apple-shaped-bodies/",
+                    image: "assets/thumbnails/apple1.jpg",
+                    description: "Empire waists, wrap dresses, and A-line styles to flatter your apple shape."
+                },
+                {
+                    title: "Top 17 Apple Body Shape Outfits For Women",
+                    url: "https://fashionuer.com/fashion/outfits/apple-body-shape-outfits/",
+                    image: "assets/thumbnails/apple2.jpg",
+                    description: "Smart styling tips to shift focus upward and balance your silhouette."
+                }
+                ];
+                break;
             }
+            
 
             if (FeatureHandler.getCurrentUser()) {
                 fetch('/quiz', {
@@ -346,11 +414,60 @@ FeatureHandler.registerFeature('quiz', {
             // Tampilkan hasil quiz di bawah quizBox
             document.getElementById('quiz-result').classList.remove('hidden');
             document.getElementById('quiz-review').classList.add('hidden');
-            document.getElementById('quizResultContent').innerHTML = `
-                <p><strong>Body Shape:</strong> ${result.charAt(0).toUpperCase() + result.slice(1)}</p>
-                <p><strong>Style Recommendations:</strong> ${recommendation}</p>
-                ${articles}
-            `;
+            const imagePath = `assets/body-shapes/${result}.jpg`;
+const imageHTML = `<img src="${imagePath}" alt="${result} shape" style="max-width:200px; margin:1rem auto;">`;
+
+let slidesHTML = '<div class="article-slideshow">';
+articleList.forEach((a, i) => {
+  slidesHTML += `
+    <div class="slide" style="display: ${i === 0 ? 'block' : 'none'};">
+      <img src="${a.image}" alt="${a.title}" class="article-thumb">
+      <h4>${a.title}</h4>
+      <p>${a.description}</p>
+      <a href="${a.url}" target="_blank">Read More</a>
+    </div>
+  `;
+});
+slidesHTML += `
+  <button id="prevSlide">⟨</button>
+  <button id="nextSlide">⟩</button>
+</div>
+`;
+
+document.getElementById('quizResultContent').innerHTML = `
+  <div class="quiz-result-card">
+    <div class="result-header">
+      <img src="${imagePath}" alt="${result} shape" class="result-image">
+      <div class="result-info">
+        <h2>${result.charAt(0).toUpperCase() + result.slice(1)} Body Shape</h2>
+        ${recommendation}
+      </div>
+    </div>
+    <h3 style="margin-top:2rem;">Outfit Article Recommendations</h3>
+    ${slidesHTML}
+  </div>
+`;
+
+
+
+setTimeout(() => {
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  document.getElementById('prevSlide').onclick = () => {
+    slides[currentSlide].style.display = 'none';
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    slides[currentSlide].style.display = 'block';
+  };
+  document.getElementById('nextSlide').onclick = () => {
+    slides[currentSlide].style.display = 'none';
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].style.display = 'block';
+  };
+}, 100);
+
+
+
+
 
             this.lastQuizAnswers = { answers: { ...this.answers }, result, recommendation };
             // Tidak perlu simpan ke localStorage, cukup POST ke server
@@ -368,6 +485,21 @@ FeatureHandler.registerFeature('quiz', {
                 throw new Error('quizReviewContent element not found');
             }
             reviewDiv.innerHTML = '';
+            setTimeout(() => {
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  document.getElementById('prevSlide').onclick = () => {
+    slides[currentSlide].style.display = 'none';
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    slides[currentSlide].style.display = 'block';
+  };
+  document.getElementById('nextSlide').onclick = () => {
+    slides[currentSlide].style.display = 'none';
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].style.display = 'block';
+  };
+}, 100);
+
 
             const { answers } = this.lastQuizAnswers || { answers: {} };
             this.quizQuestions.forEach((q, idx) => {
@@ -424,46 +556,143 @@ FeatureHandler.registerFeature('quiz', {
             document.getElementById('quizOptions').style.display = 'none';
             document.querySelector('.quiz-nav').style.display = 'none';
             const { result, recommendation } = this.lastQuizAnswers || {};
-            let articles = '';
+            let articleList = [];
             switch (result) {
+                
                 case 'pear':
-                    articles = `
-                    <h3>Rekomendasi Artikel Outfit:</h3>
-                    <ul>
-                        <li><a href="https://www.stylecraze.com/articles/outfits-for-pear-shaped-body/" target="_blank">Outfits for Pear Shaped Body - StyleCraze</a></li>
-                        <li><a href="https://www.instyle.com/pear-shaped-body-fashion-tips-7973072" target="_blank">Fashion Tips for Pear Shaped Body - InStyle</a></li>
-                    </ul>`;
-                    break;
+                    articleList = [
+                {
+                    title: "17 Outfits That Actually Work For Pear-Shaped Bodies",
+                    url: "https://trendyuniverse.com/outfits-for-pear-shaped-bodies/",
+                    image: "assets/thumbnails/pear1.jpg",
+                    description: "Game-changing outfit ideas to balance curves and flatter your pear shape."
+                },
+                {
+                    title: "50+ Stunning Outfit Ideas for Pear Shaped Women",
+                    url: "https://hervoguelife.com/outfit-ideas-for-pear-shaped-women/",
+                    image: "assets/thumbnails/pear2.jpg",
+                    description: "From casual to formal, discover flattering styles for pear-shaped figures."
+                }
+                ];
+                break;
                 case 'inverted':
-                    articles = `
-                    <h3>Rekomendasi Artikel Outfit:</h3>
-                    <ul>
-                        <li><a href="https://www.stylecraze.com/articles/outfits-for-inverted-triangle-body-shape/" target="_blank">Outfits for Inverted Triangle - StyleCraze</a></li>
-                        <li><a href="https://www.instyle.com/inverted-triangle-body-fashion-tips-7973073" target="_blank">Fashion Tips for Inverted Triangle - InStyle</a></li>
-                    </ul>`;
+                    articleList = [
+                    {
+                        title: "How to Dress an Inverted Triangle Body Shape",
+                        url: "https://www.mychicobsession.com/inverted-triangle-body-shape-outfits/",
+                        image: "assets/thumbnails/inverted1.jpg",
+                        description: "Balance your silhouette with styles that soften shoulders and enhance lower body."
+                    },
+                    {
+                        title: "60 Outfit Ideas for Inverted Triangle Shapes",
+                        url: "https://www.autumlove.com/blog/inverted-triangle-body-shape-outfits",
+                        image: "assets/thumbnails/inverted2.jpg",
+                        description: "Flexible outfit combos to create harmony and proportion for inverted triangle frames."
+                    }
+                    ];
                     break;
                 case 'hourglass':
-                    articles = `
-                    <h3>Rekomendasi Artikel Outfit:</h3>
-                    <ul>
-                        <li><a href="https://www.stylecraze.com/articles/outfits-for-hourglass-body-shape/" target="_blank">Outfits for Hourglass - StyleCraze</a></li>
-                        <li><a href="https://www.instyle.com/hourglass-body-fashion-tips-7973074" target="_blank">Fashion Tips for Hourglass - InStyle</a></li>
-                    </ul>`;
-                    break;
+                    articleList = [
+                {
+                    title: "25 Outfit Ideas for the Hourglass Body Shape",
+                    url: "https://wonder-wardrobe.com/blog/curvy-hourglass-wardrobe",
+                    image: "assets/thumbnails/hourglass1.jpg",
+                    description: "Sustainable and stylish ways to highlight your curves and waistline."
+                },
+                {
+                    title: "Wardrobe Essentials for Hourglass Shape",
+                    url: "https://bodytypefashion.com/hourglass-essentials/",
+                    image: "assets/thumbnails/hourglass2.jpg",
+                    description: "Must-have pieces and styling tips to flatter your hourglass figure."
+                }
+                ];
+                break;
                 case 'rectangle':
-                    articles = `
-                    <h3>Rekomendasi Artikel Outfit:</h3>
-                    <ul>
-                        <li><a href="https://www.stylecraze.com/articles/outfits-for-rectangle-body-shape/" target="_blank">Outfits for Rectangle - StyleCraze</a></li>
-                        <li><a href="https://www.instyle.com/rectangle-body-fashion-tips-7973075" target="_blank">Fashion Tips for Rectangle - InStyle</a></li>
-                    </ul>`;
-                    break;
+                    articleList = [
+                {
+                    title: "25 Stunning Outfit Ideas for Rectangle Body Shape",
+                    url: "https://hervoguelife.com/outfit-ideas-for-rectangle-body-shape/",
+                    image: "assets/thumbnails/rectangle1.jpg",
+                    description: "Create curves and dimension with strategic styling for rectangle frames."
+                },
+                {
+                    title: "Fashion Guide for Rectangle Body Shape",
+                    url: "https://www.mychicobsession.com/rectangle-body-shape-outfits/",
+                    image: "assets/thumbnails/rectangle2.jpg",
+                    description: "Layering, ruffles, and fitted styles to define your waist and add shape."
+                }
+                ];
+                break;
+                case 'apple':
+                    articleList = [
+                {
+                    title: "17 Outfits That Actually Work For Apple-Shaped Bodies",
+                    url: "https://trendyuniverse.com/outfits-for-apple-shaped-bodies/",
+                    image: "assets/thumbnails/apple1.jpg",
+                    description: "Empire waists, wrap dresses, and A-line styles to flatter your apple shape."
+                },
+                {
+                    title: "Top 17 Apple Body Shape Outfits For Women",
+                    url: "https://fashionuer.com/fashion/outfits/apple-body-shape-outfits/",
+                    image: "assets/thumbnails/apple2.jpg",
+                    description: "Smart styling tips to shift focus upward and balance your silhouette."
+                }
+                ];
+                break;
+
             }
-            document.getElementById('quizResultContent').innerHTML = `
-                <p><strong>Body Shape:</strong> ${result ? result.charAt(0).toUpperCase() + result.slice(1) : ''}</p>
-                <p><strong>Style Recommendations:</strong> ${recommendation || ''}</p>
-                ${articles}
-            `;
+            let slidesHTML = '<div class="article-slideshow">';
+articleList.forEach((a, i) => {
+  slidesHTML += `
+    <div class="slide" style="display: ${i === 0 ? 'block' : 'none'};">
+      <img src="${a.image}" alt="${a.title}" class="article-thumb">
+      <h4>${a.title}</h4>
+      <p>${a.description}</p>
+      <a href="${a.url}" target="_blank">Read More</a>
+    </div>
+  `;
+});
+slidesHTML += `
+  <button id="prevSlide">⟨</button>
+  <button id="nextSlide">⟩</button>
+</div>
+`;
+
+            const imagePath = `assets/body-shapes/${result}.jpg`;
+const imageHTML = `<img src="${imagePath}" alt="${result} shape" style="max-width:200px; margin:1rem auto;">`;
+
+document.getElementById('quizResultContent').innerHTML = `
+  <div class="quiz-result-card">
+    <div class="result-header">
+      <img src="${imagePath}" alt="${result} shape" class="result-image">
+      <div class="result-info">
+        <h2>${result.charAt(0).toUpperCase() + result.slice(1)} Body Shape</h2>
+        ${recommendation}
+      </div>
+    </div>
+    <h3 style="margin-top:2rem;">Outfit Article Recommendations</h3>
+    ${slidesHTML}
+  </div>
+`;
+
+
+setTimeout(() => {
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  document.getElementById('prevSlide').onclick = () => {
+    slides[currentSlide].style.display = 'none';
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    slides[currentSlide].style.display = 'block';
+  };
+  document.getElementById('nextSlide').onclick = () => {
+    slides[currentSlide].style.display = 'none';
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].style.display = 'block';
+  };
+}, 100);
+
+
+
         } catch (err) {
             console.error('Show saved quiz result error:', err.message);
         }

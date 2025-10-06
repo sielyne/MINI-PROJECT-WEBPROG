@@ -42,3 +42,11 @@
 .card button:hover {
   background: linear-gradient(90deg, #a1c4fd 0%, #fcb7ff 100%);
 }
+
+/* Dark mode for dashboard */
+@media (prefers-color-scheme: dark) {
+  .card h3,
+  .card p{
+    color: #6a82fb !important;
+  }
+}

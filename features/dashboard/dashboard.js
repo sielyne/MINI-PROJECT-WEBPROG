@@ -45,7 +45,7 @@ FeatureHandler.registerFeature('dashboard', {
           document.getElementById('mood-icon').textContent = icons[todayMood.mood] || '-';
           document.getElementById('mood-note').textContent = todayMood.note || '-';
         } else {
-          document.getElementById('mood-icon').textContent = 'Belum diisi';
+          document.getElementById('mood-icon').textContent = ' (Not filled)';
           document.getElementById('mood-note').textContent = '-';
         }
       });
@@ -59,7 +59,7 @@ FeatureHandler.registerFeature('dashboard', {
           const last = data[data.length - 1];
           document.getElementById('quiz-result').textContent = last.result || '-';
         } else {
-          document.getElementById('quiz-result').textContent = 'Belum diisi';
+          document.getElementById('quiz-result').textContent = '(Not filled)';
         }
       });
   }

@@ -58,3 +58,9 @@
 .cta:hover {
   background: linear-gradient(90deg, #6a82fb 0%, #34d399 100%);
 }
+
+@media (prefers-color-scheme: dark) {
+  .card h3 {
+    color: #6a82fb !important;
+  }
+}

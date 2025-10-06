@@ -40,3 +40,10 @@
 .blog-card a:hover {
   text-decoration: underline;
 }
+
+/* Dark mode: keep blog titles blue */
+@media (prefers-color-scheme: dark) {
+  .blog-card h3 {
+    color: #6a82fb !important;
+  }
+}

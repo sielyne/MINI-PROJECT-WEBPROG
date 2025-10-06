@@ -28,3 +28,11 @@
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
+
+/* Dark mode for account center/profile */
+@media (prefers-color-scheme: dark) {
+  .profile-section h3,
+  .profile-section li {
+    color: #4a88e5 !important;
+  }
+}

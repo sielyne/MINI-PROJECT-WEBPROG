@@ -116,6 +116,15 @@ button:active {
     transform: translateY(0);
 }
 
+/* Skip button - slightly different style */
+#skipJournalBtn {
+    background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 100%);
+}
+
+#skipJournalBtn:hover {
+    background: linear-gradient(90deg, #94a3b8 0%, #cbd5e1 100%);
+}
+
 /* Calendar navigation */
 .calendar-nav {
     display: flex;
@@ -235,10 +244,29 @@ button:active {
     font-size: 1.1rem;
 }
 
+@media (prefers-color-scheme: dark) {
+    .mood-count-title h3,
+    .mood-count-list,
+    .mood-count-list span,
+    .today-mood-title h3,
+    .mood-count-list b {
+        color: #000 !important;
+    }
+}
+
 .mood-count-list {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+        .today-mood-title h3,
+        .today-mood-box,
+        .today-mood-detail,
+        .today-mood-name,
+        .today-note,
+        .no-mood-today {
+            color: #000 !important;
+        }
     font-size: 1rem;
 }
 
@@ -290,6 +318,7 @@ button:active {
     font-size: 0.95rem;
     line-height: 1.5;
     margin-top: 0.5rem;
+    font-style: italic;
 }
 
 .no-mood-today {

@@ -215,6 +215,14 @@
         "weight": 45,
         "value": "15.57",
         "status": "Underweight"
+      },
+      {
+        "id": 2,
+        "date": "2025-10-06",
+        "height": 177,
+        "weight": 55,
+        "value": "17.56",
+        "status": "Underweight"
       }
     ],
     "moods": [
@@ -223,6 +231,12 @@
         "date": "2025-09-30",
         "mood": "happy",
         "note": "too hot yup"
+      },
+      {
+        "id": 2,
+        "date": "2025-10-06",
+        "mood": "fear",
+        "note": ""
       }
     ],
     "quiz": [
@@ -267,6 +281,20 @@
         },
         "result": "hourglass",
         "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+      },
+      {
+        "id": 4,
+        "date": "2025-10-06",
+        "answers": {
+          "shape1": "hourglass",
+          "shape2": "inverted",
+          "shape3": "hourglass",
+          "shape4": "inverted",
+          "shape5": "inverted",
+          "shape6": "rectangle"
+        },
+        "result": "inverted",
+        "recommendation": "\n                    Your body shape is Inverted Triangle 🔺.<br>\n                    <ul>\n                        <li>Wear simple tops to minimize shoulder width.</li>\n                        <li>Flared or wide-leg pants can add volume to lower body.</li>\n                        <li>Avoid shoulder pads or heavily decorated tops.</li>\n                    </ul>"
       }
     ]
   },

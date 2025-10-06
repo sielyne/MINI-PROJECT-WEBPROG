@@ -7,6 +7,7 @@ FeatureHandler.registerFeature('mood', {
     init() {
         document.getElementById('moodBackBtn').addEventListener('click', () => FeatureHandler.showPage('menu'));
         document.getElementById('saveJournalBtn').addEventListener('click', () => this.saveJournal());
+        document.getElementById('skipJournalBtn').addEventListener('click', () => this.skipJournal());
         document.getElementById('cancelMoodBtn').addEventListener('click', () => this.cancelMood());
         document.getElementById('moodCalendarBackBtn').addEventListener('click', () => FeatureHandler.showPage('menu'));
         document.getElementById('prevMonthBtn').addEventListener('click', () => this.navigateMonth(-1));
@@ -31,21 +32,16 @@ FeatureHandler.registerFeature('mood', {
                 const todayStr = new Date().toISOString().split('T')[0];
                 const todayMood = this.allMoodData.find(m => m.date === todayStr);
                 
-                if (todayMood && todayMood.note) {
-                    // Sudah isi mood & journal, langsung ke calendar
+                if (todayMood) {
+                    // Sudah ada mood hari ini (dengan atau tanpa journal), langsung ke calendar
                     this.showStep(3);
                     this.loadMoodCalendar();
-                } else if (todayMood && !todayMood.note) {
-                    // Sudah pilih mood, belum isi journal
-                    this.showStep(2);
-                    this.selectedMood = todayMood.mood;
                 } else {
                     // Belum pilih mood
                     this.showStep(1);
                 }
             })
             .catch(() => {
-                // Default ke step 1 jika gagal ambil data
                 this.showStep(1);
             });
     },
@@ -64,32 +60,65 @@ FeatureHandler.registerFeature('mood', {
             return;
         }
         
-        // Simpan mood tanpa journal
-        fetch('/mood', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ 
-                username: FeatureHandler.getCurrentUser(), 
-                mood: this.selectedMood, 
-                note: '' 
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                this.showStep(2);
-            }
-        })
-        .catch(err => {
-            console.error('Save mood error:', err);
-            alert('Error saving mood. Please try again.');
-        });
+        // Langsung ke step 2 untuk menulis journal (atau skip)
+        this.showStep(2);
     },
 
     cancelMood() {
         this.selectedMood = null;
         document.getElementById('mood-note').value = '';
         this.showStep(1);
+    },
+
+    skipJournal() {
+        // Simpan mood tanpa journal (note kosong)
+        this.saveJournal(true);
+    },
+
+    saveJournal(skipNote = false) {
+        const note = skipNote ? '' : document.getElementById('mood-note').value.trim();
+        
+        if (!FeatureHandler.getCurrentUser()) {
+            alert('Please log in to save journal');
+            FeatureHandler.showPage('login');
+            return;
+        }
+        
+        if (!this.selectedMood) {
+            alert('Please select mood first');
+            return;
+        }
+        
+        // Simpan mood dan journal (bisa kosong)
+        fetch('/mood', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                username: FeatureHandler.getCurrentUser(), 
+                mood: this.selectedMood, 
+                note: note 
+            })
+        })
+        .then(res => {
+            if (!res.ok) {
+                throw new Error(`HTTP error! status: ${res.status}`);
+            }
+            return res.json();
+        })
+        .then(data => {
+            if (data.success) {
+                document.getElementById('mood-note').value = '';
+                this.selectedMood = null;
+                this.showStep(3);
+                this.loadMoodCalendar();
+            } else {
+                alert(data.message || 'Failed to save. Please try again.');
+            }
+        })
+        .catch(err => {
+            console.error('Save journal error:', err);
+            alert('Error saving journal. Please try again.');
+        });
     },
 
     editMood(id) {
@@ -103,36 +132,36 @@ FeatureHandler.registerFeature('mood', {
         if (!moodData) return;
         
         let newMood = prompt("New mood (happy, neutral, sad, angry, fear, disgusted):", moodData.mood);
-        if (newMood === null) return; // User cancelled
+        if (newMood === null) return;
         
-        let newNote = prompt("New note:", moodData.note);
-        if (newNote === null) return; // User cancelled
+        let newNote = prompt("New note (leave empty to skip):", moodData.note || '');
+        if (newNote === null) return;
         
-        if (newMood && newNote) {
-            fetch('/mood', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    username: FeatureHandler.getCurrentUser(), 
-                    id, 
-                    mood: newMood, 
-                    note: newNote 
-                })
+        fetch('/mood', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                username: FeatureHandler.getCurrentUser(), 
+                id, 
+                mood: newMood.trim() || moodData.mood, 
+                note: newNote.trim()
             })
-            .then(res => {
-                if (!res.ok) throw new Error('Error updating mood');
-                return res.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    this.loadMoodCalendar();
-                }
-            })
-            .catch(err => {
-                console.error('Edit mood error:', err);
-                alert('Error updating mood. Please try again.');
-            });
-        }
+        })
+        .then(res => {
+            if (!res.ok) throw new Error('Error updating mood');
+            return res.json();
+        })
+        .then(data => {
+            if (data.success) {
+                this.loadMoodCalendar();
+            } else {
+                alert(data.message || 'Failed to update. Please try again.');
+            }
+        })
+        .catch(err => {
+            console.error('Edit mood error:', err);
+            alert('Error updating mood. Please try again.');
+        });
     },
 
     deleteMood(id) {
@@ -158,91 +187,13 @@ FeatureHandler.registerFeature('mood', {
             .then(data => {
                 if (data.success) {
                     this.loadMoodCalendar();
+                } else {
+                    alert(data.message || 'Failed to delete. Please try again.');
                 }
             })
             .catch(err => {
                 console.error('Delete mood error:', err);
                 alert('Error deleting mood. Please try again.');
-            });
-        }
-    },
-
-    saveJournal() {
-        const note = document.getElementById('mood-note').value.trim();
-        
-        if (!FeatureHandler.getCurrentUser()) {
-            alert('Please log in to save journal');
-            FeatureHandler.showPage('login');
-            return;
-        }
-        
-        if (!this.selectedMood) {
-            alert('Please select mood first');
-            return;
-        }
-        
-        if (!note) {
-            alert('Please write your journal');
-            return;
-        }
-        
-        // Update mood hari ini dengan journal (menggunakan PUT untuk update)
-        const todayStr = new Date().toISOString().split('T')[0];
-        const todayMood = this.allMoodData.find(m => m.date === todayStr);
-        
-        if (todayMood && todayMood.id) {
-            // Update existing mood dengan journal
-            fetch('/mood', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    username: FeatureHandler.getCurrentUser(),
-                    id: todayMood.id,
-                    mood: this.selectedMood, 
-                    note 
-                })
-            })
-            .then(res => {
-                if (!res.ok) throw new Error('Error updating journal');
-                return res.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('mood-note').value = '';
-                    this.showStep(3);
-                    this.loadMoodCalendar();
-                } else {
-                    alert('Failed to save journal. Please try again.');
-                }
-            })
-            .catch(err => {
-                console.error('Save journal error:', err);
-                alert('Error saving journal. Please try again.');
-            });
-        } else {
-            // Jika belum ada mood (fallback), create new
-            fetch('/mood', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    username: FeatureHandler.getCurrentUser(), 
-                    mood: this.selectedMood, 
-                    note 
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById('mood-note').value = '';
-                    this.showStep(3);
-                    this.loadMoodCalendar();
-                } else {
-                    alert('Failed to save journal. Please try again.');
-                }
-            })
-            .catch(err => {
-                console.error('Save journal error:', err);
-                alert('Error saving journal. Please try again.');
             });
         }
     },
@@ -288,12 +239,10 @@ FeatureHandler.registerFeature('mood', {
 
         let calendarHTML = '';
         
-        // Empty cells before first day
         for (let i = 0; i < firstDay; i++) {
             calendarHTML += `<div class='calendar-day empty'></div>`;
         }
         
-        // Days of the month
         for (let d = 1; d <= daysInMonth; d++) {
             let dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
             let mood = moods.find(m => m.date === dateStr);
@@ -325,20 +274,17 @@ FeatureHandler.registerFeature('mood', {
             document.getElementById('calendar').innerHTML += '<div class="no-moods-msg">No moods recorded this month</div>';
         }
 
-        // Add click handlers to toggle mood actions
         document.querySelectorAll('.calendar-day.has-mood').forEach(dayEl => {
             dayEl.addEventListener('click', (e) => {
                 const dateStr = dayEl.dataset.date;
                 const actionsDiv = dayEl.querySelector('.mood-actions');
                 
-                // Close all other open actions first
                 document.querySelectorAll('.calendar-day .mood-actions').forEach(el => {
                     if (el !== actionsDiv) {
                         el.classList.add('hidden');
                     }
                 });
                 
-                // Toggle current actions
                 if (actionsDiv.classList.contains('hidden')) {
                     actionsDiv.classList.remove('hidden');
                     this.showMoodNote(dateStr);
@@ -385,7 +331,7 @@ FeatureHandler.registerFeature('mood', {
                    <div class='today-mood-detail'>
                        <span class='today-icon'>${this.getMoodIcon(todayMood.mood)}</span> 
                        <span class='today-mood-name'>${todayMood.mood}</span>
-                       <p class='today-note'>${todayMood.note}</p>
+                       <p class='today-note'>${todayMood.note || 'No journal entry'}</p>
                    </div>
                </div>`
             : `<div class='today-mood-title'>
@@ -422,7 +368,8 @@ FeatureHandler.registerFeature('mood', {
     showMoodNote(dateStr) {
         const mood = this.allMoodData.find(m => m.date === dateStr);
         if (mood) {
-            alert(`Mood on ${dateStr}:\n\n${this.getMoodIcon(mood.mood)} ${mood.mood}\n\nNote: ${mood.note}`);
+            const noteText = mood.note ? `\n\nNote: ${mood.note}` : '\n\nNo journal entry';
+            alert(`Mood on ${dateStr}:\n\n${this.getMoodIcon(mood.mood)} ${mood.mood}${noteText}`);
         }
     },
 

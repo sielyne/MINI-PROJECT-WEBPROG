@@ -99,6 +99,25 @@
   color: #555;
 }
 
+@media (prefers-color-scheme: dark) {
+  .result-info h2 {
+    color: #6a82fb !important;
+  }
+  #quizResultContent h2,
+  #quizResultContent h3,
+  .quiz-result-card h2,
+  .quiz-result-card h3,
+  .article-slideshow h3,
+  .article-slideshow h2,
+  .quiz-header h2,
+  .quiz-header h3 {
+    color: #6a82fb !important;
+  }
+    #quizResultContent p,
+    .quiz-result-card p {
+      color: #6a82fb !important;
+    }
+
 .slide {
   display: none;
   animation: fadeIn 0.4s ease-in-out;

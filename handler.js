@@ -97,19 +97,15 @@ const FeatureHandler = {
         }
         this.showPage('login');
 
-        // Set username in header
-        const profileIcon = document.getElementById('profileIcon');
-        if (profileIcon) {
-            profileIcon.addEventListener('click', () => {
-                this.showPage('profile');
-            });
-        }
-
-        const username = this.getCurrentUser();
-        if (username) {
-            const headerName = document.getElementById('header-username');
-            if (headerName) headerName.textContent = `Hi, ${username}`;
-        }
+        
+      // Set username in header
+      this.updateHeaderUsername();
+      const profileIcon = document.getElementById('profileIcon');
+      if (profileIcon) {
+        profileIcon.addEventListener('click', () => {
+          this.showPage('profile');
+        });
+      }
 
         // Toggle nav menu
         const hamburger = document.getElementById('hamburgerBtn');
@@ -128,6 +124,18 @@ const FeatureHandler = {
                 this.showPage('login');
             });
         }
+    },
+
+    
+    updateHeaderUsername() {
+      const headerName = document.getElementById('header-username');
+      if (headerName) {
+        if (this.currentUser) {
+          headerName.textContent = `Hi, ${this.currentUser}`;
+        } else {
+          headerName.textContent = '';
+        }
+      }
     }
 };
 

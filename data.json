@@ -342,5 +342,22 @@
         "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
       }
     ]
+  },
+  {
+    "id": 7,
+    "username": "a1233",
+    "password": "$2b$10$ixQZBnBgveE4F.hr5CAVau2SCuI34KY2L5xz7MdwVMZX5XVx7bhdi",
+    "bmi": [
+      {
+        "id": 1,
+        "date": "2025-10-07",
+        "height": 156,
+        "weight": 45,
+        "value": "18.49",
+        "status": "Underweight"
+      }
+    ],
+    "moods": [],
+    "quiz": []
   }
 ]

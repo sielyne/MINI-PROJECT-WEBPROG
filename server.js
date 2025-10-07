@@ -19,6 +19,76 @@ function saveData(data) {
 }
 
 const server = http.createServer((req, res) => {
+
+    // Update user (username/password)
+    if (req.method === 'PUT' && req.url === '/user-update') {
+        let body = '';
+        req.on('data', chunk => { body += chunk.toString(); });
+        req.on('end', () => {
+            try {
+                const parsed = JSON.parse(body);
+                let data = loadData();
+                const user = data.find(u => u.username === parsed.oldUsername);
+                if (!user) {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'User not found' }));
+                }
+                // Cek jika username baru sudah dipakai user lain
+                if (parsed.newUsername && parsed.newUsername !== parsed.oldUsername) {
+                    if (data.some(u => u.username === parsed.newUsername)) {
+                        res.writeHead(400, { 'Content-Type': 'application/json' });
+                        return res.end(JSON.stringify({ error: 'Username already taken' }));
+                    }
+                    user.username = parsed.newUsername;
+                }
+                if (parsed.newPassword) {
+                    bcrypt.hash(parsed.newPassword, 10, (err, hash) => {
+                        if (err) {
+                            res.writeHead(500, { 'Content-Type': 'application/json' });
+                            return res.end(JSON.stringify({ error: 'Error hashing password' }));
+                        }
+                        user.password = hash;
+                        saveData(data);
+                        res.writeHead(200, { 'Content-Type': 'application/json' });
+                        res.end(JSON.stringify({ success: true, username: user.username }));
+                    });
+                } else {
+                    saveData(data);
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ success: true, username: user.username }));
+                }
+            } catch (err) {
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Internal server error' }));
+            }
+        });
+        return;
+    }
+
+    // Delete user
+    if (req.method === 'DELETE' && req.url === '/user-delete') {
+        let body = '';
+        req.on('data', chunk => { body += chunk.toString(); });
+        req.on('end', () => {
+            try {
+                const parsed = JSON.parse(body);
+                let data = loadData();
+                const idx = data.findIndex(u => u.username === parsed.username);
+                if (idx === -1) {
+                    res.writeHead(404, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'User not found' }));
+                }
+                data.splice(idx, 1);
+                saveData(data);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: true }));
+            } catch (err) {
+                res.writeHead(500, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Internal server error' }));
+            }
+        });
+        return;
+    }
     // Serve JavaScript files
     if (req.method === 'GET' && (req.url === '/handler.js' || (req.url.startsWith('/features/') && req.url.endsWith('.js')))) {
         const jsPath = path.join(__dirname, req.url);

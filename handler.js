@@ -75,7 +75,12 @@ const FeatureHandler = {
 
     // Set current user
     setCurrentUser(username) {
-        this.currentUser = username;
+    this.currentUser = username;
+    if (username) {
+      localStorage.setItem('bloomii-username', username);
+    } else {
+      localStorage.removeItem('bloomii-username');
+    }
     },
 
     // Get current user
@@ -85,42 +90,44 @@ const FeatureHandler = {
 
     // Initialize app
     init() {
+        // Sync currentUser from localStorage if available
+        const storedUser = localStorage.getItem('bloomii-username');
+        if (storedUser) {
+            this.currentUser = storedUser;
+        }
         this.showPage('login');
 
         // Set username in header
+        const profileIcon = document.getElementById('profileIcon');
+        if (profileIcon) {
+            profileIcon.addEventListener('click', () => {
+                this.showPage('profile');
+            });
+        }
 
-const profileIcon = document.getElementById('profileIcon');
-if (profileIcon) {
-  profileIcon.addEventListener('click', () => {
-    this.showPage('profile');
-  });
-}
+        const username = this.getCurrentUser();
+        if (username) {
+            const headerName = document.getElementById('header-username');
+            if (headerName) headerName.textContent = `Hi, ${username}`;
+        }
 
-  const username = this.getCurrentUser();
-  if (username) {
-    const headerName = document.getElementById('header-username');
-    if (headerName) headerName.textContent = `Hi, ${username}`;
-  }
+        // Toggle nav menu
+        const hamburger = document.getElementById('hamburgerBtn');
+        const nav = document.getElementById('header-nav');
+        if (hamburger && nav) {
+            hamburger.addEventListener('click', () => {
+                nav.classList.toggle('hidden');
+            });
+        }
 
-  // Toggle nav menu
-  const hamburger = document.getElementById('hamburgerBtn');
-  const nav = document.getElementById('header-nav');
-  if (hamburger && nav) {
-    hamburger.addEventListener('click', () => {
-      nav.classList.toggle('hidden');
-    });
-  }
-
-
-  // Logout
-  const navLogout = document.getElementById('navLogoutBtn');
-    if (navLogout) {
-    navLogout.addEventListener('click', () => {
-        this.setCurrentUser(null);
-        this.showPage('login');
-    });
-    }
-
+        // Logout
+        const navLogout = document.getElementById('navLogoutBtn');
+        if (navLogout) {
+            navLogout.addEventListener('click', () => {
+                this.setCurrentUser(null);
+                this.showPage('login');
+            });
+        }
     }
 };
 

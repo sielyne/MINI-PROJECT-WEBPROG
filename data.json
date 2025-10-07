@@ -206,7 +206,7 @@
   {
     "id": 4,
     "username": "temen",
-    "password": "$2b$10$9Gpb6eVe1Q.9uB9Tcf/iG.lw8Nc./xIRisYiIG5lk1.48CV2jC2h.",
+    "password": "$2b$10$TOD50xI03P4JF/YWSHJXpOOB6A8uG8mvR/sYk3H7bMNb8UwWoaFH6",
     "bmi": [
       {
         "id": 1,
@@ -385,14 +385,6 @@
         "status": "Underweight"
       }
     ],
-    "moods": [],
-    "quiz": []
-  },
-  {
-    "id": 8,
-    "username": "temen11",
-    "password": "$2b$10$Lu295yGf6bUMyWRGkK9mx.zTvzkhW7NF739ykVmei6oQtlBUA0ekW",
-    "bmi": [],
     "moods": [],
     "quiz": []
   }

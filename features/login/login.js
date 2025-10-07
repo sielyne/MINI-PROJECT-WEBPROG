@@ -1,26 +1,33 @@
 FeatureHandler.registerFeature('login', {
     init() {
-        document.getElementById('registerBtn').addEventListener('click', () => this.showForm('register'));
-        document.getElementById('loginBtn').addEventListener('click', () => this.showForm('login'));
-        document.getElementById('backBtn').addEventListener('click', () => this.backToChoice());
-        document.getElementById('user-form').addEventListener('submit', (e) => this.handleSubmit(e));
-        FeatureHandler.registerFeature('login', {
-  init() {
-    const toggleBtn = document.getElementById('themeToggleBtn');
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-      });
-
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark') {
-        document.body.classList.add('dark-mode');
-      }
-    }
-  }
-});
-
+        const regBtn = document.getElementById('registerBtn');
+        const logBtn = document.getElementById('loginBtn');
+        const backBtn = document.getElementById('backBtn');
+        const userForm = document.getElementById('user-form');
+        if (regBtn) {
+            regBtn.onclick = () => this.showForm('register');
+        }
+        if (logBtn) {
+            logBtn.onclick = () => this.showForm('login');
+        }
+        if (backBtn) {
+            backBtn.onclick = () => this.backToChoice();
+        }
+        if (userForm) {
+            userForm.onsubmit = (e) => this.handleSubmit(e);
+        }
+        // Theme toggle tetap
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        if (toggleBtn) {
+            toggleBtn.onclick = () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            };
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        }
     },
 
     showForm(type) {

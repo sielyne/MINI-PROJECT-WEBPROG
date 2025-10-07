@@ -17,5 +17,22 @@
     <ul id="profile-quiz-list"></ul>
   </div>
 
-  <button onclick="FeatureHandler.showPage('menu')">Back to Menu</button>
+  <div class="profile-btn-row">
+    <button id="profile-settings-btn" style="background:#fbbf24; color:#fff;">Settings</button>
+    <button id="print-history-btn">Download All History</button>
+    <button id="profile-back-btn" onclick="FeatureHandler.showPage('menu')">Back to Menu</button>
+  </div>
+
+<!-- Modal Settings (pindah ke luar profile-btn-row) -->
+<div id="profile-settings-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.25); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:16px; max-width:350px; width:90vw; margin:auto; padding:2em 1.5em; box-shadow:0 8px 32px #0002; position:relative;">
+    <h3 style="margin-top:0;">Settings</h3>
+    <form id="edit-profile-form" style="display:flex; flex-direction:column; gap:1em; align-items:stretch;">
+      <input type="text" id="edit-username" placeholder="New Username" minlength="3" maxlength="15" pattern="^[a-zA-Z0-9_]+$" style="padding:0.5em; border-radius:8px; border:1px solid #ccc;">
+      <input type="password" id="edit-password" placeholder="New Password (optional)" minlength="6" style="padding:0.5em; border-radius:8px; border:1px solid #ccc;">
+      <button type="submit" id="save-profile-btn" style="background:#34d399; color:#fff;">Save</button>
+      <button type="button" id="delete-account-btn" style="background:#f87171; color:#fff;">Delete Account</button>
+      <button type="button" id="close-settings-btn" style="background:#3838b9; color:#fff;">Back</button>
+    </form>
+  </div>
 </section>

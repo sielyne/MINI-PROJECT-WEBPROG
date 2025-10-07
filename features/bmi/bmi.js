@@ -13,6 +13,8 @@ FeatureHandler.registerFeature('bmi', {
     }
     form.addEventListener('submit', (e) => this.handleSubmit(e));
     backBtn.addEventListener('click', () => FeatureHandler.showPage('menu'));
+    // Reset chart object agar chart selalu di-render ulang
+    this.bmiChart = null;
     this.loadHistory();
   },
 

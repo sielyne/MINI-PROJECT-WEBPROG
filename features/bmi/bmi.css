@@ -1,3 +1,30 @@
+body.dark-mode .bmi-result {
+    background: linear-gradient(135deg, #23272f 0%, #1a202c 100%) !important;
+    color: #f3f3f3 !important;
+    border-color: #6366f1;
+}
+body.dark-mode .bmi-result h3 {
+    color: #a259c6 !important;
+}
+
+body.dark-mode .bmi-status.underweight {
+    border-color: #2563eb;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+}
+body.dark-mode .bmi-status.normal {
+    border-color: #059669;
+    background: linear-gradient(135deg, #1e293b 0%, #14532d 100%);
+}
+body.dark-mode .bmi-status.overweight {
+    border-color: #d97706;
+    background: linear-gradient(135deg, #1e293b 0%, #78350f 100%);
+}
+body.dark-mode .bmi-status.obese {
+    border-color: #dc2626;
+    background: linear-gradient(135deg, #1e293b 0%, #7f1d1d 100%);
+}
+
+
 .bmi-result {
     text-align: center;
     backdrop-filter: blur(15px);

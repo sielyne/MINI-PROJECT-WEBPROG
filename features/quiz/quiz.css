@@ -86,7 +86,8 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-  #quizResultContent p,
+
+#quizResultContent p{
   .quiz-result-card p {
     color: #e0e0e0 !important;
   }
@@ -278,4 +279,17 @@
 
 #quizBox {
     display: block;
+}
+
+
+/* Dark mode: buat teks quiz result dan pertanyaan jadi gelap */
+body.dark-mode #quizQuestion,
+body.dark-mode #quizResultContent,
+body.dark-mode #quizResultContent p,
+body.dark-mode #quizResultContent ul,
+body.dark-mode #quizResultContent li {
+  color: #222 !important;
+}
+#quiz-result h2{
+  color: #222 !important;
 }

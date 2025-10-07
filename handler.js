@@ -127,17 +127,16 @@ const FeatureHandler = {
     },
 
     
-    updateHeaderUsername() {
-      const headerName = document.getElementById('header-username');
-      if (headerName) {
-        if (this.currentUser) {
-          headerName.textContent = `Hi, ${this.currentUser}`;
-        } else {
-          headerName.textContent = '';
-        }
-      }
+updateHeaderUsername() {
+  const headerName = document.getElementById('header-username');
+  if (headerName) {
+    
+    if (this.currentUser && this.currentPage !== 'login') {
+      headerName.textContent = `Hi, ${this.currentUser}`;
+    } else {
+      headerName.textContent = '';
     }
-};
+  }
 
 // Initialize app on load
 window.onload = () => FeatureHandler.init();

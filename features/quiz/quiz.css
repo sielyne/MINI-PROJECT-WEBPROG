@@ -86,17 +86,17 @@
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-
-.result-info h2 {
-  margin: 0;
-  font-size: 1.8rem;
+  #quizResultContent p,
+  .quiz-result-card p {
+    color: #e0e0e0 !important;
+  }
   color: #333;
 }
 
 .result-info ul {
   margin-top: 0.5rem;
   padding-left: 1.2rem;
-  color: #555;
+  color: #131313;
 }
 
 @media (prefers-color-scheme: dark) {

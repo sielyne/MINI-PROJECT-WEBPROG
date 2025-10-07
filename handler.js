@@ -3,7 +3,7 @@ const FeatureHandler = {
     callbacks: {},
     currentPage: null,
 
-    // Register a callback for a feature
+    // Register a callback for a feature 
     registerFeature(featureName, callback) {
         this.callbacks[featureName] = callback;
     },

@@ -53,20 +53,22 @@ const FeatureHandler = {
       }
     };
 
-    if (!existingStyle) {
+     if (!existingStyle) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = cssHref;
       link.onload = () => {
         container.innerHTML = tempContainer.innerHTML;
-        applyThemeToggle(); // ← selalu dipanggil
+        applyThemeToggle();
         this.executeFeature(pageId, 'init');
+        this.updateHeaderUsername();
       };
       document.head.appendChild(link);
     } else {
       container.innerHTML = tempContainer.innerHTML;
-      applyThemeToggle(); // ← selalu dipanggil
+      applyThemeToggle();
       this.executeFeature(pageId, 'init');
+      this.updateHeaderUsername();
     }
   })
 
@@ -130,13 +132,12 @@ const FeatureHandler = {
 updateHeaderUsername() {
   const headerName = document.getElementById('header-username');
   if (headerName) {
-    
     if (this.currentUser && this.currentPage !== 'login') {
       headerName.textContent = `Hi, ${this.currentUser}`;
     } else {
       headerName.textContent = '';
     }
   }
-
+}
 // Initialize app on load
 window.onload = () => FeatureHandler.init();

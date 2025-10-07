@@ -78,12 +78,14 @@ const FeatureHandler = {
 
     // Set current user
     setCurrentUser(username) {
-    this.currentUser = username;
-    if (username) {
-      localStorage.setItem('bloomii-username', username);
-    } else {
-      localStorage.removeItem('bloomii-username');
-    }
+        console.log('Set current user:', username); // Debug
+        this.currentUser = username;
+        if (username) {
+            localStorage.setItem('bloomii-username', username);
+        } else {
+            localStorage.removeItem('bloomii-username');
+        }
+        this.updateHeaderUsername();
     },
 
     // Get current user

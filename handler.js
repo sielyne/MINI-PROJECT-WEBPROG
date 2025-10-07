@@ -25,7 +25,8 @@ const FeatureHandler = {
         const container = document.getElementById('app-container');
         const header = document.getElementById('main-header');
         if (header) {
-            header.style.display =  'flex';
+           
+            header.style.display = (pageId === 'login') ? 'none' : 'flex';
         }
 
         fetch(`features/${pageId}/${pageId}.html`)

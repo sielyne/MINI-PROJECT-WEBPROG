@@ -60,8 +60,8 @@ FeatureHandler.registerFeature('login', {
             .then(result => {
                 if (form.action.endsWith('/login')) {
                     if (result.includes('Login berhasil')) {
-                        FeatureHandler.setCurrentUser(username);
-                        FeatureHandler.showPage('dashboard');
+                        FeatureHandler.setCurrentUser(document.getElementById('username').value);
+                        FeatureHandler.showPage('menu');
                     } else {
                         alert('Login failed: Wrong username or password');
                         form.reset();

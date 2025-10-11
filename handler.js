@@ -3,7 +3,7 @@ const FeatureHandler = {
     callbacks: {},
     currentPage: null,
 
-    // Register a callback for a feature 
+    // Register a callback for a feature
     registerFeature(featureName, callback) {
         this.callbacks[featureName] = callback;
     },
@@ -25,8 +25,7 @@ const FeatureHandler = {
         const container = document.getElementById('app-container');
         const header = document.getElementById('main-header');
         if (header) {
-           
-            header.style.display = (pageId === 'login') ? 'none' : 'flex';
+            header.style.display =  'flex';
         }
 
         fetch(`features/${pageId}/${pageId}.html`)
@@ -54,22 +53,20 @@ const FeatureHandler = {
       }
     };
 
-     if (!existingStyle) {
+    if (!existingStyle) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = cssHref;
       link.onload = () => {
         container.innerHTML = tempContainer.innerHTML;
-        applyThemeToggle();
+        applyThemeToggle(); // ← selalu dipanggil
         this.executeFeature(pageId, 'init');
-        this.updateHeaderUsername();
       };
       document.head.appendChild(link);
     } else {
       container.innerHTML = tempContainer.innerHTML;
-      applyThemeToggle();
+      applyThemeToggle(); // ← selalu dipanggil
       this.executeFeature(pageId, 'init');
-      this.updateHeaderUsername();
     }
   })
 
@@ -78,14 +75,12 @@ const FeatureHandler = {
 
     // Set current user
     setCurrentUser(username) {
-        console.log('Set current user:', username); // Debug
-        this.currentUser = username;
-        if (username) {
-            localStorage.setItem('bloomii-username', username);
-        } else {
-            localStorage.removeItem('bloomii-username');
-        }
-        this.updateHeaderUsername();
+    this.currentUser = username;
+    if (username) {
+      localStorage.setItem('bloomii-username', username);
+    } else {
+      localStorage.removeItem('bloomii-username');
+    }
     },
 
     // Get current user
@@ -102,15 +97,19 @@ const FeatureHandler = {
         }
         this.showPage('login');
 
-        
-      // Set username in header
-      this.updateHeaderUsername();
-      const profileIcon = document.getElementById('profileIcon');
-      if (profileIcon) {
-        profileIcon.addEventListener('click', () => {
-          this.showPage('profile');
-        });
-      }
+        // Set username in header
+        const profileIcon = document.getElementById('profileIcon');
+        if (profileIcon) {
+            profileIcon.addEventListener('click', () => {
+                this.showPage('profile');
+            });
+        }
+
+        const username = this.getCurrentUser();
+        if (username) {
+            const headerName = document.getElementById('header-username');
+            if (headerName) headerName.textContent = `Hi, ${username}`;
+        }
 
         // Toggle nav menu
         const hamburger = document.getElementById('hamburgerBtn');
@@ -129,18 +128,8 @@ const FeatureHandler = {
                 this.showPage('login');
             });
         }
-    },
-
-    
-updateHeaderUsername() {
-  const headerName = document.getElementById('header-username');
-  if (headerName) {
-    if (this.currentUser && this.currentPage !== 'login') {
-      headerName.textContent = `Hi, ${this.currentUser}`;
-    } else {
-      headerName.textContent = '';
     }
-  }
-}
+};
+
 // Initialize app on load
 window.onload = () => FeatureHandler.init();

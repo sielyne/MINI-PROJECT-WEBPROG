@@ -1,69 +1,16 @@
 [
   {
-    "userId": 1,
-    "date": "2025-09-30",
-    "mood": "fear",
-    "note": "peace"
-  },
-  {
-    "userId": 3,
-    "date": "2025-09-30",
-    "mood": "neutral",
-    "note": "a"
-  },
-  {
-    "userId": 3,
-    "date": "2025-10-07",
-    "mood": "sad",
-    "note": "capek"
-  },
-  {
-    "userId": 3,
+    "id": 1,
+    "userId": 2,
     "date": "2025-10-17",
     "mood": "neutral",
-    "note": "okede"
-  },
-  {
-    "userId": 4,
-    "date": "2025-09-30",
-    "mood": "fear",
-    "note": "too hot yup"
-  },
-  {
-    "userId": 4,
-    "date": "2025-10-06",
-    "mood": "fear",
     "note": ""
   },
   {
-    "userId": 4,
-    "date": "2025-10-07",
-    "mood": "happy",
-    "note": "sebenarnya lagi nanges aja ituu"
-  },
-  {
-    "userId": 4,
-    "date": "2025-10-17",
-    "mood": "neutral",
-    "note": "im fine gwencana"
-  },
-  {
-    "userId": 5,
-    "date": "2025-09-30",
-    "mood": "disgusted",
-    "note": "ucup"
-  },
-  {
-    "userId": 6,
-    "date": "2025-09-30",
-    "mood": "neutral",
-    "note": "idk"
-  },
-  {
     "id": 1,
-    "userId": 8,
+    "userId": 1,
     "date": "2025-10-17",
     "mood": "happy",
-    "note": "data.json kurang ajar, tadi gajadi, sekarang kek jadi? watsss"
+    "note": ""
   }
 ]

@@ -182,7 +182,6 @@ body {
     background: linear-gradient(135deg, #f8e1f4 0%, #c2e9fb 100%);
 }
 
-
 body::before {
     content: '';
     position: fixed;
@@ -215,11 +214,14 @@ body::before {
 }
 
 h1 {
-    color: #a259c6;
     font-size: 2.5rem;
     letter-spacing: 2px;
-    text-shadow: 0 2px 12px #fff7, 0 0px 0 #fff;
     margin-bottom: 0.5em;
+    background: linear-gradient(90deg, #ff88df, #5943ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 12px rgba(162, 89, 198, 0.3);
 }
 
 h2 {
@@ -245,7 +247,7 @@ button {
 button:hover {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 8px 32px #a1c4fd77;
-    background: linear-gradient(90deg, #a1c4fd 0%, #fcb7ff 100%);
+    background: linear-gradient(90deg, #8db6f8 0%, #eebeef 100%);
 }
 
 #main-header {
@@ -363,7 +365,15 @@ body.dark-mode {
   color: #f0f0f0;
 }
 
-body.dark-mode h1,
+body.dark-mode h1{
+  background: linear-gradient(90deg, #cbd4ff, #7a82f9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.479)) 
+          drop-shadow(0 0 40px rgba(179, 156, 241, 0.301));
+}
+
 body.dark-mode h2,
 body.dark-mode h3 {
   color: #f0f0f0;
@@ -372,6 +382,12 @@ body.dark-mode h3 {
 body.dark-mode button {
   background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
+}
+
+body.dark-mode button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 32px #a1c4fd77;
+    background: linear-gradient(90deg, #9f76fc 0%, #9c9dff 100%);
 }
 
 body.dark-mode #main-header {
@@ -389,8 +405,6 @@ body.dark-mode #header-nav {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
-
-
 
 @media (max-width: 770px) {
   .container {

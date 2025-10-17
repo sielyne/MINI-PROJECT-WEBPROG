@@ -10,7 +10,6 @@ const BMI_FILE = path.join(DATA_DIR, 'bmi.json');
 const MOOD_FILE = path.join(DATA_DIR, 'mood.json');
 const QUIZ_FILE = path.join(DATA_DIR, 'quiz.json');
 
-// Pastikan folder data dan file-file ada
 function initStorage() {
     if (!fs.existsSync(DATA_DIR)) {
         fs.mkdirSync(DATA_DIR);
@@ -63,72 +62,6 @@ function saveQuiz(quizData) {
     fs.writeFileSync(QUIZ_FILE, JSON.stringify(quizData, null, 2));
 }
 
-// Fungsi migrasi dari data.json lama
-function migrateOldData() {
-    const oldDataFile = 'data.json';
-    if (fs.existsSync(oldDataFile)) {
-        console.log('Migrasi data lama dimulai...');
-        const oldData = JSON.parse(fs.readFileSync(oldDataFile, 'utf8'));
-        
-        const users = [];
-        const bmiData = [];
-        const moodData = [];
-        const quizData = [];
-        
-        oldData.forEach(user => {
-            // Simpan user info
-            users.push({
-                id: user.id,
-                username: user.username,
-                password: user.password
-            });
-            
-            // Simpan BMI data dengan userId
-            if (user.bmi && user.bmi.length > 0) {
-                user.bmi.forEach(bmi => {
-                    bmiData.push({
-                        ...bmi,
-                        userId: user.id
-                    });
-                });
-            }
-            
-            // Simpan Mood data dengan userId
-            if (user.moods && user.moods.length > 0) {
-                user.moods.forEach(mood => {
-                    moodData.push({
-                        ...mood,
-                        userId: user.id
-                    });
-                });
-            }
-            
-            // Simpan Quiz data dengan userId
-            if (user.quiz && user.quiz.length > 0) {
-                user.quiz.forEach(quiz => {
-                    quizData.push({
-                        ...quiz,
-                        userId: user.id
-                    });
-                });
-            }
-        });
-        
-        saveUsers(users);
-        saveBMI(bmiData);
-        saveMood(moodData);
-        saveQuiz(quizData);
-        
-        // Backup file lama
-        fs.renameSync(oldDataFile, 'data.json.backup');
-        console.log('Migrasi selesai! File lama di-backup ke data.json.backup');
-        console.log(`- ${users.length} users`);
-        console.log(`- ${bmiData.length} BMI records`);
-        console.log(`- ${moodData.length} mood records`);
-        console.log(`- ${quizData.length} quiz records`);
-    }
-}
-
 const server = http.createServer((req, res) => {
 
     // Update user (username/password)
@@ -177,7 +110,6 @@ const server = http.createServer((req, res) => {
         });
         return;
     }
-
     // Delete user
     if (req.method === 'DELETE' && req.url === '/user-delete') {
         let body = '';
@@ -222,7 +154,6 @@ const server = http.createServer((req, res) => {
         });
         return;
     }
-
     // Serve JavaScript files
     if (req.method === 'GET' && (req.url === '/handler.js' || (req.url.startsWith('/features/') && req.url.endsWith('.js')))) {
         const jsPath = path.join(__dirname, req.url);
@@ -237,7 +168,6 @@ const server = http.createServer((req, res) => {
         });
         return;
     }
-
     // Serve CSS files
     if (req.method === 'GET' && (req.url === '/style.css' || (req.url.startsWith('/features/') && req.url.endsWith('.css')))) {
         const cssPath = path.join(__dirname, req.url);
@@ -252,7 +182,6 @@ const server = http.createServer((req, res) => {
         });
         return;
     }
-
     // Serve HTML files
     if (req.method === 'GET' && (req.url === '/' || (req.url.startsWith('/features/') && req.url.endsWith('.html')))) {
         const filePath = req.url === '/' ? 'index.html' : req.url;
@@ -412,8 +341,6 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ bmi: bmi, status: status }));
         });
     }
-    
-    // Handle BMI history
     else if (req.method === 'GET' && req.url.startsWith('/bmi-history')) {
         const urlParams = new URLSearchParams(req.url.split('?')[1]);
         const username = urlParams.get('username');
@@ -438,7 +365,6 @@ const server = http.createServer((req, res) => {
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(JSON.stringify(userBMIs));
     }
-    
     // Handle BMI update
     else if (req.method === 'PUT' && req.url === '/bmi') {
         let body = '';
@@ -447,7 +373,6 @@ const server = http.createServer((req, res) => {
             const parsed = JSON.parse(body);
             const users = loadUsers();
             const user = users.find(u => u.username === parsed.username);
-
             if (!user) {
                 res.writeHead(404, { "Content-Type": "application/json" });
                 return res.end(JSON.stringify({ error: "User not found" }));
@@ -481,7 +406,6 @@ const server = http.createServer((req, res) => {
             }}));
         });
     }
-    
     // Handle BMI delete
     else if (req.method === 'DELETE' && req.url === '/bmi') {
         let body = '';
@@ -504,7 +428,6 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ success: true }));
         });
     }
-    
     // Handle mood creation
     else if (req.method === 'POST' && req.url === '/mood') {
         let body = '';
@@ -544,7 +467,6 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ success: true }));
         });
     }
-    
     // Handle mood history
     else if (req.method === 'GET' && req.url.startsWith('/mood-history')) {
         const urlParams = new URLSearchParams(req.url.split('?')[1]);
@@ -604,7 +526,6 @@ const server = http.createServer((req, res) => {
             }}));
         });
     }
-    
     // Handle mood delete
     else if (req.method === 'DELETE' && req.url === '/mood') {
         let body = '';
@@ -674,7 +595,6 @@ const server = http.createServer((req, res) => {
             }
         });
     }
-    
     // Handle quiz history
     else if (req.method === 'GET' && req.url.startsWith('/quiz-history')) {
         try {
@@ -705,8 +625,7 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ error: 'Error fetching quiz history' }));
         }
     }
-    
-    // Serve images
+    // Assets
     else if (req.method === 'GET' && req.url.startsWith('/assets/')) {
         const imgPath = path.join(__dirname, req.url);
         fs.readFile(imgPath, (err, content) => {
@@ -728,15 +647,8 @@ const server = http.createServer((req, res) => {
     }
 });
 
-// Inisialisasi storage dan migrasi data lama (jika ada)
 initStorage();
-migrateOldData();
 
 server.listen(3000, () => {
     console.log('Server listening on http://localhost:3000');
-    console.log('Struktur penyimpanan baru:');
-    console.log('- data/users.json: Info user (id, username, password)');
-    console.log('- data/bmi.json: Semua data BMI');
-    console.log('- data/mood.json: Semua data mood');
-    console.log('- data/quiz.json: Semua data quiz');
 });

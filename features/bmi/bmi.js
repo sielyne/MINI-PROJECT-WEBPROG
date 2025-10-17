@@ -2,7 +2,7 @@ FeatureHandler.registerFeature('bmi', {
   bmiChart: null,
   bmiData: [],
   history: [],
-  latestBMIResult: '',
+  currentFilter: null,
 
   init() {
     const form = document.getElementById('bmi-form');
@@ -13,9 +13,118 @@ FeatureHandler.registerFeature('bmi', {
     }
     form.addEventListener('submit', (e) => this.handleSubmit(e));
     backBtn.addEventListener('click', () => FeatureHandler.showPage('menu'));
-    // Reset chart object agar chart selalu di-render ulang
+    
+    this.initSearchControls();
     this.bmiChart = null;
+    this.currentFilter = null;
     this.loadHistory();
+  },
+
+  initSearchControls() {
+    const searchType = document.getElementById('searchType');
+    const searchBtn = document.getElementById('searchBtn');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const dateGroup = document.getElementById('dateSearchGroup');
+    const statusGroup = document.getElementById('statusSearchGroup');
+
+    if (!searchType || !searchBtn || !clearSearchBtn) return;
+
+    searchType.addEventListener('change', (e) => {
+      if (e.target.value === 'date') {
+        dateGroup.style.display = 'block';
+        statusGroup.style.display = 'none';
+      } else {
+        dateGroup.style.display = 'none';
+        statusGroup.style.display = 'block';
+      }
+    });
+
+    searchBtn.addEventListener('click', () => this.handleSearch());
+    clearSearchBtn.addEventListener('click', () => this.clearSearch());
+  },
+
+  handleSearch() {
+    const searchType = document.getElementById('searchType').value;
+    
+    if (searchType === 'date') {
+      const searchDate = document.getElementById('searchDate').value;
+      if (!searchDate) {
+        alert('Please select a date');
+        return;
+      }
+      this.currentFilter = {
+        type: 'date',
+        value: searchDate
+      };
+    } else if (searchType === 'status') {
+      const searchStatus = document.getElementById('searchStatus').value;
+      this.currentFilter = {
+        type: 'status',
+        value: searchStatus
+      };
+    }
+
+    this.renderRecordsList();
+  },
+
+  clearSearch() {
+    document.getElementById('searchDate').value = '';
+    document.getElementById('searchStatus').value = '';
+    this.currentFilter = null;
+    this.renderRecordsList();
+  },
+
+  getFilteredHistory() {
+    if (!this.currentFilter) {
+      return this.history;
+    }
+
+    if (this.currentFilter.type === 'date') {
+      return this.history.filter(record => {
+        const recordDate = new Date(record.date).toISOString().split('T')[0];
+        return recordDate === this.currentFilter.value;
+      });
+    } else if (this.currentFilter.type === 'status') {
+      if (!this.currentFilter.value) {
+        return this.history;
+      }
+      return this.history.filter(record => 
+        record.status.toLowerCase() === this.currentFilter.value.toLowerCase()
+      );
+    }
+
+    return this.history;
+  },
+
+  renderRecordsList() {
+    const recordsListDiv = document.getElementById('bmi-records-list');
+    if (!recordsListDiv) return;
+
+    const filteredData = this.getFilteredHistory();
+    let html = '';
+
+    if (filteredData.length === 0) {
+      html = '<p style="text-align: center; color: #dc2626;">No records found.</p>';
+    } else {
+      html += '<ul>';
+      filteredData
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .forEach((r) => {
+          const id = r.id || r._id || 0;
+          html += `
+            <li>
+              <strong>${new Date(r.date).toLocaleDateString()}</strong> - 
+              BMI: <b>${r.value}</b> (${r.status})
+              <br>
+              <small>Height: ${r.height}cm, Weight: ${r.weight}kg</small>
+              <button onclick="FeatureHandler.executeFeature('bmi','editRecord',${id})">Edit</button>
+              <button onclick="FeatureHandler.executeFeature('bmi','deleteRecord',${id})">Delete</button>
+            </li>`;
+        });
+      html += '</ul>';
+    }
+
+    recordsListDiv.innerHTML = html;
   },
 
   isSameDate(a, b) {
@@ -124,56 +233,38 @@ FeatureHandler.registerFeature('bmi', {
 
         const form = document.getElementById('bmi-form');
         const resultDiv = document.getElementById('bmi-result');
-        let html = '';
 
-        // === Your BMI section ===
+        // Display today's BMI result
         if (todayRecord) {
           const bmiVal = parseFloat(todayRecord.value).toFixed(1);
           const status = todayRecord.status || '';
-          this.latestBMIResult = `
+          resultDiv.innerHTML = `
             <div class="bmi-result">
               <h3>Your BMI: ${bmiVal}</h3>
               <p class="bmi-status ${status.toLowerCase()}">${status}</p>
               <small>${new Date(todayRecord.date).toLocaleDateString()}</small>
             </div>`;
-          form.style.display = 'none'; // hide input form
+          form.style.display = 'none';
         } else {
-          this.latestBMIResult = '';
+          resultDiv.innerHTML = '';
           form.style.display = 'block';
         }
-        html += this.latestBMIResult;
 
-        // === History list ===
-        html += '<h3>BMI History</h3>';
-        if (data.length === 0) {
-          html += '<p>No BMI records yet.</p>';
-        } else {
-          html += '<ul>';
-          data
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
-            .forEach((r) => {
-              const id = r.id || r._id || 0;
-              html += `
-                <li>
-                  ${new Date(r.date).toLocaleDateString()} - 
-                  <b>${r.value}</b> (${r.status})
-                  <button onclick="FeatureHandler.executeFeature('bmi','editRecord',${id})">Edit</button>
-                  <button onclick="FeatureHandler.executeFeature('bmi','deleteRecord',${id})">Delete</button>
-                </li>`;
-            });
-          html += '</ul>';
-        }
-
-        resultDiv.innerHTML = html;
+        // Render records list
+        this.renderRecordsList();
       })
       .catch((err) => {
         console.error('Error loading history', err);
-        document.getElementById('bmi-result').innerHTML =
-          '<p>Error loading data.</p>';
+        const recordsListDiv = document.getElementById('bmi-records-list');
+        if (recordsListDiv) {
+          recordsListDiv.innerHTML = '<p>Error loading data.</p>';
+        }
       });
   },
 
   deleteRecord(id) {
+    if (!confirm('Are you sure you want to delete this record?')) return;
+    
     fetch('/bmi', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
@@ -231,7 +322,7 @@ FeatureHandler.registerFeature('bmi', {
       })
         .then((r) => r.json())
         .then(() => {
-          this.loadHistory(); // refresh "Your BMI" + history
+          this.loadHistory();
           modal.style.display = 'none';
         })
         .catch((err) => {

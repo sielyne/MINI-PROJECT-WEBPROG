@@ -13,6 +13,39 @@
             <button type="submit">Calculate BMI</button>
         </form>
         <div id="bmi-result"></div>
+        <div id="bmi-records-section">
+            <h3>BMI Records</h3>
+            
+            <!-- Search Bar -->
+            <div id="bmi-search-section">
+                <div class="search-controls">
+                    <div class="form-group">
+                        <label for="searchType">Search By</label>
+                        <select id="searchType">
+                            <option value="date">Date</option>
+                            <option value="status">Status</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="dateSearchGroup">
+                        <label for="searchDate">Select Date</label>
+                        <input type="date" id="searchDate">
+                    </div>
+                    <div class="form-group" id="statusSearchGroup" style="display:none;">
+                        <label for="searchStatus">Select Status</label>
+                        <select id="searchStatus">
+                            <option value="">All</option>
+                            <option value="Underweight">Underweight</option>
+                            <option value="Normal">Normal</option>
+                            <option value="Overweight">Overweight</option>
+                            <option value="Obese">Obese</option>
+                        </select>
+                    </div>
+                    <button id="searchBtn" type="button">Search</button>
+                    <button id="clearSearchBtn" type="button">Clear</button>
+                </div>
+            </div>
+            <div id="bmi-records-list"></div>
+        </div>
         <canvas id="bmiChart" style="margin: 20px 0;"></canvas>
         <button id="bmiBackBtn">Back</button>
     </div>

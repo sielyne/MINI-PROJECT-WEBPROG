@@ -129,6 +129,14 @@
         "weight": 32,
         "value": "15.22",
         "status": "Underweight"
+      },
+      {
+        "id": 2,
+        "date": "2025-10-17",
+        "height": 180,
+        "weight": 60,
+        "value": "18.52",
+        "status": "Normal"
       }
     ],
     "moods": [
@@ -143,6 +151,12 @@
         "date": "2025-10-07",
         "mood": "sad",
         "note": "capek"
+      },
+      {
+        "id": 3,
+        "date": "2025-10-17",
+        "mood": "neutral",
+        "note": "okede"
       }
     ],
     "quiz": [

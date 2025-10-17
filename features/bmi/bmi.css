@@ -24,7 +24,6 @@ body.dark-mode .bmi-status.obese {
     background: linear-gradient(135deg, #1e293b 0%, #7f1d1d 100%);
 }
 
-
 .bmi-result {
     text-align: center;
     backdrop-filter: blur(15px);
@@ -60,22 +59,22 @@ body.dark-mode .bmi-status.obese {
 .bmi-status.underweight {
     color: #2563eb;
     border-color: #60a5fa;
-    background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+    background: linear-gradient(135deg, #deecff 0%, #96bae6 100%);
 }
 .bmi-status.normal {
     color: #059669;
     border-color: #34d399;
-    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    background: linear-gradient(135deg, #ddffed 0%, #8cd0b0 100%);
 }
 .bmi-status.overweight {
     color: #d97706;
     border-color: #fbbf24;
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    background: linear-gradient(135deg, #fff8dd 0%, #f6e08b 100%);
 }
 .bmi-status.obese {
     color: #dc2626;
     border-color: #f87171;
-    background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+    background: linear-gradient(135deg, #ffe7e7 0%, #e4afaf 100%);
 }
 
 .form-group {
@@ -153,4 +152,113 @@ body.dark-mode .bmi-status.obese {
     outline: none;
     border-color: #fcb7ff;
     box-shadow: 0 0 0 3px rgba(252, 183, 255, 0.15);
+}
+
+.search-controls {
+    display: flex;
+    flex-wrap: nowrap; 
+    gap: 0.5rem;
+    align-items: flex-end;
+    margin-bottom: 0.5rem;
+}
+
+.search-controls .form-group {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+}
+
+.search-controls select,
+.search-controls input[type="date"] {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #a1c4fd;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.search-controls select:focus,
+.search-controls input[type="date"]:focus {
+    outline: none;
+    border-color: #fcb7ff;
+    box-shadow: 0 0 0 3px rgba(252, 183, 255, 0.15);
+}
+
+body.dark-mode .search-controls select,
+body.dark-mode .search-controls input[type="date"] {
+    background: #2d3748;
+    color: #f3f3f3;
+    border-color: #4a5568;
+}
+
+#bmi-records-section {
+    background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+    border: 2px solid #a259c6;
+    border-radius: 15px;
+    padding: 1.2rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 4px 20px rgba(161, 196, 253, 0.2);
+}
+
+#bmi-records-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+#bmi-records-section > h3 {
+    color: #6a82fb;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+#bmi-records-list li {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #e0e7ff;
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-bottom: 0.6rem;
+    transition: all 0.3s;
+}
+
+#bmi-records-list button {
+    margin-left: 0.5rem;
+    padding: 0.2rem 0.6rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#bmi-records-list button:first-of-type {
+    background: linear-gradient(135deg, #cad2ff 0%, #8eb7db 100%);
+    color: white;
+}
+
+#bmi-records-list button:last-of-type {
+    background: linear-gradient(135deg, #ff90af 0%, #ff63ae 100%);
+    color: white;
+}
+
+#bmi-records-list button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode #bmi-records-section {
+    background: linear-gradient(135deg, #23272f 0%, #1a202c 100%);
+    border-color: #6366f1;
+}
+
+body.dark-mode #bmi-records-section > h3 {
+    color: #a1c4fd;
+}
+
+body.dark-mode #bmi-records-list li {
+    background: #2d3748;
+    border-color: #4a5568;
+    color: #f3f3f3;
 }

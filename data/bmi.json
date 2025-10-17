@@ -1,0 +1,91 @@
+[
+  {
+    "userId": 1,
+    "date": "2025-09-28",
+    "height": 184,
+    "weight": 60,
+    "value": "17.70",
+    "status": "Underweight"
+  },
+  {
+    "userId": 1,
+    "date": "2025-09-30",
+    "height": 184,
+    "weight": 70,
+    "value": "20.70",
+    "status": "Normal"
+  },
+  {
+    "userId": 1,
+    "date": "2025-09-30",
+    "height": 184,
+    "weight": 64,
+    "value": "18.90",
+    "status": "Normal"
+  },
+  {
+    "userId": 3,
+    "date": "2025-10-07",
+    "height": 145,
+    "weight": 32,
+    "value": "15.22",
+    "status": "Underweight"
+  },
+  {
+    "userId": 3,
+    "date": "2025-10-17",
+    "height": 180,
+    "weight": 60,
+    "value": "18.52",
+    "status": "Normal"
+  },
+  {
+    "userId": 4,
+    "date": "2025-09-30",
+    "height": 170,
+    "weight": 45,
+    "value": "15.57",
+    "status": "Underweight"
+  },
+  {
+    "userId": 4,
+    "date": "2025-10-06",
+    "height": 177,
+    "weight": 55,
+    "value": "17.56",
+    "status": "Underweight"
+  },
+  {
+    "userId": 4,
+    "date": "2025-10-07",
+    "height": 156,
+    "weight": 65,
+    "value": "26.71",
+    "status": "Overweight"
+  },
+  {
+    "userId": 4,
+    "date": "2025-10-17",
+    "height": 148,
+    "weight": 55.9,
+    "value": "25.52",
+    "status": "Overweight"
+  },
+  {
+    "userId": 7,
+    "date": "2025-10-07",
+    "height": 156,
+    "weight": 43,
+    "value": "17.67",
+    "status": "Underweight"
+  },
+  {
+    "id": 1,
+    "userId": 8,
+    "date": "2025-10-17",
+    "height": 167,
+    "weight": 78,
+    "value": "27.97",
+    "status": "Overweight"
+  }
+]

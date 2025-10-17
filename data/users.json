@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "username": "elin",
+    "password": "$2b$10$IjEVEOVp.UPssXJLQsXCreyRWHEiC3vHlaLeKq3OOeTGLRq5wAEpC"
+  },
+  {
+    "id": 2,
+    "username": "ucup",
+    "password": "$2b$10$fkaIbYmyKtpMTdbdoA/oS.7k72kXpZBQhfdG4K/0Y7bWH/ONHC6uC"
+  },
+  {
+    "id": 3,
+    "username": "a123_",
+    "password": "$2b$10$0mgSIofDBFgA5k5/StQGdO0BDoUb2PNBiSihm1iTYbR68Xj0BMUwa"
+  },
+  {
+    "id": 4,
+    "username": "temen",
+    "password": "$2b$10$TOD50xI03P4JF/YWSHJXpOOB6A8uG8mvR/sYk3H7bMNb8UwWoaFH6"
+  },
+  {
+    "id": 5,
+    "username": "ucup1",
+    "password": "$2b$10$QiyDhgyjsHgPWlwg933/beCnA2It9l1JEZnP6zSgLc5bFFyUEhXQ2"
+  },
+  {
+    "id": 6,
+    "username": "siapaya1",
+    "password": "$2b$10$BGubKJ2hji6fu3fSsbRWoO6iH6GB90GD9EcBY5LTub5zZcRGgAgyG"
+  },
+  {
+    "id": 7,
+    "username": "a1233",
+    "password": "$2b$10$ixQZBnBgveE4F.hr5CAVau2SCuI34KY2L5xz7MdwVMZX5XVx7bhdi"
+  },
+  {
+    "id": 8,
+    "username": "temen1",
+    "password": "$2b$10$X5xowSLwPnHMsTLFwUK.F.soHMqUmaqoYTNx4ntlIeYeD73gu5OrG"
+  }
+]

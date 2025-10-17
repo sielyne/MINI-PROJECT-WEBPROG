@@ -1,0 +1,285 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "date": "2025-09-30",
+    "result": "pear",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "pear",
+      "shape3": "rectangle",
+      "shape4": "pear",
+      "shape5": "pear",
+      "shape6": "inverted"
+    }
+  },
+  {
+    "id": 2,
+    "userId": 1,
+    "date": "2025-09-30",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "rectangle",
+      "shape3": "inverted",
+      "shape4": "hourglass",
+      "shape5": "pear",
+      "shape6": "pear"
+    }
+  },
+  {
+    "id": 3,
+    "userId": 1,
+    "date": "2025-09-30",
+    "result": "inverted",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "inverted",
+      "shape3": "pear",
+      "shape4": "rectangle",
+      "shape5": "pear",
+      "shape6": "inverted"
+    }
+  },
+  {
+    "id": 4,
+    "userId": 1,
+    "date": "2025-09-30",
+    "result": "inverted",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "pear",
+      "shape3": "rectangle",
+      "shape4": "pear",
+      "shape5": "inverted",
+      "shape6": "inverted"
+    }
+  },
+  {
+    "id": 5,
+    "userId": 1,
+    "date": "2025-09-30",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "rectangle",
+      "shape3": "pear",
+      "shape4": "hourglass",
+      "shape5": "pear",
+      "shape6": "inverted"
+    }
+  },
+  {
+    "id": 6,
+    "userId": 3,
+    "date": "2025-09-30",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "rectangle",
+      "shape2": "inverted",
+      "shape3": "hourglass",
+      "shape4": "hourglass",
+      "shape5": "inverted",
+      "shape6": "pear"
+    }
+  },
+  {
+    "id": 7,
+    "userId": 3,
+    "date": "2025-09-30",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    }
+  },
+  {
+    "id": 8,
+    "userId": 3,
+    "date": "2025-09-30",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "inverted",
+      "shape3": "hourglass",
+      "shape4": "hourglass",
+      "shape5": "inverted",
+      "shape6": "pear"
+    }
+  },
+  {
+    "id": 9,
+    "userId": 3,
+    "date": "2025-09-30",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    }
+  },
+  {
+    "id": 10,
+    "userId": 3,
+    "date": "2025-09-30",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    }
+  },
+  {
+    "id": 11,
+    "userId": 4,
+    "date": "2025-09-30",
+    "result": "inverted",
+    "answers": {
+      "shape1": "pear",
+      "shape2": "inverted",
+      "shape3": "inverted",
+      "shape4": "hourglass",
+      "shape5": "inverted",
+      "shape6": "pear"
+    }
+  },
+  {
+    "id": 12,
+    "userId": 4,
+    "date": "2025-09-30",
+    "result": "rectangle",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "rectangle",
+      "shape3": "hourglass",
+      "shape4": "hourglass",
+      "shape5": "rectangle",
+      "shape6": "rectangle"
+    }
+  },
+  {
+    "id": 13,
+    "userId": 4,
+    "date": "2025-09-30",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "pear",
+      "shape3": "hourglass",
+      "shape4": "hourglass",
+      "shape5": "inverted",
+      "shape6": "pear"
+    }
+  },
+  {
+    "id": 14,
+    "userId": 4,
+    "date": "2025-10-06",
+    "result": "inverted",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "inverted",
+      "shape3": "hourglass",
+      "shape4": "inverted",
+      "shape5": "inverted",
+      "shape6": "rectangle"
+    }
+  },
+  {
+    "id": 15,
+    "userId": 4,
+    "date": "2025-10-07",
+    "result": "inverted",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "inverted",
+      "shape3": "inverted",
+      "shape4": "rectangle",
+      "shape5": "hourglass",
+      "shape6": "inverted"
+    }
+  },
+  {
+    "id": 16,
+    "userId": 6,
+    "date": "2025-09-30",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    }
+  },
+  {
+    "id": 17,
+    "userId": 7,
+    "date": "2025-10-07",
+    "result": "hourglass",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    }
+  },
+  {
+    "id": 1,
+    "userId": 8,
+    "date": "2025-10-17",
+    "answers": {
+      "shape1": "pear",
+      "shape2": "inverted",
+      "shape3": "pear",
+      "shape4": "hourglass",
+      "shape5": "rectangle",
+      "shape6": "pear"
+    },
+    "result": "pear",
+    "recommendation": "\n                    Your body shape is Pear 🍐.<br>\n                    <ul>\n                        <li>Highlight your upper body with bright or detailed tops.</li>\n                        <li>Choose A-line skirts or wide-leg pants to balance hips.</li>\n                        <li>Avoid bottoms that add extra volume to your hips.</li>\n                    </ul>"
+  },
+  {
+    "id": 2,
+    "userId": 8,
+    "date": "2025-10-17",
+    "answers": {
+      "shape1": "pear",
+      "shape2": "pear",
+      "shape3": "inverted",
+      "shape4": "inverted",
+      "shape5": "pear",
+      "shape6": "rectangle"
+    },
+    "result": "pear",
+    "recommendation": "\n                    Your body shape is Pear 🍐.<br>\n                    <ul>\n                        <li>Highlight your upper body with bright or detailed tops.</li>\n                        <li>Choose A-line skirts or wide-leg pants to balance hips.</li>\n                        <li>Avoid bottoms that add extra volume to your hips.</li>\n                    </ul>"
+  },
+  {
+    "id": 3,
+    "userId": 8,
+    "date": "2025-10-17",
+    "answers": {
+      "shape1": "rectangle",
+      "shape2": "pear",
+      "shape3": "hourglass",
+      "shape4": "hourglass",
+      "shape5": "inverted",
+      "shape6": "hourglass"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  }
+]

@@ -104,7 +104,7 @@ FeatureHandler.registerFeature('bmi', {
     let html = '';
 
     if (filteredData.length === 0) {
-      html = '<p style="text-align: center; color: #dc2626;">No records found.</p>';
+      html = '<p style="text-align: center; color: #ca3c3cff;">No records found.</p>';
     } else {
       html += '<ul>';
       filteredData
@@ -234,7 +234,6 @@ FeatureHandler.registerFeature('bmi', {
         const form = document.getElementById('bmi-form');
         const resultDiv = document.getElementById('bmi-result');
 
-        // Display today's BMI result
         if (todayRecord) {
           const bmiVal = parseFloat(todayRecord.value).toFixed(1);
           const status = todayRecord.status || '';
@@ -249,8 +248,6 @@ FeatureHandler.registerFeature('bmi', {
           resultDiv.innerHTML = '';
           form.style.display = 'block';
         }
-
-        // Render records list
         this.renderRecordsList();
       })
       .catch((err) => {

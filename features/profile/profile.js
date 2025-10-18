@@ -197,41 +197,63 @@ FeatureHandler.registerFeature('profile', {
     }
   },
 
-  loadBMI(username) {
-    fetch(`/bmi-history?username=${username}`)
-      .then(res => res.json())
-      .then(data => {
-        const list = document.getElementById('profile-bmi-list');
-        list.innerHTML = '';
-        data.slice(-5).reverse().forEach(item => {
-          list.innerHTML += `<li>${item.date}: ${item.value} (${item.status})</li>`;
-        });
-      });
-  },
+ loadBMI(username) {
+  fetch(`/bmi-history?username=${username}`)
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById('profile-bmi-list');
+      list.innerHTML = '';
 
-  loadMood(username) {
-    fetch(`/mood-history?username=${username}`)
-      .then(res => res.json())
-      .then(data => {
-        const list = document.getElementById('profile-mood-list');
-        list.innerHTML = '';
-        data.slice(-5).reverse().forEach(item => {
-          list.innerHTML += `<li>${item.date}: ${item.mood} — ${item.note}</li>`;
-        });
-      });
-  },
+      // Urutkan data berdasarkan ID (descending)
+      data.sort((a, b) => b.id - a.id);
 
-  loadQuiz(username) {
-    fetch(`/quiz-history?username=${username}`)
-      .then(res => res.json())
-      .then(data => {
-        const list = document.getElementById('profile-quiz-list');
-        list.innerHTML = '';
-        data.slice(-3).reverse().forEach(item => {
-          list.innerHTML += `<li>${item.date}: ${item.result}</li>`;
-        });
+      // Ambil hanya 3 data terbaru
+      const latest = data.slice(0, 3);
+
+      // Tampilkan dari yang terbaru ke yang lama
+      latest.forEach(item => {
+        list.innerHTML += `<li>${item.date}: ${item.value} (${item.status})</li>`;
       });
-  },
+    });
+},
+
+loadMood(username) {
+  fetch(`/mood-history?username=${username}`)
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById('profile-mood-list');
+      list.innerHTML = '';
+
+      // Urutkan data berdasarkan ID terbaru
+      data.sort((a, b) => b.id - a.id);
+
+      // Ambil hanya 3 data terbaru
+      const latest = data.slice(0, 3);
+
+      latest.forEach(item => {
+        list.innerHTML += `<li>${item.date}: ${item.mood} — ${item.note}</li>`;
+      });
+    });
+},
+
+loadQuiz(username) {
+  fetch(`/quiz-history?username=${username}`)
+    .then(res => res.json())
+    .then(data => {
+      const list = document.getElementById('profile-quiz-list');
+      list.innerHTML = '';
+
+      // Urutkan berdasarkan ID terbaru
+      data.sort((a, b) => b.id - a.id);
+
+      // Ambil 3 hasil kuis terbaru
+      const latest = data.slice(0, 3);
+
+      latest.forEach(item => {
+        list.innerHTML += `<li>${item.date}: ${item.result}</li>`;
+      });
+    });
+},
 
   // NEW: Simple PDF Download from Profile Page
   async downloadSimplePDF(username) {

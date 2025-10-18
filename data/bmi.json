@@ -19,16 +19,79 @@
   },
   {
     "id": 1,
+    "userId": 3,
+    "date": "2025-10-10",
+    "height": 167,
+    "weight": 87,
+    "value": "31.20",
+    "status": "Obese"
+  },
+  {
+    "id": 2,
     "userId": 10,
-    "date": "2025-10-18",
+    "date": "2025-10-11",
+    "height": 150,
+    "weight": 47,
+    "value": "20.89",
+    "status": "Normal"
+  },
+  {
+    "id": 3,
+    "userId": 10,
+    "date": "2025-10-12",
+    "height": 160,
+    "weight": 50,
+    "value": "19.53",
+    "status": "Normal"
+  },
+  {
+    "id": 4,
+    "userId": 10,
+    "date": "2025-10-13",
     "height": 157,
     "weight": 55,
     "value": "22.31",
     "status": "Normal"
   },
   {
-    "id": 1,
-    "userId": 3,
+    "id": 5,
+    "userId": 10,
+    "date": "2025-10-14",
+    "height": 167,
+    "weight": 87,
+    "value": "31.20",
+    "status": "Obese"
+  },
+  {
+    "id": 6,
+    "userId": 10,
+    "date": "2025-10-15",
+    "height": 150,
+    "weight": 68,
+    "value": "30.22",
+    "status": "Obese"
+  },
+  {
+    "id": 7,
+    "userId": 10,
+    "date": "2025-10-16",
+    "height": 160,
+    "weight": 66,
+    "value": "25.78",
+    "status": "Overweight"
+  },
+  {
+    "id": 8,
+    "userId": 10,
+    "date": "2025-10-17",
+    "height": 157,
+    "weight": 55,
+    "value": "22.31",
+    "status": "Normal"
+  },
+  {
+    "id": 9,
+    "userId": 10,
     "date": "2025-10-18",
     "height": 167,
     "weight": 87,

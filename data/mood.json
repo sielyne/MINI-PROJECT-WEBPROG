@@ -23,6 +23,69 @@
   {
     "id": 1,
     "userId": 10,
+    "date": "2025-10-09",
+    "mood": "fear",
+    "note": "taktauu"
+  },
+  {
+    "id": 2,
+    "userId": 10,
+    "date": "2025-10-10",
+    "mood": "fear",
+    "note": "keyooo"
+  },
+  {
+    "id": 3,
+    "userId": 10,
+    "date": "2025-10-11",
+    "mood": "disgusted",
+    "note": "yuhuuu"
+  },
+  {
+    "id": 4,
+    "userId": 10,
+    "date": "2025-10-12",
+    "mood": "neutral",
+    "note": "idk"
+  },
+  {
+    "id": 5,
+    "userId": 10,
+    "date": "2025-10-13",
+    "mood": "angry",
+    "note": "taktauu"
+  },
+  {
+    "id": 6,
+    "userId": 10,
+    "date": "2025-10-14",
+    "mood": "sad",
+    "note": "taktauu"
+  },
+  {
+    "id": 7,
+    "userId": 10,
+    "date": "2025-10-15",
+    "mood": "fear",
+    "note": "key"
+  },
+  {
+    "id": 8,
+    "userId": 10,
+    "date": "2025-10-16",
+    "mood": "happy",
+    "note": "yuhuuu"
+  },
+  {
+    "id": 9,
+    "userId": 10,
+    "date": "2025-10-17",
+    "mood": "neutral",
+    "note": "idk"
+  },
+  {
+    "id": 10,
+    "userId": 10,
     "date": "2025-10-18",
     "mood": "sad",
     "note": "taktauu"

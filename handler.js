@@ -145,10 +145,8 @@ const FeatureHandler = {
         const storedUser = localStorage.getItem('bloomii-username');
         if (storedUser) {
             this.currentUser = storedUser;
-            this.showPage('menu');
-        } else {
-            this.showPage('login');
         }
+        this.showPage('login');
         this.updateHeader();
 
 

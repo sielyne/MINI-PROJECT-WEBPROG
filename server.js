@@ -608,6 +608,65 @@ const server = http.createServer((req, res) => {
             res.end(JSON.stringify({ error: 'Error fetching quiz history' }));
         }
     }
+
+
+
+// === 🔍 SEARCH HISTORY ROUTE ===
+else if (req.method === 'GET' && req.url.startsWith('/search-history')) {
+    try {
+        const urlObj = new URL(req.url, `http://${req.headers.host}`);
+        const username = urlObj.searchParams.get('username');
+        const q = (urlObj.searchParams.get('q') || '').toLowerCase();
+
+        if (!username || !q) {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ error: 'Missing parameters' }));
+        }
+
+        const users = loadUsers();
+        const user = users.find(u => u.username === username);
+        if (!user) {
+            res.writeHead(404, { 'Content-Type': 'application/json' });
+            return res.end(JSON.stringify({ error: 'User not found' }));
+        }
+
+        const filterText = (text) => text && text.toString().toLowerCase().includes(q);
+
+        const bmiData = loadBMI().filter(
+            b => b.userId === user.id && (
+                filterText(b.date) ||
+                filterText(b.status) ||
+                filterText(b.value)
+            )
+        );
+
+        const moodData = loadMood().filter(
+            m => m.userId === user.id && (
+                filterText(m.date) ||
+                filterText(m.mood) ||
+                filterText(m.note)
+            )
+        );
+
+        const quizData = loadQuiz().filter(
+            qz => qz.userId === user.id && (
+                filterText(qz.date) ||
+                filterText(qz.result) ||
+                filterText(qz.recommendation)
+            )
+        );
+
+        const result = { bmi: bmiData, mood: moodData, quiz: quizData };
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(result));
+
+    } catch (err) {
+        console.error('Search error:', err);
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ error: 'Internal server error' }));
+    }
+}
+
     // Assets
     else if (req.method === 'GET' && req.url.startsWith('/assets/')) {
         const imgPath = path.join(__dirname, req.url);
@@ -628,6 +687,8 @@ const server = http.createServer((req, res) => {
         });
         return;
     }
+
+    
 });
 
 initStorage();

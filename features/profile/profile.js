@@ -1,5 +1,57 @@
 FeatureHandler.registerFeature('profile', {
   init() {
+
+// === 🔍 SEARCH HISTORY FEATURE ===
+const searchInput = document.getElementById('search-history');
+const searchResults = document.getElementById('search-results');
+
+if (searchInput && searchResults) {
+  let searchTimeout;
+
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const q = searchInput.value.trim();
+    if (!q) {
+      searchResults.innerHTML = '';
+      return;
+    }
+
+    // Debounce biar gak fetch terlalu sering
+    searchTimeout = setTimeout(async () => {
+      try {
+        const username = FeatureHandler.getCurrentUser();
+        const res = await fetch(`/search-history?username=${username}&q=${encodeURIComponent(q)}`);
+        const data = await res.json();
+
+        // Gabungkan hasil dari semua kategori
+        let html = '';
+        const makeList = (title, items, formatter) => {
+          if (items.length > 0) {
+            html += `<h3>${title}</h3><ul>`;
+            items.forEach(item => {
+              html += `<li>${formatter(item)}</li>`;
+            });
+            html += '</ul>';
+          }
+        };
+
+        makeList('BMI History', data.bmi, (i) => `${i.date}: ${i.value} (${i.status})`);
+        makeList('Mood Tracker', data.mood, (i) => `${i.date}: ${i.mood} — ${i.note || 'No note'}`);
+        makeList('Quiz Results', data.quiz, (i) => `${i.date}: ${i.result}`);
+
+        searchResults.innerHTML = html || '<p style="color:#777;text-align:center;">No results found.</p>';
+      } catch (err) {
+        console.error('Search error:', err);
+        searchResults.innerHTML = '<p style="color:red;">Failed to search history.</p>';
+      }
+    }, 400); // tunggu 400ms setelah user berhenti mengetik
+  });
+}
+
+
+
+
+
     const username = FeatureHandler.getCurrentUser();
     if (!username) {
       FeatureHandler.showPage('login');
@@ -634,6 +686,58 @@ loadQuiz(username) {
         document.getElementById('report').style.display = 'none';
         document.getElementById('profile').style.display = 'block';
       };
+
+
+
+
+      // === 🔍 SEARCH HISTORY FEATURE ===
+const searchInput = document.getElementById('search-history');
+const searchResults = document.getElementById('search-results');
+
+if (searchInput && searchResults) {
+  let searchTimeout;
+
+  searchInput.addEventListener('input', () => {
+    clearTimeout(searchTimeout);
+    const q = searchInput.value.trim();
+    if (!q) {
+      searchResults.innerHTML = '';
+      return;
+    }
+
+    // Debounce biar gak fetch terlalu sering
+    searchTimeout = setTimeout(async () => {
+      try {
+        const username = FeatureHandler.getCurrentUser();
+        const res = await fetch(`/search-history?username=${username}&q=${encodeURIComponent(q)}`);
+        const data = await res.json();
+
+        // Gabungkan hasil dari semua kategori
+        let html = '';
+        const makeList = (title, items, formatter) => {
+          if (items.length > 0) {
+            html += `<h3>${title}</h3><ul>`;
+            items.forEach(item => {
+              html += `<li>${formatter(item)}</li>`;
+            });
+            html += '</ul>';
+          }
+        };
+
+        makeList('BMI History', data.bmi, (i) => `${i.date}: ${i.value} (${i.status})`);
+        makeList('Mood Tracker', data.mood, (i) => `${i.date}: ${i.mood} — ${i.note || 'No note'}`);
+        makeList('Quiz Results', data.quiz, (i) => `${i.date}: ${i.result}`);
+
+        searchResults.innerHTML = html || '<p style="color:#777;text-align:center;">No results found.</p>';
+      } catch (err) {
+        console.error('Search error:', err);
+        searchResults.innerHTML = '<p style="color:red;">Failed to search history.</p>';
+      }
+    }, 400); // tunggu 400ms setelah user berhenti mengetik
+  });
+}
+
+
     }
   }
 });

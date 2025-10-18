@@ -93,7 +93,7 @@
 }
 
 /* Action buttons */
-#mood button {
+button {
     padding: 0.7rem 1.5rem;
     border-radius: 8px;
     border: none;
@@ -106,7 +106,7 @@
     margin: 0.3rem;
 }
 
-#mood button:hover {
+button:hover {
     background: linear-gradient(90deg, #fcb7ff 0%, #a1c4fd 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(161, 196, 253, 0.3);

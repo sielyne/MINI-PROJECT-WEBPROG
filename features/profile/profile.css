@@ -1,3 +1,126 @@
+.search-history-container h3 {
+  margin-top: 1rem;
+  color: #667eea;
+  font-size: 1rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+}
+
+.search-history-container ul {
+  list-style: none;
+  margin: 0.3rem 0 1rem;
+  padding-left: 1rem;
+}
+
+.search-history-container li {
+  padding: 4px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.search-history-container li:last-child {
+  border-bottom: none;
+}
+/* === Search Bar Styling (Profile Page) === */
+.search-history-container {
+  max-width: 600px;
+  margin: 2rem auto 0; /* memberi jarak lebih besar dari username */
+  text-align: left;
+}
+
+#search-history {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  font-size: 1rem;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+#search-history:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+#search-results {
+  margin-top: 1rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 1rem 1.2rem;
+}
+
+/* Hasil search tampil konsisten dengan style history list */
+#search-results h3 {
+  margin-top: 1rem;
+  color: #6a82fb;
+  font-size: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 4px;
+}
+
+#search-results ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1rem;
+}
+
+#search-results li {
+  background: linear-gradient(to right, #f7fafc, #edf2f7);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  border-radius: 10px;
+  border-left: 4px solid #6a82fb;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  color: #2d3748;
+  line-height: 1.6;
+}
+
+#search-results li:hover {
+  background: linear-gradient(to right, #edf2f7, #e2e8f0);
+  transform: translateX(5px);
+  border-left-color: #764ba2;
+}
+#search-results {
+  transition: opacity 0.3s ease;
+}
+
+#search-results:empty {
+  opacity: 0;
+  display: none;
+}
+/* === Search Bar Styling (Light Mode Default) === */
+#search-history {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  font-size: 1rem;
+  background: #ffffff; /* 🔹 Pastikan putih bersih di light mode */
+  color: #2d3748;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+#search-history::placeholder {
+  color: #a0aec0;
+}
+
+#search-history:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+
+
+
+
+
+
 #profile {
   padding: 2rem;
   text-align: center;
@@ -307,12 +430,39 @@
   }
 }
 
-/* Dark mode for account center/profile */
+/* === DARK MODE: Search Bar & History === */
 @media (prefers-color-scheme: dark) {
+  #search-history {
+    background: #2d3748;
+    color: #e2e8f0;
+    border: 2px solid #4a5568;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+
+  #search-history::placeholder {
+    color: #a0aec0;
+  }
+
+  #search-history:focus {
+    border-color: #8b9aff;
+    box-shadow: 0 0 0 3px rgba(139, 154, 255, 0.2);
+  }
+
+  #search-results {
+    background: #2d3748;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    padding: 1rem 1.2rem;
+  }
+
   .profile-section h3,
   .profile-section li {
     color: #4a88e5 !important;
   }
+  
+
+
+  
   
   .report-container {
     background: rgba(30, 30, 40, 0.98);
@@ -371,4 +521,27 @@
   background: linear-gradient(to right, #768599, #4b5563) !important;
 }
 
+}
+
+/* === Search Bar Styling (Light Mode Default) === */
+#search-history {
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  font-size: 1rem;
+  background: #ffffff; /* 🔹 Pastikan putih bersih di light mode */
+  color: #2d3748;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+#search-history::placeholder {
+  color: #a0aec0;
+}
+
+#search-history:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }

@@ -130,16 +130,7 @@
   flex: 1;
 }
 
-.quiz-result-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
-}
-
 .quiz-result-buttons button {
-  flex: 1;
-  min-width: 140px; /* otomatis bikin turun kalau layar sempit */
   padding: 0.6rem 1rem;
   border: none;
   border-radius: 8px;
@@ -166,8 +157,6 @@
   }
 }
 
-
-
 @media (prefers-color-scheme: dark) {
   .result-info h2 {
     color: #6a82fb !important;
@@ -190,18 +179,6 @@
 .slide {
   display: none;
   animation: fadeIn 0.4s ease-in-out;
-}
-
-@media (max-width: 480px) {
-  .quiz-result-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .quiz-result-buttons button {
-    width: 100%;
-    max-width: 280px;
-  }
 }
 
 @keyframes fadeIn {

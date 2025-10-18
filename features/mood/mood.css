@@ -93,7 +93,7 @@
 }
 
 /* Action buttons */
-button {
+#mood button:not(.edit-btn):not(.delete-btn) {
     padding: 0.7rem 1.5rem;
     border-radius: 8px;
     border: none;
@@ -106,13 +106,13 @@ button {
     margin: 0.3rem;
 }
 
-button:hover {
+#mood button:hover:not(.edit-btn):not(.delete-btn) {
     background: linear-gradient(90deg, #fcb7ff 0%, #a1c4fd 100%);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(161, 196, 253, 0.3);
 }
 
-button:active {
+#mood button:active:not(.edit-btn):not(.delete-btn) {
     transform: translateY(0);
 }
 

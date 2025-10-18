@@ -1,15 +1,6 @@
 [
   {
     "id": 1,
-    "userId": 1,
-    "date": "2025-10-17",
-    "height": 150,
-    "weight": 47,
-    "value": "20.89",
-    "status": "Normal"
-  },
-  {
-    "id": 1,
     "userId": 2,
     "date": "2025-10-17",
     "height": 160,
@@ -49,9 +40,9 @@
     "userId": 10,
     "date": "2025-10-13",
     "height": 157,
-    "weight": 55,
-    "value": "22.31",
-    "status": "Normal"
+    "weight": 32,
+    "value": "12.98",
+    "status": "Underweight"
   },
   {
     "id": 5,

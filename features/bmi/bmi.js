@@ -104,7 +104,7 @@ FeatureHandler.registerFeature('bmi', {
     let html = '';
 
     if (filteredData.length === 0) {
-      html = '<p style="text-align: center; color: #ca3c3cff;">No records found.</p>';
+      html = '<p style="text-align: center; color: #bf4141ff;">No records found.</p>';
     } else {
       html += '<ul>';
       filteredData
@@ -113,12 +113,17 @@ FeatureHandler.registerFeature('bmi', {
           const id = r.id || r._id || 0;
           html += `
             <li>
-              <strong>${new Date(r.date).toLocaleDateString()}</strong> - 
-              BMI: <b>${r.value}</b> (${r.status})
-              <br>
-              <small>Height: ${r.height}cm, Weight: ${r.weight}kg</small>
-              <button onclick="FeatureHandler.executeFeature('bmi','editRecord',${id})">Edit</button>
-              <button onclick="FeatureHandler.executeFeature('bmi','deleteRecord',${id})">Delete</button>
+              <div class="record-info">
+                <strong>${new Date(r.date).toLocaleDateString()}</strong> 
+                <b>BMI: ${r.value}</b>
+                <b class="status-badge">(${r.status})</b>
+                <br>
+                <small>Height: ${r.height}cm Weight: ${r.weight}kg</small>
+              </div>
+              <div class="record-actions">
+                <button onclick="FeatureHandler.executeFeature('bmi','editRecord',${id})">Edit</button>
+                <button onclick="FeatureHandler.executeFeature('bmi','deleteRecord',${id})">Delete</button>
+              </div>
             </li>`;
         });
       html += '</ul>';

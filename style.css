@@ -242,6 +242,7 @@ button {
     box-shadow: 0 4px 24px #c2e9fb55;
     cursor: pointer;
     transition: transform 0.15s, box-shadow 0.15s;
+    margin-top: 0.2px;
 }
 
 button:hover {
@@ -316,7 +317,7 @@ button:hover {
   background: none;
   border: none;
   font-size: 1rem;
-  color: #ebeaea;
+  color: #a1c4fd;
   text-align: left;
   cursor: pointer;
 }
@@ -443,9 +444,6 @@ body.dark-mode #header-nav {
     75% { transform: translateX(-5px); }
     100% { transform: translateX(0); }
 }
-
-
-
 
 /* ===== Footer Styles ===== */
 .site-footer {

@@ -137,9 +137,6 @@ const server = http.createServer((req, res) => {
         return;
     }
 
-    // ...lanjutan kode kamu (serve file, register, login, bmi, mood, quiz) tetap sama
-    // ⬇️ ⬇️ ⬇️
-
     // Serve JavaScript files
     if (req.method === 'GET' && (req.url === '/handler.js' || (req.url.startsWith('/features/') && req.url.endsWith('.js')))) {
         const jsPath = path.join(__dirname, req.url);

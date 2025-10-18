@@ -1,13 +1,30 @@
 FeatureHandler.registerFeature('dashboard', {
   init() {
+    console.log('🔍 Dashboard init dipanggil'); // Debug log
+    
+    // ✅ PENTING: Cek apakah kita benar-benar di halaman dashboard
+    if (FeatureHandler.currentPage !== 'dashboard') {
+      console.log('⛔ Bukan halaman dashboard, skip init');
+      return;
+    }
+
     const user = FeatureHandler.getCurrentUser();
     if (!user) {
       FeatureHandler.showPage('login');
       return;
     }
 
-    document.getElementById('dashboard-username').textContent = user;
-    document.getElementById('dashboardBackBtn').addEventListener('click', () => {
+    // Pastikan elemen dashboard ada
+    const dashboardUsername = document.getElementById('dashboard-username');
+    const dashboardBackBtn = document.getElementById('dashboardBackBtn');
+    
+    if (!dashboardUsername || !dashboardBackBtn) {
+      console.log('⚠️ Elemen dashboard tidak ditemukan');
+      return;
+    }
+
+    dashboardUsername.textContent = user;
+    dashboardBackBtn.addEventListener('click', () => {
       FeatureHandler.showPage('menu');
     });
 
@@ -17,21 +34,32 @@ FeatureHandler.registerFeature('dashboard', {
   },
 
   loadBMI(username) {
+    const bmiValue = document.getElementById('bmi-value');
+    const bmiStatus = document.getElementById('bmi-status');
+    
+    if (!bmiValue || !bmiStatus) return;
+    
     fetch(`/bmi-history?username=${username}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
           const last = data[data.length - 1];
-          document.getElementById('bmi-value').textContent = `${last.value}`;
-          document.getElementById('bmi-status').textContent = `${last.status}`;
+          bmiValue.textContent = `${last.value}`;
+          bmiStatus.textContent = `${last.status}`;
         } else {
-          document.getElementById('bmi-value').textContent = 'No data';
-          document.getElementById('bmi-status').textContent = '-';
+          bmiValue.textContent = 'No data';
+          bmiStatus.textContent = '-';
         }
-      });
+      })
+      .catch(err => console.error('Error loading BMI:', err));
   },
 
   loadMood(username) {
+    const moodIcon = document.getElementById('mood-icon');
+    const moodNote = document.getElementById('mood-note');
+    
+    if (!moodIcon || !moodNote) return;
+    
     fetch(`/mood-history?username=${username}`)
       .then(res => res.json())
       .then(data => {
@@ -42,25 +70,31 @@ FeatureHandler.registerFeature('dashboard', {
             happy: '😊', neutral: '😐', sad: '😢',
             angry: '😡', fear: '😨', disgusted: '🤢'
           };
-          document.getElementById('mood-icon').textContent = icons[todayMood.mood] || '-';
-          document.getElementById('mood-note').textContent = todayMood.note || '-';
+          moodIcon.textContent = icons[todayMood.mood] || '-';
+          moodNote.textContent = todayMood.note || '-';
         } else {
-          document.getElementById('mood-icon').textContent = ' (Not filled)';
-          document.getElementById('mood-note').textContent = '-';
+          moodIcon.textContent = '(Not filled)';
+          moodNote.textContent = '-';
         }
-      });
+      })
+      .catch(err => console.error('Error loading mood:', err));
   },
 
   loadQuiz(username) {
+    const quizResult = document.getElementById('quiz-result');
+    
+    if (!quizResult) return;
+    
     fetch(`/quiz-history?username=${username}`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {
           const last = data[data.length - 1];
-          document.getElementById('quiz-result').textContent = last.result || '-';
+          quizResult.textContent = last.result || '-';
         } else {
-          document.getElementById('quiz-result').textContent = '(Not filled)';
+          quizResult.textContent = '(Not filled)';
         }
-      });
+      })
+      .catch(err => console.error('Error loading quiz:', err));
   }
 });

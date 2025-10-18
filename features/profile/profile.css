@@ -206,7 +206,7 @@
 }
 
 .btn-download {
-  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  background: linear-gradient(135deg, #48d29f 0%, #24ad7f 100%);
   color: #fff;
   flex: 1;
   max-width: 300px;
@@ -360,15 +360,15 @@
 }
 
 #save-profile-btn:hover {
-  background: #10b981 !important;
+  background: linear-gradient(to right, #2aefad, #3ab97c) !important;
 }
 
 #delete-account-btn:hover {
-  background: #ef4444 !important;
+  background: linear-gradient(to right, #f66b6b, #f14881) !important;
 }
 
 #close-settings-btn:hover {
-  background: #4b5563 !important;
+  background: linear-gradient(to right, #768599, #4b5563) !important;
 }
 
 }

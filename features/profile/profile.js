@@ -117,6 +117,10 @@ FeatureHandler.registerFeature('profile', {
             FeatureHandler.setCurrentUser(finalUsername);
             document.getElementById('profile-username').textContent = finalUsername;
             
+            
+            const headerName = document.getElementById('header-username') || document.getElementById('welcome-username');
+  if (headerName) headerName.textContent = finalUsername;
+  
             // Reload all data for new username
             this.loadBMI(finalUsername);
             this.loadMood(finalUsername);

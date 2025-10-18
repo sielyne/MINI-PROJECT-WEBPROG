@@ -8,5 +8,40 @@
     "id": 2,
     "username": "testes",
     "password": "$2b$10$KAc6kYoIGzTGR2zWeUXJo.q1HAz.Fh6x0hRcgc8GfcmmaL9O/FruS"
+  },
+  {
+    "id": 3,
+    "username": "elin",
+    "password": "$2b$10$OmhQX1FXSyh0yy8F/EjsI.yMOVDaply7QXqJn.PdDZFK4u9zzKNAW"
+  },
+  {
+    "id": 4,
+    "username": "matcha",
+    "password": "$2b$10$qz1WVin4yQZ1aWAC5mI/Nutu2LWDbiTS6qooVNDk6/efPYteC/kB."
+  },
+  {
+    "id": 5,
+    "username": "kopi",
+    "password": "$2b$10$6gif1E5xEYL801/RLnVtJeCpLz.jzeDJlAnTwVDC0S8HTC3KuFfSy"
+  },
+  {
+    "id": 6,
+    "username": "latte",
+    "password": "$2b$10$bRwqklSDn5vXmtfz9t0rHOBu/VCkzIwTANdZ/DrFWDEDoT1cLrFXG"
+  },
+  {
+    "id": 7,
+    "username": "mimi",
+    "password": "$2b$10$4fvFKwzOcJqx2.WTvWMv8.hvLm5sSxrfhkmGvhfrpxsWtjHF5ksBu"
+  },
+  {
+    "id": 8,
+    "username": "mumu",
+    "password": "$2b$10$QlrCW9koB2fdWEWQfuPWhOXYAluZSLFOg7tnJfxTn34yUgEikFiDu"
+  },
+  {
+    "id": 9,
+    "username": "mama",
+    "password": "$2b$10$YmY2kQ0/4c4oa0oA0f90ReLnWY9N4f89EyssLm2724Wm67y7/nPIC"
   }
 ]

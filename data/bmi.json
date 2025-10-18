@@ -16,5 +16,14 @@
     "weight": 50,
     "value": "19.53",
     "status": "Normal"
+  },
+  {
+    "id": 1,
+    "userId": 3,
+    "date": "2025-10-18",
+    "height": 154,
+    "weight": 66,
+    "value": "27.83",
+    "status": "Overweight"
   }
 ]

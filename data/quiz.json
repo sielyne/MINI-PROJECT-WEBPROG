@@ -28,5 +28,245 @@
     },
     "result": "hourglass",
     "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 1,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "pear",
+      "shape2": "inverted",
+      "shape3": "pear",
+      "shape4": "rectangle",
+      "shape5": "pear",
+      "shape6": "inverted"
+    },
+    "result": "pear",
+    "recommendation": "\n                    Your body shape is Pear 🍐.<br>\n                    <ul>\n                        <li>Highlight your upper body with bright or detailed tops.</li>\n                        <li>Choose A-line skirts or wide-leg pants to balance hips.</li>\n                        <li>Avoid bottoms that add extra volume to your hips.</li>\n                    </ul>"
+  },
+  {
+    "id": 2,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 3,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 4,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "rectangle",
+      "shape2": "rectangle",
+      "shape3": "rectangle",
+      "shape4": "rectangle",
+      "shape5": "rectangle",
+      "shape6": "inverted"
+    },
+    "result": "rectangle",
+    "recommendation": "\n                    Your body shape is Rectangle ▭.<br>\n                    <ul>\n                        <li>Create curves with peplum tops or belts.</li>\n                        <li>Layered outfits or ruffles add dimension.</li>\n                        <li>Avoid straight-cut outfits that hide the waist completely.</li>\n                    </ul>"
+  },
+  {
+    "id": 5,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "pear",
+      "shape2": "pear",
+      "shape3": "inverted",
+      "shape4": "inverted",
+      "shape5": "pear",
+      "shape6": "rectangle"
+    },
+    "result": "pear",
+    "recommendation": "\n                    Your body shape is Pear 🍐.<br>\n                    <ul>\n                        <li>Highlight your upper body with bright or detailed tops.</li>\n                        <li>Choose A-line skirts or wide-leg pants to balance hips.</li>\n                        <li>Avoid bottoms that add extra volume to your hips.</li>\n                    </ul>"
+  },
+  {
+    "id": 6,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "inverted",
+      "shape3": "hourglass",
+      "shape4": "hourglass",
+      "shape5": "inverted",
+      "shape6": "pear"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 7,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "rectangle",
+      "shape2": "rectangle",
+      "shape3": "rectangle",
+      "shape4": "rectangle",
+      "shape5": "rectangle",
+      "shape6": "inverted"
+    },
+    "result": "rectangle",
+    "recommendation": "\n                    Your body shape is Rectangle ▭.<br>\n                    <ul>\n                        <li>Create curves with peplum tops or belts.</li>\n                        <li>Layered outfits or ruffles add dimension.</li>\n                        <li>Avoid straight-cut outfits that hide the waist completely.</li>\n                    </ul>"
+  },
+  {
+    "id": 8,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 9,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "rectangle",
+      "shape2": "rectangle",
+      "shape3": "rectangle",
+      "shape4": "rectangle",
+      "shape5": "rectangle",
+      "shape6": "inverted"
+    },
+    "result": "rectangle",
+    "recommendation": "\n                    Your body shape is Rectangle ▭.<br>\n                    <ul>\n                        <li>Create curves with peplum tops or belts.</li>\n                        <li>Layered outfits or ruffles add dimension.</li>\n                        <li>Avoid straight-cut outfits that hide the waist completely.</li>\n                    </ul>"
+  },
+  {
+    "id": 10,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 11,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "inverted",
+      "shape3": "hourglass",
+      "shape4": "hourglass",
+      "shape5": "inverted",
+      "shape6": "pear"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 12,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "rectangle",
+      "shape2": "rectangle",
+      "shape3": "rectangle",
+      "shape4": "rectangle",
+      "shape5": "rectangle",
+      "shape6": "inverted"
+    },
+    "result": "rectangle",
+    "recommendation": "\n                    Your body shape is Rectangle ▭.<br>\n                    <ul>\n                        <li>Create curves with peplum tops or belts.</li>\n                        <li>Layered outfits or ruffles add dimension.</li>\n                        <li>Avoid straight-cut outfits that hide the waist completely.</li>\n                    </ul>"
+  },
+  {
+    "id": 13,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 14,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "pear",
+      "shape2": "pear",
+      "shape3": "inverted",
+      "shape4": "inverted",
+      "shape5": "pear",
+      "shape6": "rectangle"
+    },
+    "result": "pear",
+    "recommendation": "\n                    Your body shape is Pear 🍐.<br>\n                    <ul>\n                        <li>Highlight your upper body with bright or detailed tops.</li>\n                        <li>Choose A-line skirts or wide-leg pants to balance hips.</li>\n                        <li>Avoid bottoms that add extra volume to your hips.</li>\n                    </ul>"
+  },
+  {
+    "id": 15,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "hourglass",
+      "shape2": "inverted",
+      "shape3": "hourglass",
+      "shape4": "hourglass",
+      "shape5": "inverted",
+      "shape6": "pear"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 16,
+    "userId": 3,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "rectangle",
+      "shape2": "rectangle",
+      "shape3": "rectangle",
+      "shape4": "rectangle",
+      "shape5": "rectangle",
+      "shape6": "inverted"
+    },
+    "result": "rectangle",
+    "recommendation": "\n                    Your body shape is Rectangle ▭.<br>\n                    <ul>\n                        <li>Create curves with peplum tops or belts.</li>\n                        <li>Layered outfits or ruffles add dimension.</li>\n                        <li>Avoid straight-cut outfits that hide the waist completely.</li>\n                    </ul>"
   }
 ]

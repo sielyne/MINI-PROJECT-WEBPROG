@@ -19,59 +19,79 @@ const FeatureHandler = {
 
     // Load and show a specific page
     showPage(pageId) {
-        if (this.currentPage === pageId) return;
-        this.currentPage = pageId;
+  const protectedPages = ['menu', 'dashboard', 'profile', 'bmi', 'mood', 'quiz'];
+  const username = this.getCurrentUser();
 
-        const container = document.getElementById('app-container');
-        const header = document.getElementById('main-header');
-        if (header) {
-            header.style.display =  'flex';
+  // 🔹 1️⃣ Khusus: kalau belum login dan mau buka menu → langsung ke login TANPA alert
+  if (!username && pageId === 'menu') {
+    this.showPage('login');
+    return;
+  }
+
+  // 🔹 2️⃣ Kalau belum login dan buka halaman lain yang dilindungi → alert
+  if (!username && protectedPages.includes(pageId)) {
+    alert('⚠️ You are not logged in yet! Please log in first.');
+    this.showPage('login');
+    return;
+  }
+
+  // Hindari reload halaman sama
+  if (this.currentPage === pageId) return;
+  this.currentPage = pageId;
+
+  const container = document.getElementById('app-container');
+  const header = document.getElementById('main-header');
+  if (header) header.style.display = 'flex';
+
+
+  fetch(`features/${pageId}/${pageId}.html`)
+    .then(res => res.text())
+    .then(html => {
+      const tempContainer = document.createElement('div');
+      tempContainer.innerHTML = html;
+
+      const cssHref = `features/${pageId}/${pageId}.css`;
+      const existingStyle = document.querySelector(`link[href="${cssHref}"]`);
+
+      const applyThemeToggle = () => {
+        const toggleBtn = document.getElementById('themeToggleBtn');
+        if (toggleBtn) {
+          toggleBtn.onclick = () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem(
+              'theme',
+              document.body.classList.contains('dark-mode') ? 'dark' : 'light'
+            );
+          };
+
+          const savedTheme = localStorage.getItem('theme');
+          if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+          } else {
+            document.body.classList.remove('dark-mode');
+          }
         }
-
-        fetch(`features/${pageId}/${pageId}.html`)
-  .then(res => res.text())
-  .then(html => {
-    const tempContainer = document.createElement('div');
-    tempContainer.innerHTML = html;
-
-    const cssHref = `features/${pageId}/${pageId}.css`;
-    const existingStyle = document.querySelector(`link[href="${cssHref}"]`);
-    const applyThemeToggle = () => {
-      const toggleBtn = document.getElementById('themeToggleBtn');
-      if (toggleBtn) {
-        toggleBtn.onclick = () => {
-          document.body.classList.toggle('dark-mode');
-          localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
-        };
-
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-          document.body.classList.add('dark-mode');
-        } else {
-          document.body.classList.remove('dark-mode');
-        }
-      }
-    };
-
-    if (!existingStyle) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = cssHref;
-      link.onload = () => {
-        container.innerHTML = tempContainer.innerHTML;
-        applyThemeToggle(); // ← selalu dipanggil
-        this.executeFeature(pageId, 'init');
       };
-      document.head.appendChild(link);
-    } else {
-      container.innerHTML = tempContainer.innerHTML;
-      applyThemeToggle(); // ← selalu dipanggil
-      this.executeFeature(pageId, 'init');
-    }
-  })
 
-                .catch(err => console.error(`Error loading ${pageId}:`, err));
+      if (!existingStyle) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = cssHref;
+        link.onload = () => {
+          container.innerHTML = tempContainer.innerHTML;
+          applyThemeToggle();
+          this.executeFeature(pageId, 'init');
+        };
+        document.head.appendChild(link);
+      } else {
+        container.innerHTML = tempContainer.innerHTML;
+        applyThemeToggle();
+        this.executeFeature(pageId, 'init');
+      }
+    })
+    .catch(err => console.error(`Error loading ${pageId}:`, err));
 },
+
 
     // Set current user
     setCurrentUser(username) {
@@ -88,6 +108,34 @@ const FeatureHandler = {
         return this.currentUser;
     },
 
+    updateHeader() {
+  const header = document.getElementById('main-header');
+  const headerName = document.getElementById('header-username');
+  const nav = document.getElementById('header-nav');
+  const profileIcon = document.getElementById('profileIcon');
+  const navLogout = document.getElementById('navLogoutBtn');
+  const username = this.getCurrentUser();
+
+  // Header tetap tampil selalu
+  if (header) header.style.display = 'flex';
+
+  if (username) {
+    if (headerName) headerName.textContent = `Hi, ${username}`;
+    if (nav) nav.classList.remove('hidden');
+    if (profileIcon) profileIcon.style.display = 'inline';
+    if (navLogout) navLogout.style.display = 'inline';
+  } else {
+    if (headerName) headerName.textContent = '';
+    if (nav) nav.classList.add('hidden'); // sembunyikan menu
+    if (navLogout) navLogout.style.display = 'none';
+  }
+},
+
+clearCurrentUser() {
+    localStorage.removeItem('bloomii-currentUser');
+},
+
+
     // Initialize app
     init() {
         // Sync currentUser from localStorage if available
@@ -96,6 +144,8 @@ const FeatureHandler = {
             this.currentUser = storedUser;
         }
         this.showPage('login');
+        this.updateHeader();
+
 
         // Set username in header
         const profileIcon = document.getElementById('profileIcon');
@@ -122,14 +172,14 @@ const FeatureHandler = {
 
         // Logout
         const navLogout = document.getElementById('navLogoutBtn');
-        if (navLogout) {
-            navLogout.addEventListener('click', () => {
-                this.setCurrentUser(null);
-                this.showPage('login');
-            });
-        }
+          navLogout.addEventListener('click', () => {
+          this.setCurrentUser(null);
+          this.updateHeader();
+          this.showPage('login');
+      });
     }
 };
+
 
 // Initialize app on load
 window.onload = () => FeatureHandler.init();

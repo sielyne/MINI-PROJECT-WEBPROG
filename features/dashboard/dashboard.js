@@ -25,7 +25,7 @@ FeatureHandler.registerFeature('dashboard', {
           document.getElementById('bmi-value').textContent = `${last.value}`;
           document.getElementById('bmi-status').textContent = `${last.status}`;
         } else {
-          document.getElementById('bmi-value').textContent = 'Belum ada data';
+          document.getElementById('bmi-value').textContent = 'No data';
           document.getElementById('bmi-status').textContent = '-';
         }
       });

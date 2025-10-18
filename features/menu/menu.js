@@ -1,5 +1,13 @@
 FeatureHandler.registerFeature('menu', {
+  
   init() {
+
+    const username = FeatureHandler.getCurrentUser();
+      if (!username) {
+       FeatureHandler.showPage('login');
+      return;
+    }
+
     console.log('Home page loaded');
 
     // Navigasi ke Dashboard

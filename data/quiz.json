@@ -283,5 +283,35 @@
     },
     "result": "inverted",
     "recommendation": "\n                    Your body shape is Inverted Triangle 🔺.<br>\n                    <ul>\n                        <li>Wear simple tops to minimize shoulder width.</li>\n                        <li>Flared or wide-leg pants can add volume to lower body.</li>\n                        <li>Avoid shoulder pads or heavily decorated tops.</li>\n                    </ul>"
+  },
+  {
+    "id": 1,
+    "userId": 9,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "hourglass",
+      "shape3": "pear",
+      "shape4": "pear",
+      "shape5": "hourglass",
+      "shape6": "hourglass"
+    },
+    "result": "hourglass",
+    "recommendation": "\n                    Your body shape is Hourglass ⏳.<br>\n                    <ul>\n                        <li>Highlight your waist with fitted dresses or belts.</li>\n                        <li>Bodycon dresses or outfits that show curves work well.</li>\n                        <li>Avoid shapeless, boxy clothes that hide your waist.</li>\n                    </ul>"
+  },
+  {
+    "id": 2,
+    "userId": 9,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "pear",
+      "shape2": "pear",
+      "shape3": "inverted",
+      "shape4": "inverted",
+      "shape5": "pear",
+      "shape6": "rectangle"
+    },
+    "result": "pear",
+    "recommendation": "\n                    Your body shape is Pear 🍐.<br>\n                    <ul>\n                        <li>Highlight your upper body with bright or detailed tops.</li>\n                        <li>Choose A-line skirts or wide-leg pants to balance hips.</li>\n                        <li>Avoid bottoms that add extra volume to your hips.</li>\n                    </ul>"
   }
 ]

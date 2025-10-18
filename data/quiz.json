@@ -268,5 +268,20 @@
     },
     "result": "rectangle",
     "recommendation": "\n                    Your body shape is Rectangle ▭.<br>\n                    <ul>\n                        <li>Create curves with peplum tops or belts.</li>\n                        <li>Layered outfits or ruffles add dimension.</li>\n                        <li>Avoid straight-cut outfits that hide the waist completely.</li>\n                    </ul>"
+  },
+  {
+    "id": 1,
+    "userId": 10,
+    "date": "2025-10-18",
+    "answers": {
+      "shape1": "inverted",
+      "shape2": "inverted",
+      "shape3": "inverted",
+      "shape4": "inverted",
+      "shape5": "pear",
+      "shape6": "rectangle"
+    },
+    "result": "inverted",
+    "recommendation": "\n                    Your body shape is Inverted Triangle 🔺.<br>\n                    <ul>\n                        <li>Wear simple tops to minimize shoulder width.</li>\n                        <li>Flared or wide-leg pants can add volume to lower body.</li>\n                        <li>Avoid shoulder pads or heavily decorated tops.</li>\n                    </ul>"
   }
 ]

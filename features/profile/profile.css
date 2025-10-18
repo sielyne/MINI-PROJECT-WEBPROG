@@ -29,10 +29,346 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
+.profile-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.profile-btn-row button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.profile-btn-row button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+/* Report Section Styles */
+#report {
+  padding: 2rem;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.report-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.report-header {
+  text-align: center;
+  padding-bottom: 2rem;
+  border-bottom: 3px solid #6a82fb;
+  margin-bottom: 2rem;
+}
+
+.report-header h2 {
+  color: #667eea;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.report-username {
+  color: #4a5568;
+  font-size: 1.1rem;
+  margin: 0.5rem 0;
+}
+
+.report-date {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.report-content {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.report-card {
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.report-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  border-color: #6a82fb;
+}
+
+.report-card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.report-card-header h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.report-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.report-card-body {
+  padding: 1.5rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.report-card-body ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.report-card-body li {
+  background: linear-gradient(to right, #f7fafc, #edf2f7);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  border-radius: 10px;
+  border-left: 4px solid #6a82fb;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+  color: #2d3748;
+  line-height: 1.6;
+}
+
+.report-card-body li:hover {
+  background: linear-gradient(to right, #edf2f7, #e2e8f0);
+  transform: translateX(5px);
+  border-left-color: #764ba2;
+}
+
+.report-card-body li:last-child {
+  margin-bottom: 0;
+}
+
+.report-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e2e8f0;
+}
+
+.btn-download,
+.btn-back {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-download {
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  color: #fff;
+  flex: 1;
+  max-width: 300px;
+}
+
+.btn-download:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-back {
+  background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+  color: #fff;
+  flex: 1;
+  max-width: 300px;
+}
+
+.btn-back:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(109, 40, 217, 0.4);
+}
+
+/* Scrollbar Styling */
+.report-card-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.report-card-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.report-card-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+}
+
+.report-card-body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .report-container {
+    padding: 1.5rem;
+    border-radius: 15px;
+  }
+  
+  .report-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .report-card-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .report-actions {
+    flex-direction: column;
+  }
+  
+  .btn-download,
+  .btn-back {
+    max-width: 100%;
+  }
+  
+  .report-card-body {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  #report {
+    padding: 1rem;
+  }
+  
+  .report-container {
+    padding: 1rem;
+  }
+  
+  .report-header {
+    padding-bottom: 1rem;
+  }
+  
+  .report-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .report-card-header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .report-card-body li {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+  }
+}
+
 /* Dark mode for account center/profile */
 @media (prefers-color-scheme: dark) {
   .profile-section h3,
   .profile-section li {
     color: #4a88e5 !important;
   }
+  
+  .report-container {
+    background: rgba(30, 30, 40, 0.98);
+  }
+  
+  .report-header h2 {
+    color: #8b9aff;
+  }
+  
+  .report-username,
+  .report-date {
+    color: #cbd5e0;
+  }
+  
+  .report-card {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+  
+  .report-card-body li {
+    background: linear-gradient(to right, #374151, #4b5563);
+    color: #e2e8f0;
+  }
+  
+  .report-card-body li:hover {
+    background: linear-gradient(to right, #4b5563, #6b7280);
+  }
+
+/* ... CSS sebelumnya tetap sama ... */
+
+/* Settings Form Enhancements */
+#edit-profile-form input:focus {
+  outline: none;
+  border-color: #667eea !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+#edit-profile-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#edit-profile-form button:active {
+  transform: translateY(0);
+}
+
+#save-profile-btn:hover {
+  background: #10b981 !important;
+}
+
+#delete-account-btn:hover {
+  background: #ef4444 !important;
+}
+
+#close-settings-btn:hover {
+  background: #4b5563 !important;
+}
+
 }

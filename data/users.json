@@ -12,7 +12,7 @@
   {
     "id": 3,
     "username": "elin",
-    "password": "$2b$10$OmhQX1FXSyh0yy8F/EjsI.yMOVDaply7QXqJn.PdDZFK4u9zzKNAW"
+    "password": "$2b$10$UMA33EiwaN02DW6Fd05gve1UGtAHQ23Qb2nnvgD3S7TRBV1FUzXj2"
   },
   {
     "id": 4,
@@ -43,5 +43,10 @@
     "id": 9,
     "username": "mama",
     "password": "$2b$10$YmY2kQ0/4c4oa0oA0f90ReLnWY9N4f89EyssLm2724Wm67y7/nPIC"
+  },
+  {
+    "id": 10,
+    "username": "temen",
+    "password": "$2b$10$OxCmeRKSQy0T5RoXJtCzsew3zIQgAWlFLMUTtFogA5qXB1PGi.YHO"
   }
 ]

@@ -19,11 +19,20 @@
   },
   {
     "id": 1,
+    "userId": 10,
+    "date": "2025-10-18",
+    "height": 157,
+    "weight": 55,
+    "value": "22.31",
+    "status": "Normal"
+  },
+  {
+    "id": 1,
     "userId": 3,
     "date": "2025-10-18",
-    "height": 154,
-    "weight": 66,
-    "value": "27.83",
-    "status": "Overweight"
+    "height": 167,
+    "weight": 87,
+    "value": "31.20",
+    "status": "Obese"
   }
 ]

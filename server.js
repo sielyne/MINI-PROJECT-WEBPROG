@@ -11,149 +11,135 @@ const MOOD_FILE = path.join(DATA_DIR, 'mood.json');
 const QUIZ_FILE = path.join(DATA_DIR, 'quiz.json');
 
 function initStorage() {
-    if (!fs.existsSync(DATA_DIR)) {
-        fs.mkdirSync(DATA_DIR);
-    }
-    if (!fs.existsSync(USERS_FILE)) {
-        fs.writeFileSync(USERS_FILE, JSON.stringify([], null, 2));
-    }
-    if (!fs.existsSync(BMI_FILE)) {
-        fs.writeFileSync(BMI_FILE, JSON.stringify([], null, 2));
-    }
-    if (!fs.existsSync(MOOD_FILE)) {
-        fs.writeFileSync(MOOD_FILE, JSON.stringify([], null, 2));
-    }
-    if (!fs.existsSync(QUIZ_FILE)) {
-        fs.writeFileSync(QUIZ_FILE, JSON.stringify([], null, 2));
-    }
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR);
+    if (!fs.existsSync(USERS_FILE)) fs.writeFileSync(USERS_FILE, JSON.stringify([], null, 2));
+    if (!fs.existsSync(BMI_FILE)) fs.writeFileSync(BMI_FILE, JSON.stringify([], null, 2));
+    if (!fs.existsSync(MOOD_FILE)) fs.writeFileSync(MOOD_FILE, JSON.stringify([], null, 2));
+    if (!fs.existsSync(QUIZ_FILE)) fs.writeFileSync(QUIZ_FILE, JSON.stringify([], null, 2));
 }
 
-// Load functions
-function loadUsers() {
-    return JSON.parse(fs.readFileSync(USERS_FILE, 'utf8'));
-}
-
-function loadBMI() {
-    return JSON.parse(fs.readFileSync(BMI_FILE, 'utf8'));
-}
-
-function loadMood() {
-    return JSON.parse(fs.readFileSync(MOOD_FILE, 'utf8'));
-}
-
-function loadQuiz() {
-    return JSON.parse(fs.readFileSync(QUIZ_FILE, 'utf8'));
-}
-
-// Save functions
-function saveUsers(users) {
-    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
-}
-
-function saveBMI(bmiData) {
-    fs.writeFileSync(BMI_FILE, JSON.stringify(bmiData, null, 2));
-}
-
-function saveMood(moodData) {
-    fs.writeFileSync(MOOD_FILE, JSON.stringify(moodData, null, 2));
-}
-
-function saveQuiz(quizData) {
-    fs.writeFileSync(QUIZ_FILE, JSON.stringify(quizData, null, 2));
-}
+// Load & save helpers
+function loadUsers() { return JSON.parse(fs.readFileSync(USERS_FILE, 'utf8')); }
+function loadBMI() { return JSON.parse(fs.readFileSync(BMI_FILE, 'utf8')); }
+function loadMood() { return JSON.parse(fs.readFileSync(MOOD_FILE, 'utf8')); }
+function loadQuiz() { return JSON.parse(fs.readFileSync(QUIZ_FILE, 'utf8')); }
+function saveUsers(users) { fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2)); }
+function saveBMI(bmiData) { fs.writeFileSync(BMI_FILE, JSON.stringify(bmiData, null, 2)); }
+function saveMood(moodData) { fs.writeFileSync(MOOD_FILE, JSON.stringify(moodData, null, 2)); }
+function saveQuiz(quizData) { fs.writeFileSync(QUIZ_FILE, JSON.stringify(quizData, null, 2)); }
 
 const server = http.createServer((req, res) => {
 
-    // Update user (username/password)
+    // ✅ Verifikasi password sebelum ubah/hapus
+    if (req.method === 'POST' && req.url === '/user-verify-password') {
+        let body = '';
+        req.on('data', chunk => body += chunk.toString());
+        req.on('end', async () => {
+            try {
+                const { username, password } = JSON.parse(body);
+                const users = loadUsers();
+                const user = users.find(u => u.username === username);
+                if (!user) {
+                    res.writeHead(404, {'Content-Type': 'application/json'});
+                    return res.end(JSON.stringify({ success: false, error: 'User not found' }));
+                }
+                const valid = await bcrypt.compare(password, user.password);
+                res.writeHead(200, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({ success: valid }));
+            } catch (err) {
+                console.error('Verify error:', err);
+                res.writeHead(500, {'Content-Type': 'application/json'});
+                res.end(JSON.stringify({ success: false, error: 'Server error' }));
+            }
+        });
+        return;
+    }
+
+    // ✅ Update username/password
     if (req.method === 'PUT' && req.url === '/user-update') {
         let body = '';
         req.on('data', chunk => { body += chunk.toString(); });
-        req.on('end', () => {
+        req.on('end', async () => {
             try {
-                const parsed = JSON.parse(body);
+                const { oldUsername, newUsername, newPassword, currentPassword } = JSON.parse(body);
                 let users = loadUsers();
-                const user = users.find(u => u.username === parsed.oldUsername);
+                const user = users.find(u => u.username === oldUsername);
                 if (!user) {
                     res.writeHead(404, { 'Content-Type': 'application/json' });
                     return res.end(JSON.stringify({ error: 'User not found' }));
                 }
-                
-                // Cek jika username baru sudah dipakai user lain
-                if (parsed.newUsername && parsed.newUsername !== parsed.oldUsername) {
-                    if (users.some(u => u.username === parsed.newUsername)) {
+
+                const valid = await bcrypt.compare(currentPassword, user.password);
+                if (!valid) {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'Invalid password' }));
+                }
+
+                if (newUsername && newUsername !== oldUsername) {
+                    if (users.some(u => u.username === newUsername)) {
                         res.writeHead(400, { 'Content-Type': 'application/json' });
                         return res.end(JSON.stringify({ error: 'Username already taken' }));
                     }
-                    user.username = parsed.newUsername;
+                    user.username = newUsername;
                 }
-                
-                if (parsed.newPassword) {
-                    bcrypt.hash(parsed.newPassword, 10, (err, hash) => {
-                        if (err) {
-                            res.writeHead(500, { 'Content-Type': 'application/json' });
-                            return res.end(JSON.stringify({ error: 'Error hashing password' }));
-                        }
-                        user.password = hash;
-                        saveUsers(users);
-                        res.writeHead(200, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ success: true, username: user.username }));
-                    });
-                } else {
-                    saveUsers(users);
-                    res.writeHead(200, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ success: true, username: user.username }));
-                }
+
+                if (newPassword) user.password = await bcrypt.hash(newPassword, 10);
+                saveUsers(users);
+
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ success: true, username: user.username }));
             } catch (err) {
+                console.error('Update error:', err);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ error: 'Internal server error' }));
             }
         });
         return;
     }
-    // Delete user
+
+    // ✅ Hapus user + datanya
     if (req.method === 'DELETE' && req.url === '/user-delete') {
         let body = '';
         req.on('data', chunk => { body += chunk.toString(); });
-        req.on('end', () => {
+        req.on('end', async () => {
             try {
-                const parsed = JSON.parse(body);
+                const { username, password } = JSON.parse(body);
                 let users = loadUsers();
-                const user = users.find(u => u.username === parsed.username);
+                const user = users.find(u => u.username === username);
                 if (!user) {
                     res.writeHead(404, { 'Content-Type': 'application/json' });
                     return res.end(JSON.stringify({ error: 'User not found' }));
                 }
-                
+
+                const valid = await bcrypt.compare(password, user.password);
+                if (!valid) {
+                    res.writeHead(401, { 'Content-Type': 'application/json' });
+                    return res.end(JSON.stringify({ error: 'Incorrect password' }));
+                }
+
                 const userId = user.id;
-                
-                // Hapus user
                 users = users.filter(u => u.id !== userId);
                 saveUsers(users);
-                
-                // Hapus data BMI user
-                let bmiData = loadBMI();
-                bmiData = bmiData.filter(b => b.userId !== userId);
-                saveBMI(bmiData);
-                
-                // Hapus data mood user
-                let moodData = loadMood();
-                moodData = moodData.filter(m => m.userId !== userId);
-                saveMood(moodData);
-                
-                // Hapus data quiz user
-                let quizData = loadQuiz();
-                quizData = quizData.filter(q => q.userId !== userId);
-                saveQuiz(quizData);
-                
+
+                // Hapus semua data terkait
+                saveBMI(loadBMI().filter(b => b.userId !== userId));
+                saveMood(loadMood().filter(m => m.userId !== userId));
+                saveQuiz(loadQuiz().filter(q => q.userId !== userId));
+
                 res.writeHead(200, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ success: true }));
             } catch (err) {
+                console.error('Delete error:', err);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ error: 'Internal server error' }));
             }
         });
         return;
     }
+
+    // ...lanjutan kode kamu (serve file, register, login, bmi, mood, quiz) tetap sama
+    // ⬇️ ⬇️ ⬇️
+
     // Serve JavaScript files
     if (req.method === 'GET' && (req.url === '/handler.js' || (req.url.startsWith('/features/') && req.url.endsWith('.js')))) {
         const jsPath = path.join(__dirname, req.url);

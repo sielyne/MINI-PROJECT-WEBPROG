@@ -26,13 +26,31 @@ FeatureHandler.registerFeature('login', {
     },
 
     showForm(type) {
-        document.getElementById('choice-buttons').style.display = 'none';
-        const form = document.getElementById('user-form');
-        const title = document.getElementById('form-title');
-        form.action = type === 'register' ? '/register' : '/login';
-        title.textContent = type === 'register' ? 'Register' : 'Login';
-        form.style.display = 'block';
-    },
+  document.getElementById('choice-buttons').style.display = 'none';
+  const form = document.getElementById('user-form');
+  const title = document.getElementById('form-title');
+  const toggleText = document.getElementById('toggleText');
+
+  form.action = type === 'register' ? '/register' : '/login';
+  title.textContent = type === 'register' ? 'Register' : 'Login';
+  form.style.display = 'block';
+
+  // 🔹 Tambahkan teks bawah form
+  if (type === 'register') {
+    toggleText.innerHTML = `Already have an account? 
+      <a href="#" id="toLoginLink" style="color:#6a82fb; text-decoration:underline;">Login</a>`;
+  } else {
+    toggleText.innerHTML = `Don’t have an account yet? 
+      <a href="#" id="toRegisterLink" style="color:#6a82fb; text-decoration:underline;">Register</a>`;
+  }
+
+  // 🔹 Event untuk link-nya
+  const toLogin = document.getElementById('toLoginLink');
+  const toRegister = document.getElementById('toRegisterLink');
+  if (toLogin) toLogin.onclick = (e) => { e.preventDefault(); this.showForm('login'); };
+  if (toRegister) toRegister.onclick = (e) => { e.preventDefault(); this.showForm('register'); };
+},
+
 
     backToChoice() {
         document.getElementById('user-form').style.display = 'none';

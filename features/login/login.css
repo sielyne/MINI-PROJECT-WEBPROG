@@ -1,6 +1,13 @@
 #choice-buttons {
     margin-top: 1.5em;
 }
+
+#toggleText a:hover {
+  color: #a259c6;
+  text-decoration: none;
+}
+
+
 #user-form {
     background: rgba(255,255,255,0.85);
     border-radius: 18px;

@@ -197,6 +197,7 @@ body.dark-mode #hamburgerBtn:hover {
   margin: 0 auto;
   max-width: 1200px;
   padding: 2rem;
+  flex: 1;
 }
 
 #app-container > * {

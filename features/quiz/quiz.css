@@ -494,3 +494,7 @@ body.dark-mode #quizResultContent h3 {
     margin: 2px !important;
   }
 }
+#quiz-result:not(.hidden) ~ #quizBox #quizMenuBackBtn,
+#quiz-result:not(.hidden) #quizMenuBackBtn {
+  display: none !important;
+}

@@ -1,8 +1,6 @@
 FeatureHandler.registerFeature('dashboard', {
   init() {
-    console.log('🔍 Dashboard init dipanggil'); // Debug log
-    
-    // ✅ PENTING: Cek apakah kita benar-benar di halaman dashboard
+    console.log('🔍 Dashboard init dipanggil');
     if (FeatureHandler.currentPage !== 'dashboard') {
       console.log('⛔ Bukan halaman dashboard, skip init');
       return;
@@ -13,8 +11,6 @@ FeatureHandler.registerFeature('dashboard', {
       FeatureHandler.showPage('login');
       return;
     }
-
-    // Pastikan elemen dashboard ada
     const dashboardUsername = document.getElementById('dashboard-username');
     const dashboardBackBtn = document.getElementById('dashboardBackBtn');
     

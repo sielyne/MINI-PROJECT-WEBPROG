@@ -405,13 +405,9 @@ document.getElementById('quizProgressBar').style.width = `${progress}%`;
                     .catch(err => console.error('Quiz save error:', err));
             }
 
-
-            // Sembunyikan pertanyaan dan navigasi quiz, tapi quizBox tetap tampil
             document.getElementById('quizQuestion').style.display = 'none';
             document.getElementById('quizOptions').style.display = 'none';
             document.querySelector('.quiz-nav').style.display = 'none';
-
-            // Tampilkan hasil quiz di bawah quizBox
             document.getElementById('quiz-result').classList.remove('hidden');
             document.getElementById('quiz-review').classList.add('hidden');
             const imagePath = `assets/body-shapes/${result}.jpg`;
@@ -470,7 +466,6 @@ setTimeout(() => {
 
 
             this.lastQuizAnswers = { answers: { ...this.answers }, result, recommendation };
-            // Tidak perlu simpan ke localStorage, cukup POST ke server
         } catch (err) {
             console.error('Finish quiz error:', err.message);
             alert('Error finishing quiz: ' + err.message + '. Please try again.');
@@ -530,11 +525,9 @@ setTimeout(() => {
                 FeatureHandler.showPage('login');
                 return;
             }
-            // Tidak perlu hapus localStorage, quiz akan direset dan hasil baru akan diambil dari server
             this.currentQuestion = 0;
             this.answers = {};
             document.getElementById('quizReviewContent').innerHTML = '';
-            // Tampilkan kembali pertanyaan dan navigasi quiz
             document.getElementById('quizQuestion').style.display = '';
             document.getElementById('quizOptions').style.display = '';
             document.querySelector('.quiz-nav').style.display = '';
@@ -547,7 +540,6 @@ setTimeout(() => {
     },
 
     showSavedQuizResult() {
-        // Tampilkan hasil quiz yang sudah tersimpan di localStorage
         try {
             document.getElementById('quizBox').classList.remove('hidden');
             document.getElementById('quiz-result').classList.remove('hidden');

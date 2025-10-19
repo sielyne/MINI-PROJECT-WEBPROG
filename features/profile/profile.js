@@ -1,7 +1,5 @@
 FeatureHandler.registerFeature('profile', {
   init() {
-
-// === 🔍 SEARCH HISTORY FEATURE ===
 const searchInput = document.getElementById('search-history');
 const searchResults = document.getElementById('search-results');
 
@@ -16,14 +14,11 @@ if (searchInput && searchResults) {
       return;
     }
 
-    // Debounce biar gak fetch terlalu sering
     searchTimeout = setTimeout(async () => {
       try {
         const username = FeatureHandler.getCurrentUser();
         const res = await fetch(`/search-history?username=${username}&q=${encodeURIComponent(q)}`);
         const data = await res.json();
-
-        // Gabungkan hasil dari semua kategori
         let html = '';
         const makeList = (title, items, formatter) => {
           if (items.length > 0) {
@@ -44,7 +39,7 @@ if (searchInput && searchResults) {
         console.error('Search error:', err);
         searchResults.innerHTML = '<p style="color:red;">Failed to search history.</p>';
       }
-    }, 400); // tunggu 400ms setelah user berhenti mengetik
+    }, 400);
   });
 }
 
@@ -64,7 +59,6 @@ if (searchInput && searchResults) {
     this.loadMood(username);
     this.loadQuiz(username);
 
-    // Settings modal logic
     const settingsBtn = document.getElementById('profile-settings-btn');
     const settingsModal = document.getElementById('profile-settings-modal');
     const closeSettingsBtn = document.getElementById('close-settings-btn');
@@ -72,7 +66,6 @@ if (searchInput && searchResults) {
     if (settingsBtn && settingsModal) {
       settingsBtn.onclick = () => {
         settingsModal.style.display = 'flex';
-        // Clear form when opening
         document.getElementById('edit-profile-form').reset();
       };
     }
@@ -84,7 +77,6 @@ if (searchInput && searchResults) {
       };
     }
 
-    // View Report button
     const viewReportBtn = document.getElementById('view-report-btn');
     if (viewReportBtn) {
       viewReportBtn.onclick = () => {
@@ -92,7 +84,6 @@ if (searchInput && searchResults) {
       };
     }
 
-    // Download PDF button event
     const printBtn = document.getElementById('print-history-btn');
     if (printBtn) {
       printBtn.onclick = async () => {
@@ -100,7 +91,6 @@ if (searchInput && searchResults) {
       };
     }
 
-    // Edit profile form (UPDATED WITH PASSWORD VERIFICATION)
     const editForm = document.getElementById('edit-profile-form');
     if (editForm) {
       editForm.onsubmit = async (e) => {
@@ -110,27 +100,21 @@ if (searchInput && searchResults) {
         const currentPassword = document.getElementById('current-password').value;
         const newUsername = document.getElementById('edit-username').value.trim();
         const newPassword = document.getElementById('edit-password').value;
-        
-        // Validate current password is provided
+
         if (!currentPassword) {
           alert('Current password is required to make changes!');
           return;
         }
-        
-        // Check if any changes were made
         if (!newUsername && !newPassword) {
           alert('Please enter a new username or password to update.');
           return;
         }
-        
-        // Validate new username if provided
         if (newUsername && newUsername === oldUsername) {
           alert('New username is the same as current username.');
           return;
         }
-        
+    
         try {
-          // First verify current password
           const verifyRes = await fetch('/user-verify-password', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -147,8 +131,6 @@ if (searchInput && searchResults) {
             document.getElementById('current-password').focus();
             return;
           }
-          
-          // If verification passed, proceed with update
           const res = await fetch('/user-update', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
@@ -156,14 +138,13 @@ if (searchInput && searchResults) {
               oldUsername, 
               newUsername: newUsername || oldUsername, 
               newPassword: newPassword || null,
-              currentPassword // Send current password for double verification
+              currentPassword
             })
           });
           
           const data = await res.json();
           
           if (data.success) {
-            // Update username in localStorage/session and FeatureHandler
             const finalUsername = newUsername || oldUsername;
             localStorage.setItem('bloomii-username', finalUsername);
             FeatureHandler.setCurrentUser(finalUsername);
@@ -172,8 +153,6 @@ if (searchInput && searchResults) {
             
             const headerName = document.getElementById('header-username') || document.getElementById('welcome-username');
   if (headerName) headerName.textContent = finalUsername;
-  
-            // Reload all data for new username
             this.loadBMI(finalUsername);
             this.loadMood(finalUsername);
             this.loadQuiz(finalUsername);
@@ -189,14 +168,12 @@ if (searchInput && searchResults) {
           alert('❌ Server error. Please try again.');
         }
       };
-      
-      // Delete account button (UPDATED WITH PASSWORD VERIFICATION)
+
       const delBtn = document.getElementById('delete-account-btn');
       if (delBtn) {
         delBtn.onclick = async () => {
           const currentPassword = document.getElementById('current-password').value;
-          
-          // Validate current password is provided
+
           if (!currentPassword) {
             alert('⚠️ Please enter your current password first!');
             document.getElementById('current-password').focus();
@@ -206,8 +183,6 @@ if (searchInput && searchResults) {
           if (confirm('⚠️ Are you ABSOLUTELY SURE you want to delete your account?\n\nThis action CANNOT be undone!\n\nAll your data will be permanently deleted.')) {
             try {
               const username = FeatureHandler.getCurrentUser();
-              
-              // Verify password before deletion
               const verifyRes = await fetch('/user-verify-password', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -223,8 +198,7 @@ if (searchInput && searchResults) {
                 alert('❌ Current password is incorrect! Account deletion cancelled.');
                 return;
               }
-              
-              // If verified, proceed with deletion
+
               const res = await fetch('/user-delete', {
                 method: 'DELETE',
                 headers: { 'Content-Type': 'application/json' },
@@ -259,14 +233,8 @@ if (searchInput && searchResults) {
     .then(data => {
       const list = document.getElementById('profile-bmi-list');
       list.innerHTML = '';
-
-      // Urutkan data berdasarkan ID (descending)
       data.sort((a, b) => b.id - a.id);
-
-      // Ambil hanya 3 data terbaru
       const latest = data.slice(0, 3);
-
-      // Tampilkan dari yang terbaru ke yang lama
       latest.forEach(item => {
         list.innerHTML += `<li>${item.date}: ${item.value} (${item.status})</li>`;
       });
@@ -279,11 +247,7 @@ loadMood(username) {
     .then(data => {
       const list = document.getElementById('profile-mood-list');
       list.innerHTML = '';
-
-      // Urutkan data berdasarkan ID terbaru
       data.sort((a, b) => b.id - a.id);
-
-      // Ambil hanya 3 data terbaru
       const latest = data.slice(0, 3);
 
       latest.forEach(item => {
@@ -298,11 +262,7 @@ loadQuiz(username) {
     .then(data => {
       const list = document.getElementById('profile-quiz-list');
       list.innerHTML = '';
-
-      // Urutkan berdasarkan ID terbaru
       data.sort((a, b) => b.id - a.id);
-
-      // Ambil 3 hasil kuis terbaru
       const latest = data.slice(0, 3);
 
       latest.forEach(item => {
@@ -311,13 +271,10 @@ loadQuiz(username) {
     });
 },
 
-  // NEW: Simple PDF Download from Profile Page
   async downloadSimplePDF(username) {
     try {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      
-      // Fetch all data
       const bmiRes = await fetch(`/bmi-history?username=${username}`);
       const bmiData = await bmiRes.json();
       const moodRes = await fetch(`/mood-history?username=${username}`);
@@ -329,8 +286,6 @@ loadQuiz(username) {
       const pageHeight = doc.internal.pageSize.height;
       const margin = 20;
       const maxWidth = 170;
-      
-      // Helper function to check if new page is needed
       const checkPageBreak = (neededSpace) => {
         if (yPos + neededSpace > pageHeight - margin) {
           doc.addPage();
@@ -338,21 +293,18 @@ loadQuiz(username) {
         }
       };
       
-      // Title
       doc.setFontSize(22);
       doc.setTextColor(102, 126, 234);
       doc.text('BLOOMII HEALTH REPORT', 105, yPos, { align: 'center' });
       yPos += 15;
       
-      // User info
       doc.setFontSize(12);
       doc.setTextColor(60, 60, 60);
       doc.text(`User: ${username}`, 20, yPos);
       yPos += 7;
       doc.text(`Generated: ${new Date().toLocaleString()}`, 20, yPos);
       yPos += 15;
-      
-      // BMI History Section
+
       checkPageBreak(30);
       doc.setFontSize(16);
       doc.setTextColor(102, 126, 234);
@@ -381,7 +333,6 @@ loadQuiz(username) {
       }
       yPos += 5;
       
-      // Mood History Section
       checkPageBreak(30);
       doc.setFontSize(16);
       doc.setTextColor(102, 126, 234);
@@ -413,7 +364,6 @@ loadQuiz(username) {
       }
       yPos += 5;
       
-      // Quiz History Section
       checkPageBreak(30);
       doc.setFontSize(16);
       doc.setTextColor(102, 126, 234);
@@ -440,7 +390,6 @@ loadQuiz(username) {
         });
       }
       
-      // Footer on last page
       const pageCount = doc.internal.getNumberOfPages();
       for (let i = 1; i <= pageCount; i++) {
         doc.setPage(i);
@@ -448,8 +397,7 @@ loadQuiz(username) {
         doc.setTextColor(150, 150, 150);
         doc.text(`Page ${i} of ${pageCount}`, 105, pageHeight - 10, { align: 'center' });
       }
-      
-      // Save PDF
+
       doc.save(`bloomii-history-${username}-${Date.now()}.pdf`);
       
     } catch (error) {
@@ -458,7 +406,6 @@ loadQuiz(username) {
     }
   },
 
-  // Show Report Function
   async showReport(username) {
     document.getElementById('profile').style.display = 'none';
     document.getElementById('report').style.display = 'block';
@@ -478,7 +425,6 @@ loadQuiz(username) {
 
   async loadReportData(username) {
     try {
-      // Load BMI History
       const bmiRes = await fetch(`/bmi-history?username=${username}`);
       const bmiData = await bmiRes.json();
       const bmiList = document.getElementById('report-bmi-list');
@@ -493,7 +439,6 @@ loadQuiz(username) {
         });
       }
       
-      // Load Mood History
       const moodRes = await fetch(`/mood-history?username=${username}`);
       const moodData = await moodRes.json();
       const moodList = document.getElementById('report-mood-list');
@@ -507,8 +452,7 @@ loadQuiz(username) {
           moodList.innerHTML += `<li><strong>${item.date}</strong><br>Mood: ${item.mood}<br>Note: ${item.note || 'No note'}</li>`;
         });
       }
-      
-      // Load Quiz History
+
       const quizRes = await fetch(`/quiz-history?username=${username}`);
       const quizData = await quizRes.json();
       const quizList = document.getElementById('report-quiz-list');
@@ -529,15 +473,12 @@ loadQuiz(username) {
   },
 
   setupReportButtons(username) {
-    // Download Report Button (UPDATED TO PDF)
     const downloadBtn = document.getElementById('download-report-btn');
     if (downloadBtn) {
       downloadBtn.onclick = async () => {
         try {
           const { jsPDF } = window.jspdf;
           const doc = new jsPDF();
-          
-          // Fetch all data
           const bmiRes = await fetch(`/bmi-history?username=${username}`);
           const bmiData = await bmiRes.json();
           const moodRes = await fetch(`/mood-history?username=${username}`);
@@ -549,8 +490,6 @@ loadQuiz(username) {
           const pageHeight = doc.internal.pageSize.height;
           const margin = 20;
           const maxWidth = 170;
-          
-          // Helper function to check if new page is needed
           const checkPageBreak = (neededSpace) => {
             if (yPos + neededSpace > pageHeight - margin) {
               doc.addPage();
@@ -558,21 +497,17 @@ loadQuiz(username) {
             }
           };
           
-          // Title
           doc.setFontSize(22);
           doc.setTextColor(102, 126, 234);
           doc.text('BLOOMII COMPLETE HEALTH REPORT', 105, yPos, { align: 'center' });
           yPos += 15;
-          
-          // User info
           doc.setFontSize(12);
           doc.setTextColor(60, 60, 60);
           doc.text(`User: ${username}`, 20, yPos);
           yPos += 7;
           doc.text(`Generated: ${new Date().toLocaleString()}`, 20, yPos);
           yPos += 15;
-          
-          // BMI History Section
+        
           checkPageBreak(30);
           doc.setFontSize(16);
           doc.setTextColor(102, 126, 234);
@@ -601,7 +536,6 @@ loadQuiz(username) {
           }
           yPos += 5;
           
-          // Mood History Section
           checkPageBreak(30);
           doc.setFontSize(16);
           doc.setTextColor(102, 126, 234);
@@ -633,7 +567,6 @@ loadQuiz(username) {
           }
           yPos += 5;
           
-          // Quiz History Section
           checkPageBreak(30);
           doc.setFontSize(16);
           doc.setTextColor(102, 126, 234);
@@ -659,8 +592,7 @@ loadQuiz(username) {
               yPos += 8;
             });
           }
-          
-          // Footer on all pages
+        
           const pageCount = doc.internal.getNumberOfPages();
           for (let i = 1; i <= pageCount; i++) {
             doc.setPage(i);
@@ -668,8 +600,7 @@ loadQuiz(username) {
             doc.setTextColor(150, 150, 150);
             doc.text(`Bloomii Health Report - Page ${i} of ${pageCount}`, 105, pageHeight - 10, { align: 'center' });
           }
-          
-          // Save PDF
+
           doc.save(`bloomii-complete-report-${username}-${Date.now()}.pdf`);
           
         } catch (error) {
@@ -679,7 +610,6 @@ loadQuiz(username) {
       };
     }
     
-    // Back to Profile Button
     const backBtn = document.getElementById('back-to-profile-btn');
     if (backBtn) {
       backBtn.onclick = () => {
@@ -687,10 +617,6 @@ loadQuiz(username) {
         document.getElementById('profile').style.display = 'block';
       };
 
-
-
-
-      // === 🔍 SEARCH HISTORY FEATURE ===
 const searchInput = document.getElementById('search-history');
 const searchResults = document.getElementById('search-results');
 
@@ -705,14 +631,11 @@ if (searchInput && searchResults) {
       return;
     }
 
-    // Debounce biar gak fetch terlalu sering
     searchTimeout = setTimeout(async () => {
       try {
         const username = FeatureHandler.getCurrentUser();
         const res = await fetch(`/search-history?username=${username}&q=${encodeURIComponent(q)}`);
         const data = await res.json();
-
-        // Gabungkan hasil dari semua kategori
         let html = '';
         const makeList = (title, items, formatter) => {
           if (items.length > 0) {
@@ -733,7 +656,7 @@ if (searchInput && searchResults) {
         console.error('Search error:', err);
         searchResults.innerHTML = '<p style="color:red;">Failed to search history.</p>';
       }
-    }, 400); // tunggu 400ms setelah user berhenti mengetik
+    }, 400);
   });
 }
 

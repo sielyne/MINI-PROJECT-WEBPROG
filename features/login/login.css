@@ -1,4 +1,3 @@
-/* Toggle Text Styles - Responsive */
 #toggleText {
   text-align: center;
   margin-top: 1.5em;
@@ -20,7 +19,6 @@
   text-decoration: none;
 }
 
-/* Dark Mode */
 body.dark-mode #toggleText {
   color: #fffffff2;
 }
@@ -33,7 +31,6 @@ body.dark-mode #toggleText a:hover {
   color: #fcb7ff;
 }
 
-/* Choice Buttons */
 #choice-buttons {
   margin-top: 1.5em;
 }
@@ -78,7 +75,6 @@ body.dark-mode #choice-buttons button {
   color: #fff;
 }
 
-/* User Form */
 #user-form {
   background: rgba(255,255,255,0.85);
   border-radius: 18px;

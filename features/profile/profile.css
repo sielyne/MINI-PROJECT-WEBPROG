@@ -20,10 +20,10 @@
 .search-history-container li:last-child {
   border-bottom: none;
 }
-/* === Search Bar Styling (Profile Page) === */
+
 .search-history-container {
   max-width: 600px;
-  margin: 2rem auto 0; /* memberi jarak lebih besar dari username */
+  margin: 2rem auto 0; 
   text-align: left;
 }
 
@@ -52,7 +52,6 @@
   padding: 1rem 1.2rem;
 }
 
-/* Hasil search tampil konsisten dengan style history list */
 #search-results h3 {
   margin-top: 1rem;
   color: #6a82fb;
@@ -92,14 +91,14 @@
   opacity: 0;
   display: none;
 }
-/* === Search Bar Styling (Light Mode Default) === */
+
 #search-history {
   width: 100%;
   padding: 1rem 1.2rem;
   border-radius: 12px;
   border: 2px solid #e2e8f0;
   font-size: 1rem;
-  background: #ffffff; /* 🔹 Pastikan putih bersih di light mode */
+  background: #ffffff;
   color: #2d3748;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   transition: all 0.3s ease;
@@ -114,12 +113,6 @@
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
-
-
-
-
-
-
 
 #profile {
   padding: 2rem;
@@ -175,7 +168,6 @@
   box-shadow: 0 6px 16px rgba(0,0,0,0.15);
 }
 
-/* Report Section Styles */
 #report {
   padding: 2rem;
   min-height: 100vh;
@@ -352,7 +344,6 @@
   box-shadow: 0 8px 20px rgba(109, 40, 217, 0.4);
 }
 
-/* Scrollbar Styling */
 .report-card-body::-webkit-scrollbar {
   width: 8px;
 }
@@ -371,7 +362,6 @@
   background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
   .report-container {
     padding: 1.5rem;
@@ -430,7 +420,6 @@
   }
 }
 
-/* === DARK MODE: Search Bar & History === */
 @media (prefers-color-scheme: dark) {
   #search-history {
     background: #2d3748;
@@ -460,10 +449,6 @@
     color: #4a88e5 !important;
   }
   
-
-
-  
-  
   .report-container {
     background: rgba(30, 30, 40, 0.98);
   }
@@ -491,46 +476,43 @@
     background: linear-gradient(to right, #4b5563, #6b7280);
   }
 
-/* ... CSS sebelumnya tetap sama ... */
 
-/* Settings Form Enhancements */
-#edit-profile-form input:focus {
-  outline: none;
-  border-color: #667eea !important;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
+  #edit-profile-form input:focus {
+    outline: none;
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
 
-#edit-profile-form button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
+  #edit-profile-form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 
-#edit-profile-form button:active {
-  transform: translateY(0);
-}
+  #edit-profile-form button:active {
+    transform: translateY(0);
+  }
 
-#save-profile-btn:hover {
-  background: linear-gradient(to right, #2aefad, #3ab97c) !important;
-}
+  #save-profile-btn:hover {
+    background: linear-gradient(to right, #2aefad, #3ab97c) !important;
+  }
 
-#delete-account-btn:hover {
-  background: linear-gradient(to right, #f66b6b, #f14881) !important;
-}
+  #delete-account-btn:hover {
+    background: linear-gradient(to right, #f66b6b, #f14881) !important;
+  }
 
-#close-settings-btn:hover {
-  background: linear-gradient(to right, #768599, #4b5563) !important;
-}
+  #close-settings-btn:hover {
+    background: linear-gradient(to right, #768599, #4b5563) !important;
+  }
 
 }
 
-/* === Search Bar Styling (Light Mode Default) === */
 #search-history {
   width: 100%;
   padding: 1rem 1.2rem;
   border-radius: 12px;
   border: 2px solid #e2e8f0;
   font-size: 1rem;
-  background: #ffffff; /* 🔹 Pastikan putih bersih di light mode */
+  background: #ffffff;
   color: #2d3748;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   transition: all 0.3s ease;
@@ -575,11 +557,7 @@ body.dark-mode #search-results li:hover {
   background: linear-gradient(to right, #4b5563, #6b7280) !important;
 }
 
-/* === RESPONSIVE DESIGN === */
-
-/* === Max-width: 768px === */
 @media (max-width: 768px) {
-  /* --- Report Section --- */
   .report-container {
     padding: 1.5rem;
     border-radius: 15px;
@@ -606,7 +584,6 @@ body.dark-mode #search-results li:hover {
     max-height: 300px;
   }
 
-  /* --- Profile Section --- */
   #profile {
     padding: 1rem;
   }
@@ -637,7 +614,6 @@ body.dark-mode #search-results li:hover {
     padding: 0.6rem 1.2rem;
   }
 
-  /* --- Search History Section --- */
   .search-history-container {
     max-width: 95% !important;
     padding: 0 0.5rem !important;
@@ -678,9 +654,7 @@ body.dark-mode #search-results li:hover {
   }
 }
 
-/* === Max-width: 480px === */
 @media (max-width: 480px) {
-  /* --- Report Section --- */
   #report,
   .report-container {
     padding: 1rem;
@@ -717,7 +691,6 @@ body.dark-mode #search-results li:hover {
     font-size: 0.8rem;
   }
 
-  /* --- Profile Section --- */
   #profile h2 {
     font-size: 1.3rem;
   }
@@ -738,7 +711,6 @@ body.dark-mode #search-results li:hover {
     width: 100%;
   }
 
-  /* --- Search History Section --- */
   .search-history-container {
     max-width: 98% !important;
     padding: 0 0.3rem !important;
@@ -785,7 +757,6 @@ body.dark-mode #search-results li:hover {
   }
 }
 
-/* === Max-width: 350px === */
 @media (max-width: 350px) {
   #search-history {
     padding: 0.6rem 0.8rem !important;

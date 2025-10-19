@@ -35,7 +35,6 @@ FeatureHandler.registerFeature('login', {
   title.textContent = type === 'register' ? 'Register' : 'Login';
   form.style.display = 'block';
 
-  // 🔹 Tambahkan teks bawah form
   if (type === 'register') {
     toggleText.innerHTML = `Already have an account? 
       <a href="#" id="toLoginLink" style="color:#6a82fb; text-decoration:underline;">Login</a>`;
@@ -44,7 +43,6 @@ FeatureHandler.registerFeature('login', {
       <a href="#" id="toRegisterLink" style="color:#6a82fb; text-decoration:underline;">Register</a>`;
   }
 
-  // 🔹 Event untuk link-nya
   const toLogin = document.getElementById('toLoginLink');
   const toRegister = document.getElementById('toRegisterLink');
   if (toLogin) toLogin.onclick = (e) => { e.preventDefault(); this.showForm('login'); };
@@ -72,10 +70,9 @@ FeatureHandler.registerFeature('login', {
     fetch(form.action, { method: 'POST', body: new URLSearchParams(data) })
         .then(res => res.text())
         .then(result => {
-            console.log('Server response:', result); // Debug server output
+            console.log('Server response:', result);
 
             if (form.action.endsWith('/login')) {
-                // LOGIN HANDLER
                 if (result.includes('Login berhasil')) {
                     const username = document.getElementById('username').value.trim();
                     if (username) {
@@ -92,7 +89,6 @@ FeatureHandler.registerFeature('login', {
             } 
             
             else if (form.action.endsWith('/register')) {
-                // REGISTER HANDLER
                 FeatureHandler.setCurrentUser(null);
                 FeatureHandler.updateHeader();
 

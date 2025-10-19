@@ -15,26 +15,19 @@ const FeatureHandler = {
     }
   },
 
-  // Load and show a specific page
+
   showPage(pageId) {
     const protectedPages = ['dashboard', 'profile', 'bmi', 'mood', 'quiz'];
     const username = this.getCurrentUser();
-
-    // Special: kalau belum login dan mau buka menu dari fitur bebas (mis. blog),
-    // kita arahkan ke login tanpa alert. Namun akses langsung ke menu juga harus dicegah.
     if (!username && pageId === 'menu') {
       this.showPage('login');
       return;
     }
-
-    // Kalau belum login dan mau buka halaman yang dilindungi → alert + redirect ke login
     if (!username && protectedPages.includes(pageId)) {
       alert('⚠️ You are not logged in yet! Please log in first.');
       this.showPage('login');
       return;
     }
-
-    // Hindari reload halaman sama
     if (this.currentPage === pageId) return;
     this.currentPage = pageId;
 
@@ -71,7 +64,6 @@ const FeatureHandler = {
         const finishRender = () => {
           applyThemeToggle();
           this.executeFeature(pageId, 'init');
-          // Sinkronkan header **setelah** konten ter-insert dan init feature berjalan
           this.updateHeader();
         };
 
@@ -92,7 +84,6 @@ const FeatureHandler = {
       .catch(err => console.error(`Error loading ${pageId}:`, err));
   },
 
-  // Set current user (sync ke localStorage)
   setCurrentUser(username) {
   this.currentUser = username;
   if (username) {
@@ -107,13 +98,13 @@ getCurrentUser() {
 },
 
 
-  // Remove current user (helper yang benar)
+
   clearCurrentUser() {
     this.currentUser = null;
     localStorage.removeItem('bloomii-username');
   },
 
-  // Update header UI sesuai status login
+
   updateHeader() {
     const header = document.getElementById('main-header');
     const headerName = document.getElementById('header-username');
@@ -122,7 +113,6 @@ getCurrentUser() {
     const navLogout = document.getElementById('navLogoutBtn');
     const username = this.getCurrentUser();
 
-    // Pastikan header tampil (layout), tapi elemen dalamnya diatur
     if (header) header.style.display = 'flex';
 
     if (username) {
@@ -132,7 +122,6 @@ getCurrentUser() {
       }
       if (profileIcon) profileIcon.style.display = 'inline';
       if (navLogout) navLogout.style.display = 'inline';
-      // Nav tertutup by default, user harus klik hamburger untuk membuka
       if (nav) nav.classList.add('hidden');
     } else {
       if (headerName) {
@@ -145,39 +134,34 @@ getCurrentUser() {
     }
   },
 
-  // Initialize app
+
   init() {
   const storedUser = sessionStorage.getItem('bloomii-username');
 
   if (storedUser) {
-    // Kalau ada user tersimpan, treat as logged-in
     this.currentUser = storedUser;
-    // langsung ke menu (user sudah dianggap login)
     this.showPage('menu');
   } else {
     this.currentUser = null;
     this.showPage('login');
   }
 
-  // Event listener global
+
   document.addEventListener('click', (e) => {
     const target = e.target;
     const nav = document.getElementById('header-nav');
     const hamburger = document.getElementById('hamburgerBtn');
 
-    // Klik ikon profil
     if (target && target.id === 'profileIcon') {
       this.showPage('profile');
       return;
     }
 
-    // Klik hamburger → toggle menu
     if (target && target.id === 'hamburgerBtn') {
       if (nav) nav.classList.toggle('hidden');
       return;
     }
 
-    // Klik tombol logout
     if (target && target.id === 'navLogoutBtn') {
       this.setCurrentUser(null);
       this.updateHeader();
@@ -185,12 +169,11 @@ getCurrentUser() {
       return;
     }
 
-    // Klik di luar menu dan hamburger → close menu
     if (
       nav &&
-      !nav.classList.contains('hidden') && // menu lagi terbuka
-      !nav.contains(target) && // bukan klik di dalam nav
-      target !== hamburger // bukan klik hamburger
+      !nav.classList.contains('hidden') && 
+      !nav.contains(target) && 
+      target !== hamburger
     ) {
       nav.classList.add('hidden');
     }
@@ -199,5 +182,5 @@ getCurrentUser() {
 
 };
 
-// Initialize app on load
+
 window.onload = () => FeatureHandler.init();

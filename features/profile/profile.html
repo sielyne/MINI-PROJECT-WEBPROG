@@ -35,14 +35,12 @@
     <button id="view-report-btn" style="background:#6a82fb; color:#fff;">View Report</button>
     <button id="profile-back-btn" onclick="FeatureHandler.showPage('menu')">Back to Menu</button>
   </div>
-  
-  <!-- Modal Settings (UPDATED) -->
+
   <div id="profile-settings-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.25); z-index:9999; align-items:center; justify-content:center;">
     <div style="background:#fff; border-radius:16px; max-width:400px; width:90vw; margin:auto; padding:2em 1.5em; box-shadow:0 8px 32px #0002; position:relative;">
       <h3 style="margin-top:0; color:#667eea;">Account Settings</h3>
       
       <form id="edit-profile-form" style="display:flex; flex-direction:column; gap:1em; align-items:stretch;">
-        <!-- Current Password (Required) -->
         <div style="background:#fff3cd; border-left:4px solid #ffd555; padding:0.8em; border-radius:8px; margin-bottom:0.5em;">
           <small style="color:#856404; display:block; margin-bottom:0.3em;">
             ⚠️ <strong>Security Verification Required</strong>
@@ -65,8 +63,7 @@
         </div>
         
         <hr style="border:none; border-top:1px solid #e2e8f0; margin:0.5em 0;">
-        
-        <!-- New Username (Optional) -->
+
         <div style="position:relative;">
           <label style="display:block; margin-bottom:0.3em; color:#4a5568; font-size:0.9em; font-weight:600;">
             New Username (optional)
@@ -83,8 +80,7 @@
             3-15 characters (letters, numbers, underscore only)
           </small>
         </div>
-        
-        <!-- New Password (Optional) -->
+
         <div style="position:relative;">
           <label style="display:block; margin-bottom:0.3em; color:#4a5568; font-size:0.9em; font-weight:600;">
             New Password (optional)
@@ -100,7 +96,6 @@
           </small>
         </div>
         
-        <!-- Action Buttons -->
         <button type="submit" id="save-profile-btn" style="background:#45c797; color:#fff; padding:0.8em; border-radius:8px; border:none; font-weight:600; cursor:pointer; transition:all 0.3s;">
           Save Changes
         </button>
@@ -117,7 +112,6 @@
   </div>
 </section>
 
-<!-- Report Section (Same as before) -->
 <section id="report" style="display:none;">
   <div class="report-container">
     <div class="report-header">
@@ -127,7 +121,6 @@
     </div>
     
     <div class="report-content">
-      <!-- BMI Report -->
       <div class="report-card">
         <div class="report-card-header">
           <h3>BMI History</h3>
@@ -137,8 +130,7 @@
           <ul id="report-bmi-list"></ul>
         </div>
       </div>
-      
-      <!-- Mood Report -->
+
       <div class="report-card">
         <div class="report-card-header">
           <h3>Mood Tracker History</h3>
@@ -148,8 +140,7 @@
           <ul id="report-mood-list"></ul>
         </div>
       </div>
-      
-      <!-- Quiz Report -->
+
       <div class="report-card">
         <div class="report-card-header">
           <h3>Body Shape Quiz Results</h3>

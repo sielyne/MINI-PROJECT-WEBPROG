@@ -4,7 +4,6 @@
     box-sizing: border-box;
 }
 
-/* Step containers */
 #mood-step-1,
 #mood-step-2,
 #mood-step-3 {
@@ -26,7 +25,6 @@
     font-size: 1.5rem;
 }
 
-/* IMPORTANT: Hide elements completely */
 .hidden {
     display: none !important;
     visibility: hidden !important;
@@ -39,7 +37,6 @@
     left: -9999px !important;
 }
 
-/* Emoji selection buttons */
 .emoji-options {
     display: flex;
     justify-content: center;
@@ -68,7 +65,6 @@
     transform: scale(1.05);
 }
 
-/* Journal textarea */
 #mood-note {
     width: 100%;
     min-height: 120px;
@@ -92,7 +88,6 @@
     box-shadow: 0 0 0 3px rgba(161, 196, 253, 0.1);
 }
 
-/* Action buttons */
 button {
     padding: 0.7rem 1.5rem;
     border-radius: 8px;
@@ -116,7 +111,6 @@ button:active {
     transform: translateY(0);
 }
 
-/* Skip button - slightly different style */
 #skipJournalBtn {
     background: linear-gradient(90deg, #cbd5e1 0%, #94a3b8 100%);
 }
@@ -125,7 +119,6 @@ button:active {
     background: linear-gradient(90deg, #94a3b8 0%, #cbd5e1 100%);
 }
 
-/* Calendar navigation */
 .calendar-nav {
     display: flex;
     justify-content: center;
@@ -147,7 +140,6 @@ button:active {
     text-align: center;
 }
 
-/* Calendar grid */
 #calendar {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -229,7 +221,6 @@ button:active {
     font-style: italic;
 }
 
-/* Mood statistics */
 .mood-count-box {
     background: white;
     padding: 1rem;
@@ -281,7 +272,6 @@ button:active {
     color: #a1c4fd;
 }
 
-/* Today's mood */
 .today-mood-box {
     background: white;
     padding: 1rem;
@@ -326,7 +316,6 @@ button:active {
     font-style: italic;
 }
 
-/* Responsive design */
 @media (max-width: 770px) {
     #mood-step-1,
     #mood-step-2,

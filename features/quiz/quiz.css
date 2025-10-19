@@ -381,3 +381,116 @@ body.dark-mode #quizResultContent h3 {
   color: #a1c4fd !important;
 }
 
+@media (max-width: 768px) {
+  .quiz-nav {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-top: 12px !important;
+  }
+
+  #quizQuestion {
+    font-size: 1.15rem !important;
+  }
+
+  #quizOptions button {
+    width: 98% !important;
+    font-size: 0.95rem !important;
+  }
+
+  .quiz-result-card {
+    margin: 1rem 0.5rem !important;
+    padding: 1.5rem !important;
+  }
+
+  .result-header {
+    flex-direction: column !important;
+  }
+
+  .result-image {
+    width: 150px !important;
+  }
+
+  .quiz-result-buttons {
+    flex-direction: column !important;
+  }
+
+  .quiz-result-buttons button {
+    width: 100% !important;
+    max-width: 300px !important;
+  }
+
+  #quizReviewContent {
+    grid-template-columns: 1fr !important;
+  }
+
+    .quiz-nav button {
+    padding: 0.6rem 1.2rem !important;
+    font-size: 0.9rem !important;
+    margin: 2px !important;
+  }
+
+  .quiz-result-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .quiz-result-buttons button {
+    width: 100% !important;
+    max-width: 300px !important;
+    font-size: 0.95rem !important;
+    margin: 2px !important;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .quiz-nav {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+  }
+
+  #quizQuestion {
+    font-size: 1.05rem !important;
+  }
+
+  #quizOptions button {
+    font-size: 0.9rem !important;
+    padding: 0.7rem 0.9rem !important;
+  }
+
+  .result-image {
+    width: 130px !important;
+  }
+
+  .result-info h2 {
+    font-size: 1.2rem !important;
+  }
+
+  .result-info p {
+    font-size: 0.85rem !important;
+  }
+
+  .quiz-nav button {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.85rem !important;
+    margin: 2px !important;
+    flex: 1 1 auto !important;
+    min-width: 100px !important;
+  }
+
+  .quiz-result-buttons {
+    gap: 8px !important;
+  }
+
+  .quiz-result-buttons button {
+    padding: 0.7rem 1rem !important;
+    font-size: 0.9rem !important;
+    margin: 2px !important;
+  }
+}

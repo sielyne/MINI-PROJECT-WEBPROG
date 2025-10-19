@@ -425,3 +425,92 @@ body.dark-mode .footer-copyright {
     gap: 0.75rem;
   }
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem !important;
+    max-width: 100% !important;
+  }
+
+  #main-header {
+    padding: 0.6rem 1rem !important;
+  }
+
+  .logo {
+    font-size: 1.2rem !important;
+  }
+
+  .profile-icon {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  #header-username {
+    font-size: 0.85rem !important;
+  }
+
+  #logoutBtn, #hamburgerBtn, #themeToggleBtn {
+    padding: 0.4em 1em !important;
+    font-size: 1rem !important;
+  }
+
+  #header-nav {
+    right: 1rem !important;
+    min-width: 140px !important;
+  }
+
+  h1 {
+    font-size: 1.8rem !important;
+  }
+
+  h2 {
+    font-size: 1.3rem !important;
+  }
+
+  button {
+    font-size: 0.95rem !important;
+    padding: 0.5em 1.5em !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px !important;
+  }
+
+  .container {
+    padding: 0.5rem !important;
+  }
+
+  #main-header {
+    padding: 0.5rem 0.8rem !important;
+  }
+
+  .logo {
+    font-size: 1.1rem !important;
+  }
+
+  .profile-icon {
+    width: 26px !important;
+    height: 26px !important;
+  }
+
+  #header-nav {
+    right: 0.5rem !important;
+    min-width: 130px !important;
+  }
+
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  h2 {
+    font-size: 1.2rem !important;
+  }
+
+  button {
+    font-size: 0.9rem !important;
+    padding: 0.5em 1.2em !important;
+    margin: 2px !important;
+  }
+}

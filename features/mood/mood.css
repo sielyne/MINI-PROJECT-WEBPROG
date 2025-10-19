@@ -333,6 +333,8 @@ button:active {
     #mood-step-3 {
         padding: 0.8rem;
         margin: 0.5rem;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
     #mood-step-1 h2,
@@ -343,13 +345,27 @@ button:active {
     }
 
     .emoji-options {
-        gap: 0.5rem;
-        margin: 1rem 0;
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.8rem;
+        justify-items: center;
+        align-items: center;
+        margin: 1rem auto;   
+        width: 100%;
+        max-width: 350px;  
+    }
+
+    .calendar-nav {
+        justify-content: center !important;
     }
 
     .emoji-options .mood-btn {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
         padding: 0.4em 0.6em;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     #mood-note {
@@ -430,8 +446,15 @@ button:active {
 }
 
 @media (max-width: 480px) {
+    .emoji-options{
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.6rem;
+        max-width: 300px;
+    }
+
     .emoji-options .mood-btn {
-        font-size: 1.2rem;
+        grid-template-columns: repeat(3, 1fr);
+        font-size: 1.3rem;
         padding: 0.3em 0.5em;
     }
 

@@ -135,90 +135,68 @@ body.dark-mode #login p {
   color: #fffffff2;
 }
 
-/* Responsive Breakpoints */
-
-/* Tablet dan Device Sedang (768px ke bawah) */
 @media (max-width: 768px) {
-  #toggleText {
-    font-size: 0.95rem;
-  }
-  
-  #choice-buttons button {
-    font-size: 16px;
-    padding: 10px 24px;
-  }
-}
-
-/* Mobile Landscape dan Device Kecil (600px ke bawah) */
-@media (max-width: 600px) {
-  #toggleText {
-    font-size: 0.9rem;
-    margin-top: 1.2em;
-  }
-  
-  #choice-buttons button {
-    font-size: 15px;
-    padding: 10px 20px;
-    margin: 0 6px;
-  }
-}
-
-/* Mobile Portrait (500px ke bawah) */
-@media (max-width: 500px) {
-  #user-form {
-    min-width: unset;
-    width: 90vw;
-    padding: 1.5em 1.2em;
-  }
-  
-  #toggleText {
-    font-size: 0.85rem;
-    margin-top: 1em;
-    padding: 0 0.5em;
-  }
-  
-  #choice-buttons button {
-    font-size: 14px;
-    padding: 9px 18px;
-  }
-}
-
-/* Mobile Small (400px ke bawah) */
-@media (max-width: 400px) {
-  #user-form {
-    padding: 1.2em 1em;
-  }
-  
-  #toggleText {
-    font-size: 0.8rem;
-    line-height: 1.5;
-  }
-  
-  #choice-buttons {
+  #login {
+    display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 1rem;
+    text-align: center;
+    box-sizing: border-box;
   }
-  
+  #user-form {
+    margin: 0 auto !important;  
+    width: 95% !important;
+    max-width: 400px !important;
+    padding: 1.5em 1.2em !important;
+  }
+
+  #toggleText {
+    font-size: 0.85rem !important;
+  }
+
   #choice-buttons button {
-    width: 100%;
-    max-width: 200px;
-    margin: 0;
-    font-size: 14px;
+    min-width: 120px !important;
+    padding: 10px 20px !important;
+    font-size: 15px !important;
+    margin: 2px;
   }
 }
 
-/* Mobile Extra Small (350px ke bawah) */
-@media (max-width: 350px) {
-  #toggleText {
-    font-size: 0.75rem;
+@media (max-width: 480px) {
+  #login {
+    padding: 0.8rem;
   }
-  
+  #user-form {
+    width: 98% !important;
+    padding: 1.2em 1em !important;
+  }
+
   #user-form h2 {
-    font-size: 1.3rem;
+    font-size: 1.3rem !important;
   }
-  
+
+  #user-form input[type="text"],
+  #user-form input[type="password"] {
+    font-size: 0.9rem !important;
+    padding: 0.5em 0.8em !important;
+  }
+
+  #toggleText {
+    font-size: 0.8rem !important;
+  }
+
+  #choice-buttons {
+    flex-direction: column !important;
+    margin: 2px;
+  }
+
   #choice-buttons button {
-    font-size: 13px;
-    padding: 8px 16px;
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 14px !important;
+    padding: 10px 15px !important;
   }
 }

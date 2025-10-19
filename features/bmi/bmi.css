@@ -365,7 +365,66 @@ body.darkmode #bmi h2 {
 }
 
 @media (max-width: 768px) {
-    #bmi h2 {
+  #bmi {
+    text-align: center !important;
+    padding: 1.5rem 1rem !important;
+  }
+
+  .form-group {
+    max-width: 90% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .search-controls {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+    align-items: stretch !important;
+    max-width: 90% !important;
+    margin: 0 auto 1rem !important;
+  }
+
+  .search-controls .form-group {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .search-controls select,
+  .search-controls input[type="date"] {
+    width: 100% !important;
+    padding: 0.7rem !important;
+  }
+
+  .search-controls button {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.7rem !important;
+    margin: 0 !important;
+  }
+
+  #bmi-records-section {
+    max-width: 95% !important;
+    margin: 1rem auto !important;
+  }
+
+  #bmi-records-list li {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 0.5rem !important;
+  }
+
+  .record-info {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .record-actions {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+     #bmi h2 {
         font-size: 2rem;
     }
     #bmi-records-list {
@@ -389,4 +448,27 @@ body.darkmode #bmi h2 {
         flex: 1;
         max-width: 120px;
     }
+}
+
+@media (max-width: 480px) {
+  #bmi h2 {
+    font-size: 1.4rem !important;
+  }
+
+  .form-group,
+  .search-controls {
+    max-width: 98% !important;
+  }
+
+  .form-group input,
+  .search-controls select,
+  .search-controls input[type="date"] {
+    font-size: 0.9rem !important;
+    padding: 0.6rem !important;
+  }
+
+  #bmi-records-list button {
+    font-size: 0.85rem !important;
+    padding: 0.5rem !important;
+  }
 }

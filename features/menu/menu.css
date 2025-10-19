@@ -64,3 +64,48 @@
     color: #6a82fb !important;
   }
 }
+
+@media (max-width: 768px) {
+  #menu {
+    padding: 1.5rem 1rem !important;
+  }
+
+  .feature-cards {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .card {
+    width: 90% !important;
+    max-width: 400px !important;
+  }
+
+  .cta {
+    font-size: 1rem !important;
+    padding: 0.7rem 1.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  #menu {
+    padding: 1rem !important;
+  }
+
+  .card {
+    width: 98% !important;
+    padding: 1.2rem !important;
+  }
+
+  .card h3 {
+    font-size: 1rem !important;
+  }
+
+  .card p {
+    font-size: 0.9rem !important;
+  }
+
+  .cta {
+    font-size: 0.9rem !important;
+    padding: 0.6rem 1.2rem !important;
+  }
+}

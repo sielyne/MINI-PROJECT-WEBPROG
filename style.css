@@ -3,12 +3,15 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   min-height: 100vh;
   font-family: 'Segoe UI', 'Poppins', Arial, sans-serif;
   background: linear-gradient(135deg, #f8e1f4 0%, #c2e9fb 100%);
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 body::before {
@@ -193,12 +196,12 @@ body.dark-mode #hamburgerBtn:hover {
 }
 
 #app-container {
-  flex: 1 !important; 
   animation: fadeIn 0.4s ease-in-out;
   margin: 0 auto;
   max-width: 1200px;
   padding: 2rem;
-
+  flex: 1;
+  width: 100%;
 }
 
 #app-container > * {
@@ -208,12 +211,13 @@ body.dark-mode #hamburgerBtn:hover {
 .site-footer {
   background: linear-gradient(90deg, #f8e1f4 0%, #c2e9fb 100%);
   color: #5a3e85;
-  padding: 3rem 2rem 1.5rem 2rem;
+  padding: 2rem 1.5rem 1rem 1.5rem;
   text-align: left;
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 2vw, 1rem);
   box-shadow: 0 -2px 20px rgba(90, 62, 133, 0.1);
-  margin-top: 5rem;
+  margin-top: auto;
   position: relative;
+  width: 100%;
 }
 
 .footer-content {
@@ -232,7 +236,7 @@ body.dark-mode #hamburgerBtn:hover {
 }
 
 .footer-logo {
-  font-size: 1.8rem;
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
   font-weight: 700;
   background: linear-gradient(90deg, #a855f7, #6366f1);
   -webkit-background-clip: text;
@@ -242,7 +246,7 @@ body.dark-mode #hamburgerBtn:hover {
 }
 
 .footer-tagline {
-  font-size: 1rem;
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
   color: #5a3e85;
   font-weight: 400;
 }
@@ -259,6 +263,7 @@ body.dark-mode #hamburgerBtn:hover {
   font-weight: 500;
   transition: all 0.3s ease;
   position: relative;
+  font-size: clamp(0.875rem, 2vw, 1rem);
 }
 
 .footer-links a::after {
@@ -287,8 +292,8 @@ body.dark-mode #hamburgerBtn:hover {
 }
 
 .footer-icon {
-  width: 32px;
-  height: 32px;
+  width: clamp(24px, 5vw, 32px);
+  height: clamp(24px, 5vw, 32px);
   filter: brightness(0.8) saturate(0.9);
   transition: all 0.3s ease;
   cursor: pointer;
@@ -300,7 +305,7 @@ body.dark-mode #hamburgerBtn:hover {
 }
 
 .footer-copyright {
-  font-size: 0.9rem;
+  font-size: clamp(0.75rem, 2vw, 0.9rem);
   color: #7c5fa3;
   margin-top: 1rem;
   padding-top: 1.5rem;
@@ -357,6 +362,10 @@ body.dark-mode .footer-logo {
   -webkit-text-fill-color: transparent;
 }
 
+body.dark-mode .footer-tagline {
+  color: #e0e0e0;
+}
+
 body.dark-mode .footer-links a {
   color: #e0e0e0;
 }
@@ -375,9 +384,22 @@ body.dark-mode .footer-copyright {
     max-width: 98%;
     padding: 1rem;
   }
-  .footer-links { gap: 1rem; }
-  .footer-social { gap: 1rem; }
-  .footer-icon { width: 28px; height: 28px; }
+  
+  .site-footer {
+    padding: 1.5rem 1rem 0.75rem 1rem;
+  }
+  
+  .footer-content {
+    gap: 1rem;
+  }
+  
+  .footer-links {
+    gap: 1rem;
+  }
+  
+  .footer-social {
+    gap: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -385,6 +407,21 @@ body.dark-mode .footer-copyright {
     padding: 0.5rem;
     max-width: 100%;
   }
-  .footer-content { gap: 0.7rem; }
-  .footer-logo { font-size: 1.1rem; }
+  
+  .site-footer {
+    padding: 1rem 0.75rem 0.5rem 0.75rem;
+  }
+  
+  .footer-content {
+    gap: 0.75rem;
+  }
+  
+  .footer-links {
+    gap: 0.75rem;
+    font-size: 0.875rem;
+  }
+  
+  .footer-social {
+    gap: 0.75rem;
+  }
 }

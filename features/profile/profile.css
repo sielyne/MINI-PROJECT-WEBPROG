@@ -545,3 +545,154 @@
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
+/* Responsive Design */
+@media (max-width: 768px) {
+  .report-container {
+    padding: 1.5rem;
+    border-radius: 15px;
+  }
+  
+  .report-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .report-card-header h3 {
+    font-size: 1.1rem;
+  }
+  
+  .report-actions {
+    flex-direction: column;
+  }
+  
+  .btn-download,
+  .btn-back {
+    max-width: 100%;
+  }
+  
+  .report-card-body {
+    max-height: 300px;
+  }
+
+  /* Profile Section Responsive */
+  #profile {
+    padding: 1rem;
+  }
+
+  .profile-section {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .profile-section h3 {
+    font-size: 0.95rem;
+  }
+
+  .profile-section li {
+    font-size: 0.85rem;
+    padding: 0.6rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .search-history-container {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  #search-history {
+    font-size: 0.9rem;
+    padding: 0.8rem 1rem;
+  }
+
+  #search-results li {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+    word-wrap: break-word;
+  }
+
+  .profile-btn-row {
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+  }
+
+  .profile-btn-row button {
+    font-size: 0.85rem;
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #report {
+    padding: 1rem;
+  }
+  
+  .report-container {
+    padding: 1rem;
+  }
+  
+  .report-header {
+    padding-bottom: 1rem;
+  }
+  
+  .report-header h2 {
+    font-size: 1.3rem;
+  }
+  
+  .report-card-header {
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+  
+  .report-card-body li {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Profile Mobile Optimization */
+  #profile h2 {
+    font-size: 1.3rem;
+  }
+
+  .profile-section h3 {
+    font-size: 0.9rem;
+  }
+
+  .profile-section li {
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    line-height: 1.5;
+  }
+
+  #search-history {
+    font-size: 0.85rem;
+    padding: 0.7rem 0.9rem;
+  }
+
+  #search-results li {
+    font-size: 0.8rem;
+    padding: 0.7rem;
+  }
+
+  .profile-btn-row button {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+  }
+
+  .search-history-container h3 {
+    font-size: 0.9rem;
+  }
+
+  .report-username {
+    font-size: 0.95rem;
+    word-wrap: break-word;
+  }
+
+  .report-date {
+    font-size: 0.8rem;
+  }
+}

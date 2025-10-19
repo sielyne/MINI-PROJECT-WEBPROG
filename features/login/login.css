@@ -1,5 +1,18 @@
-#choice-buttons {
-    margin-top: 1.5em;
+/* Toggle Text Styles - Responsive */
+#toggleText {
+  text-align: center;
+  margin-top: 1.5em;
+  color: #5d73de;
+  font-size: 1rem;
+  line-height: 1.6;
+  transition: font-size 0.3s ease;
+}
+
+#toggleText a {
+  color: #6a82fb;
+  text-decoration: underline;
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
 #toggleText a:hover {
@@ -7,67 +20,22 @@
   text-decoration: none;
 }
 
-
-#user-form {
-    background: rgba(255,255,255,0.85);
-    border-radius: 18px;
-    box-shadow: 0 8px 32px #c2e9fb55;
-    padding: 2em 2.5em;
-    margin-top: 1em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 320px;
-}
-
-#user-form h2 {
-    color: #a259c6;
-    margin-bottom: 1em;
-}
-
-#user-form label {
-    display: block;
-    text-align: left;
-    width: 100%;
-    margin-left: 0;
-    color: #6a82fb;
-    font-size: 1rem;
-    margin-top: 1em;
-    margin-bottom: 0.3em;
-    align-self: flex-start;
-}
-
-#user-form input[type="text"], #user-form input[type="password"] {
-    width: 100%;
-    padding: 0.6em 1em;
-    border: 1px solid #e0c3fc;
-    border-radius: 12px;
-    background: #f8e1f4cc;
-    margin-bottom: 0.7em;
-    font-size: 1rem;
-    outline: none;
-    transition: border 0.2s;
-}
-
-#user-form input[type="text"]:focus, #user-form input[type="password"]:focus {
-    border: 1.5px solid #a259c6;
-    background: #fff;
-}
-
-@media (max-width: 500px) {
-    #user-form {
-        min-width: unset;
-        width: 90vw;
-        padding: 1em;
-    }
-}
-
-#login p {
-  color: #5d73de;
-}
-
-body.dark-mode #login p {
+/* Dark Mode */
+body.dark-mode #toggleText {
   color: #fffffff2;
+}
+
+body.dark-mode #toggleText a {
+  color: #72a8ff;
+}
+
+body.dark-mode #toggleText a:hover {
+  color: #fcb7ff;
+}
+
+/* Choice Buttons */
+#choice-buttons {
+  margin-top: 1.5em;
 }
 
 #choice-buttons button {
@@ -108,4 +76,149 @@ body.dark-mode #login p {
 body.dark-mode #choice-buttons button {
   background: linear-gradient(45deg, #ff788f, #9c9dff);
   color: #fff;
+}
+
+/* User Form */
+#user-form {
+  background: rgba(255,255,255,0.85);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px #c2e9fb55;
+  padding: 2em 2.5em;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 320px;
+}
+
+#user-form h2 {
+  color: #a259c6;
+  margin-bottom: 1em;
+}
+
+#user-form label {
+  display: block;
+  text-align: left;
+  width: 100%;
+  margin-left: 0;
+  color: #6a82fb;
+  font-size: 1rem;
+  margin-top: 1em;
+  margin-bottom: 0.3em;
+  align-self: flex-start;
+}
+
+#user-form input[type="text"],
+#user-form input[type="password"] {
+  width: 100%;
+  padding: 0.6em 1em;
+  border: 1px solid #e0c3fc;
+  border-radius: 12px;
+  background: #f8e1f4cc;
+  margin-bottom: 0.7em;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+
+#user-form input[type="text"]:focus,
+#user-form input[type="password"]:focus {
+  border: 1.5px solid #a259c6;
+  background: #fff;
+}
+
+#login p {
+  color: #5d73de;
+}
+
+body.dark-mode #login p {
+  color: #fffffff2;
+}
+
+/* Responsive Breakpoints */
+
+/* Tablet dan Device Sedang (768px ke bawah) */
+@media (max-width: 768px) {
+  #toggleText {
+    font-size: 0.95rem;
+  }
+  
+  #choice-buttons button {
+    font-size: 16px;
+    padding: 10px 24px;
+  }
+}
+
+/* Mobile Landscape dan Device Kecil (600px ke bawah) */
+@media (max-width: 600px) {
+  #toggleText {
+    font-size: 0.9rem;
+    margin-top: 1.2em;
+  }
+  
+  #choice-buttons button {
+    font-size: 15px;
+    padding: 10px 20px;
+    margin: 0 6px;
+  }
+}
+
+/* Mobile Portrait (500px ke bawah) */
+@media (max-width: 500px) {
+  #user-form {
+    min-width: unset;
+    width: 90vw;
+    padding: 1.5em 1.2em;
+  }
+  
+  #toggleText {
+    font-size: 0.85rem;
+    margin-top: 1em;
+    padding: 0 0.5em;
+  }
+  
+  #choice-buttons button {
+    font-size: 14px;
+    padding: 9px 18px;
+  }
+}
+
+/* Mobile Small (400px ke bawah) */
+@media (max-width: 400px) {
+  #user-form {
+    padding: 1.2em 1em;
+  }
+  
+  #toggleText {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  
+  #choice-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  #choice-buttons button {
+    width: 100%;
+    max-width: 200px;
+    margin: 0;
+    font-size: 14px;
+  }
+}
+
+/* Mobile Extra Small (350px ke bawah) */
+@media (max-width: 350px) {
+  #toggleText {
+    font-size: 0.75rem;
+  }
+  
+  #user-form h2 {
+    font-size: 1.3rem;
+  }
+  
+  #choice-buttons button {
+    font-size: 13px;
+    padding: 8px 16px;
+  }
 }
